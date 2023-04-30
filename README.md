@@ -1,2 +1,2 @@
 # SAC
-Web &amp; mobile app for administrative solutions
+Web & App; mobile app for administrative solutions
