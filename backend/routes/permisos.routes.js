@@ -5,7 +5,7 @@ const { PermisosController } = require('../controllers');
 
 
 api.get('/v1/permisos/detallepermiso', PermisosController.getDetallePermiso);
-
+api.get('/v1/permisos/asistenciapermiso', PermisosController.getAsistenciaPermiso);
 
 
 
