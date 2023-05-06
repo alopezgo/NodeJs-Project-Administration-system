@@ -18,3 +18,20 @@ exports.getUser = async (req, res) => {
     res.status(500).send('Error en el servidor');
   }
 };
+
+exports.postCreatUser = async (req, res) => {
+  try {
+
+      //funcionalidades crear usuario
+
+    return res.status(200).send({
+      success: true,
+      message: "usuario encontrado",
+      Data: result.rows
+    })
+
+  } catch (error) {
+    console.error('Error al obtener los usuarios', error);
+    res.status(500).send('Error en el servidor');
+  }
+};
