@@ -35,3 +35,42 @@ exports.postCreatUser = async (req, res) => {
     res.status(500).send('Error en el servidor');
   }
 };
+
+async function login(correo, contraseña) {
+  const query = {
+    loginQuery: `SELECT   correo, contraseña 
+                   FROM   sac.usuario 
+                   WHERE  correo = $1 
+                   AND    contraseña = $2`,
+    values: [correo, contraseña],
+  };
+
+  const { rows } = await pool.query(query);
+
+  if (rows.length === 0) {
+    return { success: false, message: 'Correo o contraseña incorrectos' };
+  }
+  return { success: true, message: 'Inicio de sesión exitoso' };
+}
+
+
+exports.loginUser = async (req, res) => {
+  try {
+    const { correo, contrasena } = req.body;
+    if (!correo || !contrasena) {
+      throw new Error("Ingrese su correo y contraseña")
+    }
+    const resultado = await login(correo, contrasena);
+
+    return res.status(200).send({
+      success: true,
+      message: "Inicio de sesión exitoso",
+      Data: resultado
+    })
+
+  } catch (error) {
+    console.error('Error al comprobar las credenciales', error);
+    res.status(500).send('Error en el servidor');
+  }
+};
+
