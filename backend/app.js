@@ -6,7 +6,7 @@ const express = require('express');
 const app = express();
 const api = require('./routes/users.routes');
 
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
@@ -16,6 +16,6 @@ app.get('/', (req, res) => {
   res.send('¡Bienvenido a la API REST!');
 });
 
-app.listen(port, () => {
-  console.log(`El servidor está escuchando en el puerto ${port}`);
+app.listen(PORT, () => {
+  console.log(`El servidor está escuchando en http://localhost:${PORT}`);
 });

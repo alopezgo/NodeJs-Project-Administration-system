@@ -1,4 +1,7 @@
 const { pool } = require('../db/db');
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.getUser = async (req, res) => {
   try {
@@ -37,40 +40,38 @@ exports.postCreatUser = async (req, res) => {
 };
 
 async function login(correo, contraseña) {
-  const query = {
-    loginQuery: `SELECT   correo, contraseña 
+  const query =`SELECT  correo, contrasena 
                    FROM   sac.usuario 
                    WHERE  correo = $1 
-                   AND    contraseña = $2`,
-    values: [correo, contraseña],
-  };
+                   AND    contrasena = $2
+                   AND id_rol in (1,2)`;
 
-  const { rows } = await pool.query(query);
+  const { rows } = await pool.query(query, [correo, contraseña]);
 
   if (rows.length === 0) {
-    return { success: false, message: 'Correo o contraseña incorrectos' };
+    return { success: false, message: 'Correo o contraseña incorrectos', data: null };
   }
-  return { success: true, message: 'Inicio de sesión exitoso' };
+  return { success: true, message: 'Login exitoso', data: rows };
 }
 
 
 exports.loginUser = async (req, res) => {
   try {
     const { correo, contrasena } = req.body;
-    if (!correo || !contrasena) {
-      throw new Error("Ingrese su correo y contraseña")
-    }
     const resultado = await login(correo, contrasena);
-
-    return res.status(200).send({
-      success: true,
-      message: "Inicio de sesión exitoso",
-      Data: resultado
-    })
-
+    if (resultado.success == true) {
+      return res.status(200).json(resultado);
+    } else {
+      return res.status(404).json(resultado);
+    }
   } catch (error) {
-    console.error('Error al comprobar las credenciales', error);
-    res.status(500).send('Error en el servidor');
+    console.error('Error con la conexión a la base de datos', error);
+    res.status(500).send(error);
   }
 };
+
+// const otrafuncion = async () => {
+//   console.log(await login('adminempresa1@gmail.com', 'pass123'));
+// }
+// otrafuncion();
 
