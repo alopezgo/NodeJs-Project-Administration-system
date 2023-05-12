@@ -57,22 +57,22 @@
 				<div class="inner">
 						<h3 class="major">Iniciar Sesión</h3>
 						<p>Si ya tienes una cuenta, ingresa con tu correo y contraseña </p>
-						<form method="post" action="#">
+						<form method="post" action="#" id="login-form">
 							<div class="row gtr-uniform">
 								<div class="col-8-large">
 									<label for="demo-email">Correo</label>
-									<input type="email" name="demo-email" id="demo-email" value="" />
+									<input type="email" name="email" id="email" value="" />
 								</div>
 								<div class="col-8-large">
 									<label for="demo-pass">Contraseña</label>
-									<input type="password" name="demo-pass" id="demo-pass" value="" />
+									<input type="password" name="password" id="password" value="" />
 								</div>
 								<div class="col-4-large">
 								</div>
 
 								<div class="col-6 col-12-small">
-									<input type="checkbox" id="demo-copy" name="demo-copy">
-									<label for="demo-copy">Recuérdame</label>
+									<input type="checkbox" id="rememberme" name="rememberme">
+									<label for="rememberme">Recuérdame</label>
 								</div>
 								<div class="col-6 col-12-small">
 								</div>
@@ -90,6 +90,7 @@
 								</div>
 							</div>
 						</form>
+						<div id="message"></div>
 
 				</div>
 			</div>

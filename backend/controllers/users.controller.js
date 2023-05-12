@@ -79,7 +79,7 @@ async function login(correo, contraseña) {
     };
   }
 
-  return { success: true, message: "Login exitoso", data: rows };
+  return { success: true, message: "Login exitoso", token: token, data: rows };
 }
 
 exports.loginUser = async (req, res) => {
