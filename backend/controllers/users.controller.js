@@ -97,7 +97,7 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-const otrafuncion = async () => {
-  console.log(await login("test3@mail.com", "test3"));
-};
-otrafuncion();
+// const otrafuncion = async () => {
+//   console.log(await login("test3@mail.com", "test3"));
+// };
+// otrafuncion();
