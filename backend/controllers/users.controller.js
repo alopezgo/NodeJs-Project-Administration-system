@@ -67,7 +67,7 @@ async function login(correo, contraseña) {
   if (rows[0].id_rol == 3) {
     return {
       success: false,
-      message: "No cuenta con los permisos necesarios para ingresar al sitio",
+      message: "No cuenta con los permisos necesarios para ingresar al sitio web",
       data: null,
     };
   }
