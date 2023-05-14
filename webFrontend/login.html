@@ -1,122 +1,26 @@
-<!DOCTYPE HTML>
-<!--
-	Solid State by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<!DOCTYPE html>
 <html>
+ 
 
 <head>
-	<title>SAC - Home </title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
-	<noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" />
-	</noscript>
+       
+    <meta charset="UTF-8">
+        <title>Login</title>
+     
 </head>
+ 
 
-<body class="is-preload">
-
-	<!-- Page Wrapper -->
-	<div id="page-wrapper">
-
-		<!-- Header -->
-		<header id="header">
-			<h1><a href="index.html">Sac</a></h1>
-			<nav>
-				<a href="#menu">Menu</a>
-			</nav>
-		</header>
-
-		<!-- Menu -->
-		<nav id="menu">
-			<div class="inner">
-				<h2>Menu</h2>
-				<ul class="links">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="generic.html">Generic</a></li>
-					<li><a href="elements.html">Elements</a></li>
-					<li><a href="login.html">Log In</a></li>
-					<li><a href="#">Sign Up</a></li>
-				</ul>
-				<a href="#" class="close">Close</a>
-			</div>
-		</nav>
-
-		<!-- Content -->
-		<section id="wrapper">
-			<!-- <header>
-				<div class="inner">
-			
-					<h2>Sistema Administrativo Complementario</h2>
-					<p>No es sólo otra herramienta, es tu solución</p>
-				</div>
-			</header> -->
-			<div class="wrapper altspotlight style6">
-				<div class="inner">
-						<h3 class="major">Iniciar Sesión</h3>
-						<p>Si ya tienes una cuenta, ingresa con tu correo y contraseña </p>
-						<form method="post" action="#" id="login-form">
-							<div class="row gtr-uniform">
-								<div class="col-8-large">
-									<label for="demo-email">Correo</label>
-									<input type="email" name="email" id="email" value="" />
-								</div>
-								<div class="col-8-large">
-									<label for="demo-pass">Contraseña</label>
-									<input type="password" name="password" id="password" value="" />
-								</div>
-								<div class="col-4-large">
-								</div>
-
-								<div class="col-6 col-12-small">
-									<input type="checkbox" id="rememberme" name="rememberme">
-									<label for="rememberme">Recuérdame</label>
-								</div>
-								<div class="col-6 col-12-small">
-								</div>
-								<div class="col-12">
-									<ul class="actions">
-										<li><input type="submit" value="Ingresar" class="button primary fit" /></li>
-										<li><input type="submit" value="Recuperar contraseña" class="button fit" /></li>
-									</ul>
-									
-									<ul>
-										<p>¿Aún no tienes una cuenta? <strong><a href="#">Regístrate aquí</a></strong>
-										</p>
-									</ul>									
-									
-								</div>
-							</div>
-						</form>
-						<div id="message"></div>
-
-				</div>
-			</div>
-
-		</section>
-
-		<!-- Footer -->
-		<section id="footer">
-			<div class="inner">
-				<ul class="copyright">
-					<li>&copy; Untitled Inc. All rights reserved.</li>
-					<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-				</ul>
-			</div>
-		</section>
-
-	</div>
-
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.scrollex.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
-
+<body>
+        <h1>Login</h1>
+        <div id="message"></div>
+        <form id="login-form">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required><br>
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" required><br>
+              <input type="submit" value="Login">
+            </form>
+        <script src="..\assets\js\login.js"></script>
 </body>
 
 </html>
