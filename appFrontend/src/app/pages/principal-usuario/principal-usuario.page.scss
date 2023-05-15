@@ -1,0 +1,44 @@
+h3{
+    color: white;
+    text-align: center;
+    
+}
+
+.cabecera {
+    display: flex;
+    width: 90%;
+    align-items: center;
+}
+
+ion-img{
+    width: 60px;
+
+}
+
+p{
+    color: white;
+    margin-bottom: 100px;
+}
+
+
+.registroButton{
+    margin-top: 20px;
+    width: 80%;
+    height: 50px;
+    margin-bottom: 100px;
+
+}
+
+ion-button{
+    margin: auto;
+}
+
+.categorias{
+    display: flex;
+    margin: auto;
+    width: 80%;
+}
+
+.caja{
+    width: 45%;
+}
