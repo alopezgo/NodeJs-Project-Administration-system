@@ -1,0 +1,31 @@
+
+
+<ion-content class="fondo"> 
+  
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button href="/principal-empresa">
+        <ion-icon size="large" color="light" name="arrow-back-circle-outline" ></ion-icon>
+      </ion-button>
+      </ion-buttons>
+      <h3>Home</h3>
+      <ion-buttons slot="end" >
+        <ion-button href="/login">
+        <ion-icon size="large" color="light" name="log-out-outline" ></ion-icon>
+      </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+
+  
+    <div class="registros">
+      <ion-button (click)="addConsumo(1)">DESAYUNO</ion-button>
+      <ion-button  (click)="addConsumo(2)">ALMUERZO</ion-button>
+      <ion-button (click)="addConsumo(3)">ONCE</ion-button>
+      <ion-button (click)="addConsumo(4)">CENA</ion-button> 
+    </div>
+    
+
+  </ion-content>
