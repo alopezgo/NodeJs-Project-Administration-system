@@ -5,6 +5,7 @@ const { CentroCostoController } = require('../controllers');
 
 
 api.get('/v1/centrocosto/test', CentroCostoController.getCentroCosto);
+api.get('/v1/empresas', CentroCostoController.getEmpresas);
 
 
 
