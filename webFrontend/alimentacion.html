@@ -15,7 +15,7 @@
     <title>Estadísticas</title>
 </head>
 
-<body>
+<body class="is-preload">
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">
@@ -112,88 +112,18 @@
             <table id="example" class="display" style="width:100%">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Producto</th>
-                        <th>Categoría</th>
-                        <th>Stock</th>
+                        <th>Empleado</th>
+                        <th>Tipo Consumo</th>
+                        <th>Datetime Consumo</th>
                         <th>Precio</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Macetero Pequeño</td>
-                        <td>Jardín</td>
-                        <td>10</td>
-                        <td>$3200</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Macetero Mediano</td>
-                        <td>Jardín</td>
-                        <td>9</td>
-                        <td>$3700</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Macetero Grande</td>
-                        <td>Jardín</td>
-                        <td>12</td>
-                        <td>$4800</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Pala pequeña</td>
-                        <td>Jardín</td>
-                        <td>20</td>
-                        <td>$2360</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Asadón pequeño</td>
-                        <td>Jardín</td>
-                        <td>8</td>
-                        <td>$1700</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Rastrillo</td>
-                        <td>Jardín</td>
-                        <td>10</td>
-                        <td>$3700</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Fibra de coco</td>
-                        <td>Jardín</td>
-                        <td>20</td>
-                        <td>$1500</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>Vermiculira</td>
-                        <td>Jardín</td>
-                        <td>14</td>
-                        <td>$3900</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>Tierra de hoja</td>
-                        <td>Jardín</td>
-                        <td>9</td>
-                        <td>$2500</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Arena de Lampa</td>
-                        <td>Jardín</td>
-                        <td>8</td>
-                        <td>$1600</td>
-                    </tr>
+                <tbody id="tb-alimentacion">
                 </tbody>
             </table>
         </div>
     </main>
+    <script src="assets\js\alimentacion.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
