@@ -26,7 +26,7 @@ export class RegistroPage {
       .subscribe(
         (response: any) => {
           console.log(response);
-          alert("consumo se ha registrado el consumo correctamente")
+          alert("Se ha registrado el consumo correctamente")
         },
         (error) => {
           console.error(error);

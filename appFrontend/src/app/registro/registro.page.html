@@ -9,7 +9,7 @@
         <ion-icon size="large" color="light" name="arrow-back-circle-outline" ></ion-icon>
       </ion-button>
       </ion-buttons>
-      <h3>Home</h3>
+      <h3>Registro de consumos</h3>
       <ion-buttons slot="end" >
         <ion-button href="/login">
         <ion-icon size="large" color="light" name="log-out-outline" ></ion-icon>
@@ -19,13 +19,14 @@
   </ion-header>
   
 
-  
+  <div class="container">
     <div class="registros">
       <ion-button (click)="addConsumo(1)">DESAYUNO</ion-button>
       <ion-button  (click)="addConsumo(2)">ALMUERZO</ion-button>
       <ion-button (click)="addConsumo(3)">ONCE</ion-button>
       <ion-button (click)="addConsumo(4)">CENA</ion-button> 
     </div>
+  </div>
     
 
   </ion-content>

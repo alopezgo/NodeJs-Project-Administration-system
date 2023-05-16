@@ -48,8 +48,8 @@ exports.addConsumo = async (req, res) => {
     const id_empleado = rows[0].id;
     
     // Inserta el registro en detalle_consumo
-    const insertQuery = 'INSERT INTO sac.detalle_consumo (id_empleado, id_tipo_consumo, dt_consumo, precio) VALUES ($1, $2, NOW(), $3)';
-    await pool.query(insertQuery, [id_empleado, consumo.id_tipo_consumo, consumo.precio]);
+    const insertQuery = 'INSERT INTO sac.detalle_consumo (id_empleado, id_tipo_consumo, dt_consumo) VALUES ($1, $2, NOW())';
+    await pool.query(insertQuery, [id_empleado, consumo.id_tipo_consumo]);
 
     return res.status(200).send({
       success: true,
@@ -73,7 +73,7 @@ exports.getConsumosPorEmpresa = async (req, res) => {
         e.nombre || ' ' || e.apellido_paterno || ' ' || e.apellido_materno as nom_empleado,
         tc.tipo as tipo_consumo,
         dc.dt_consumo,
-        '$' || dc.precio::int as precio
+        '$' || tc.precio::int as precio
       FROM sac.detalle_consumo as dc
       JOIN sac.empleado as e ON dc.id_empleado = e.id
       JOIN sac.tipo_consumo as tc ON dc.id_tipo_consumo = tc.id
