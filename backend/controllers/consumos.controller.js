@@ -99,6 +99,16 @@ exports.getConsumosPorFecha = async (req, res) => {
     const { fechaInicio, fechaFin } = req.body;
     const { id_empresa } = req.params;
 
+    if (!fechaInicio || !fechaFin) {
+      return res.status(400).send({ success: false, message: "Debe indicar una fecha de inicio y término." });
+    };
+
+    const empresaQuery = `SELECT id FROM sac.empresa WHERE id = $1`;
+    const empresaResult = await pool.query(empresaQuery, [id_empresa]);
+    if (empresaResult.rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'La empresa no existe' });
+    }
+
     const query = `
       SELECT  emp.nombre AS empresa_nombre,
               e.nombre AS empleado_nombre,
@@ -154,6 +164,16 @@ exports.getConsumosCentroCosto = async (req, res) => {
   try {
     const { fechaInicio, fechaFin, centroCosto } = req.body;
     const { id_empresa } = req.params;
+    
+    if (!fechaInicio || !fechaFin) {
+      return res.status(400).send({ success: false, message: "Debe indicar una fecha de inicio y término." });
+    };
+
+    const empresaQuery = `SELECT id FROM sac.empresa WHERE id = $1`;
+    const empresaResult = await pool.query(empresaQuery, [id_empresa]);
+    if (empresaResult.rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'La empresa no existe' });
+    }
 
     const query = `
         SELECT  emp.nombre AS empresa_nombre,
