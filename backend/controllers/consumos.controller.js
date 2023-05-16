@@ -93,3 +93,7 @@ exports.getConsumosPorEmpresa = async (req, res) => {
     return res.status(500).send('Error en el servidor');
   }
 };
+
+exports.getConsumosPorFecha = async (req, res) => {
+
+};
