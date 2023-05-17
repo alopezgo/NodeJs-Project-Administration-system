@@ -6,24 +6,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="proyecto" content="Portafolio 2023">
-    <title>Registros Alimentación- SAC</title>
+    <title>Alimentación- SAC</title>
 
-    <link href="assets/css/dashboard.css" rel="stylesheet">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/"> <!--parece que este no es necesario-->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/dashboard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-
-    <title>Estadísticas</title>
 </head>
 
 <body class="is-preload">
+
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    
+
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">
             <img src="images/logo_sac_(S).png" alt="" width="32" height="32" class="rounded me-2">
             <span>SAC</span>
         </a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search"
@@ -34,13 +35,22 @@
             </div>
         </div>
     </header>
+
     <div class="container-fluid">
         <div class="row">
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar collapse">
                 <div class="position-sticky pt-3 sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">
+                            <a id="nombre-usuario" class="nav-link" href="#">
+                                <img id="img-usuario"
+                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK8HJpZl5SDTDZP455OxKbc71lJTRXW4wygA&usqp=CAU"
+                                    alt="" width="32" height="32" class="rounded-circle me-2">
+                            </a>
+                        </li>
+                        <hr />
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="dashboard.html">
                                 <span data-feather="home" class="align-text-bottom"></span>
                                 Dashboard
                             </a>
@@ -58,7 +68,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="alimentacion.html">
                                 <span data-feather="coffee" class="align-text-bottom"></span>
                                 Alimentación
                             </a>
@@ -75,8 +85,10 @@
                                 Permisos
                             </a>
                         </li>
+
                     </ul>
                     <hr />
+
                     <h6
                         class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
                         <span>Favoritos</span>
@@ -95,51 +107,68 @@
                                 Preguntas Frecuentes
                             </a>
                         </li>
-                        <hr />
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK8HJpZl5SDTDZP455OxKbc71lJTRXW4wygA&usqp=CAU"
-                                    alt="" width="32" height="32" class="rounded-circle me-2">
-                                Mi cuenta
-                            </a>
-                        </li>
+
                     </ul>
                 </div>
             </nav>
-    
-    <main  class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <div class="text-center">
-            <table id="example" class="display" style="width:100%">
-                <!-- <thead>
-                </thead>
-                <tbody id="tb-alimentacion">
-                </tbody> -->
-            </table>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Registros Alimentación</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">PDF</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">CSV</button>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <!--Esto puede servir para filtrar por fechas y centro de costo-->
+                            <span data-feather="calendar" class="align-text-bottom"></span>
+                            Hoy
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item active" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h5>Título incluirá Periodo + CCosto</h5>
+                <div class="table-responsive">
+                    <table id="example" class="display" style="width:100%" class="display table table-striped table-sm">
+                       
+                    </table>
+                </div>
+            </main>
         </div>
-    </main>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
+
     <script src="assets/js/bootstrap.bundle.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
         integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
         integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG"
         crossorigin="anonymous"></script>
-    <script src="assets/js/dashboard.js"></script>
     <script src="assets\js\alimentacion.js"></script>
     <script>
         $(document).ready(function () {
-                var tabla_consumo = $('#example').DataTable({
-                    "language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-                    columns: [
-                        { "title": "Empleado","data": "nom_empleado" },
-                        { "title": "Consumo", "data": "tipo_consumo" },
-                        { "title": "Fecha", "data": "dt_consumo" },
-                        { "title": "Precio", "data": "precio" }
-                    ]
-                });
-                GetConsumos();
+            var tabla_consumo = $('#example').DataTable({
+                "language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+                columns: [
+                    { "title": "Empleado", "data": "nom_empleado" },
+                    { "title": "Consumo", "data": "tipo_consumo" },
+                    { "title": "Fecha", "data": "dt_consumo" },
+                    { "title": "Precio", "data": "precio" }
+                ]
+            });
+            GetConsumos();
 
             // Obtener lista de usuarios
             function GetConsumos() {
@@ -159,10 +188,10 @@
                             }).draw();
                         });
                     }
-            });
-        }});
+                });
+            }
+        });
     </script>
-
 </body>
 
 </html>

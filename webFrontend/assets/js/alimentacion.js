@@ -1,21 +1,23 @@
-// // JavaScript
-// document.addEventListener("DOMContentLoaded", function () {
-//   llenarTabla();
-// });
+/* globals Chart:false, feather:false */
 
-// async function llenarTabla(){
-//   // Hacer petición GET a la API
-//     const response = await fetch("http://localhost:3000/api/v1/consumos/3");
-//     const jsonres = await response.json();
-//     const data = jsonres.data;
+(() => {
+  "use strict";
 
-//     try {
-//       const values = data.reduce((acc, val) => {
-//         return [...acc, Object.values(val)];
-//       }, []);
-//         console.log(values);
-//         return values;
-//     } catch (e) {
-//       console.log("Invalid JSON");
-//     }
-// };
+  feather.replace({ "aria-hidden": "true" });
+
+})();
+
+document.addEventListener("DOMContentLoaded", function () {
+  const nombreUsuario = localStorage.getItem("nombre_usuario");
+
+  if (nombreUsuario) {
+    const nombreUsuarioElemento = document.getElementById("nombre-usuario");
+
+    const imagenElemento = document.getElementById("img-usuario");
+    const nombreElemento = document.createElement("span");
+    nombreElemento.innerHTML = "Hola " + nombreUsuario;
+
+    nombreUsuarioElemento.appendChild(imagenElemento);
+    nombreUsuarioElemento.appendChild(nombreElemento);
+  }
+});
