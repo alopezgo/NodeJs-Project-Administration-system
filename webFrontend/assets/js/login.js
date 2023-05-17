@@ -1,9 +1,6 @@
-
 const form = document.querySelector("#login-form");
 
-
 form.addEventListener("submit", (event) => {
-
   event.preventDefault();
 
   // Get the form data.
@@ -26,20 +23,32 @@ form.addEventListener("submit", (event) => {
     },
   })
     .then((response) => {
-
       if (response.status === 200) {
-        // The login was successful.
-        alert("Inicio de sesión exitoso");
-    
+        return response.json();
       } else if (response.status === 401) {
         alert("Correo o contraseña incorrectos");
+        throw new Error("Correo o contraseña incorrectos");
       } else {
-
-        alert("Error en el servidor");
+        throw new Error("Error en el servidor");
       }
     })
+    .then((data) => {
+      // Extract the required data from the response
+      const { token, data: userData } = data;
+      const { id_empresa, id_usuario, nombre } = userData[0];
+
+      // Save the required data in localStorage or session storage
+      localStorage.setItem("token", token);
+      localStorage.setItem("id_empresa", id_empresa);
+      localStorage.setItem("id_usuario", id_usuario);
+      localStorage.setItem("nombre_usuario", nombre);
+
+      // The login was successful.
+      alert("Inicio de sesión exitoso");
+      // Redirect to the next page
+      window.location.href = "dashboard.html";
+    })
     .catch((error) => {
-      // An error occurred.
       console.error(error);
       alert("Error al iniciar sesión");
     });

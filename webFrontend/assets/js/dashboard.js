@@ -1,7 +1,10 @@
 /* globals Chart:false, feather:false */
 
+
 (() => {
   'use strict'
+
+
 
   feather.replace({ 'aria-hidden': 'true' })
 
@@ -49,3 +52,10 @@
     }
   })
 })()
+
+const nombreUsuario = localStorage.getItem("nombre_usuario");
+console.log("nombre", nombreUsuario);
+
+const id_empresa = localStorage.getItem('id_empresa');
+console.log("id_empresa", id_empresa)
+
