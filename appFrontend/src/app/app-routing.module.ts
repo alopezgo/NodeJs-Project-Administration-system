@@ -22,6 +22,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'principal',
+    redirectTo: 'principal',
+    pathMatch: 'full'
+  },
+  {
     path: 'registro',
     redirectTo: 'registro',
     pathMatch: 'full'
@@ -38,6 +43,11 @@ const routes: Routes = [
     path: 'registro',
     loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule)
   },
+  {
+    path: 'principal',
+    loadChildren: () => import('./principal/principal.module').then( m => m.PrincipalPageModule)
+  },
+
 ];
 
 @NgModule({

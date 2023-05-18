@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.page.html',
-  styleUrls: ['./dashboard.page.scss'],
+  selector: 'app-principal',
+  templateUrl: './principal.page.html',
+  styleUrls: ['./principal.page.scss'],
 })
-export class DashboardPage implements OnInit {
+export class PrincipalPage implements OnInit {
+
   username: string | null= '';
 
 
@@ -18,5 +18,4 @@ export class DashboardPage implements OnInit {
   
 
 
-  }
-}
+  }}

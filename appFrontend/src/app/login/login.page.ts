@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth-service.service';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +10,12 @@ import { AuthService } from '../auth-service.service';
 })
 export class LoginPage {
   loggingIn = false;
+  username: string = ''; //
+  rol: string = ''; //
 
   constructor(
     private http: HttpClient,
-    private router: Router,
-    private authService: AuthService
+    private router: Router
   ) {}
 
   login(loginForm: NgForm): void {
@@ -39,10 +39,13 @@ export class LoginPage {
         (response: any) => {
           console.log(response);
           this.loggingIn = false;
-
-          // Establecer el correo electrónico actual y redirigir al usuario a la página de dashboard
-          this.authService.setCurrentUserEmail(email);
-          this.router.navigate(['/dashboard']);
+          this.username = response.data[0].nombre;
+          this.rol = response.data[0].id_rol;
+          if (this.rol == "1"){
+            this.router.navigate(['/dashboard', { username: this.username }]);
+          }else{
+            this.router.navigate(['/principal', { username: this.username }]);
+          }
         },
         (error) => {
           console.error(error);

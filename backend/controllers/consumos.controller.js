@@ -45,16 +45,21 @@ exports.addConsumo = async (req, res) => {
     // Busca el id del empleado a partir del rut
     const query = 'SELECT id FROM sac.empleado WHERE rut = $1';
     const { rows } = await pool.query(query, [rut_empleado]);
-    const id_empleado = rows[0].id;
 
-    // Inserta el registro en detalle_consumo
-    const insertQuery = 'INSERT INTO sac.detalle_consumo (id_empleado, id_tipo_consumo, dt_consumo) VALUES ($1, $2, NOW())';
-    await pool.query(insertQuery, [id_empleado, consumo.id_tipo_consumo]);
+    if (rows.length > 0) {
+      const id_empleado = rows[0].id;
 
-    return res.status(200).send({
-      success: true,
-      message: 'Consumo registrado con éxito',
-    });
+      // Inserta el registro en detalle_consumo
+      const insertQuery = 'INSERT INTO sac.detalle_consumo (id_empleado, id_tipo_consumo, dt_consumo) VALUES ($1, $2, NOW())';
+      await pool.query(insertQuery, [id_empleado, consumo.id_tipo_consumo]);
+
+      return res.status(200).send({
+        success: true,
+        message: 'Consumo registrado con éxito',
+      });
+    } else {
+      return res.status(400).send({ success: false, message: "No se encontró el empleado con el rut proporcionado" });
+    }
   } catch (error) {
     console.error('Error al insertar consumo', error);
     res.status(500).send('Error en el servidor');

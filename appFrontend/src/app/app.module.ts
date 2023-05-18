@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { RegistroPage } from './registro/registro.page';
+import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 
 
 
@@ -18,7 +19,8 @@ import { RegistroPage } from './registro/registro.page';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, HttpClientModule ,IonicModule.forRoot(), AppRoutingModule, FormsModule, IonicModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, NFC,
+    Ndef,],
   bootstrap: [AppComponent, RegistroPage],
 })
 export class AppModule {}
