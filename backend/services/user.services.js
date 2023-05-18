@@ -3,8 +3,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 
-async function login(correo, contraseña) {
-    const query = `SELECT  id, id_rol, correo, contrasena 
+async function  login(correo, contraseña) {
+    const query = `SELECT  id, id_empresa, id_rol, nombre, correo, contrasena 
                      FROM   sac.usuario 
                      WHERE  correo = $1 
                      AND id_estado = 1`;
@@ -46,7 +46,7 @@ async function login(correo, contraseña) {
         };
     }
 
-    return { success: true, message: "Login exitoso", token: token, data: rows };
+    return { success: true, message: "Login exitoso", token: token, data: rows};
 };
 
 async function deleteUser(correo) {

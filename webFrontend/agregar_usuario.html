@@ -11,7 +11,10 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="assets/css/main.css" />
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+  </head>
 
 	<noscript>
 		<link rel="stylesheet" href="assets/css/noscript.css" />
@@ -57,16 +60,52 @@
 			</header> -->
 			<div class="wrapper altspotlight style6">
 				<div class="inner">
-						<h3 class="major">Incia sesión</h3>
-						<p>Ingresa con tu correo y contraseña </p>
-						    <form id="login-form">
-							      <label for="email">Email:</label>
-							      <input type="email" id="email" name="email" required><br>
-							      <label for="password">Password:</label>
-							      <input type="password" id="password" name="password" required><br>
-							      <input type="submit" value="Login">
-							    </form>
-							<script src="..\assets\js\login.js"></script>
+						<h3 class="major">Ingreso de usuarios</h3>
+						<p>Llena el siguiente formulario para ingresar un usuario </p>
+
+
+						<form id="add-user-form">
+							<label for="id_rol">Rol:</label>
+							<select id="id_rol" name="id_rol">
+							  <option value="1">Administrador</option>
+							  <option value="2">Usuario</option>
+							  <option value="3">Básico</option>
+							</select><br><br>
+						  
+							<label for="id_empresa">Empresa:</label>
+							<select id="id_empresa" name="id_empresa">
+							  <!-- Aquí se cargarán las opciones desde JavaScript -->
+							</select><br><br>
+						  
+							<label for="rut">RUT:</label>
+							<input type="text" id="rut" name="rut"><br><br>
+						  
+							<label for="dv">DV:</label>
+							<input type="text" id="dv" name="dv"><br><br>
+						  
+							<label for="nombre">Nombre:</label>
+							<input type="text" id="nombre" name="nombre"><br><br>
+						  
+							<label for="ap_paterno">Apellido paterno:</label>
+							<input type="text" id="ap_paterno" name="ap_paterno"><br><br>
+						  
+							<label for="ap_materno">Apellido materno:</label>
+							<input type="text" id="ap_materno" name="ap_materno"><br><br>
+						  
+							<label for="correo">Correo electrónico:</label>
+							<input type="email" id="correo" name="correo"><br><br>
+						  
+							<label for="contrasena">Contraseña:</label>
+							<input type="password" id="contrasena" name="contrasena"><br><br>
+						  
+							<input type="submit" value="Agregar usuario">
+						  </form>
+						  
+						  
+						  
+
+						  <script src="assets\js\addUser.js"></script>
+
               
 						<div id="message"></div>
 
@@ -79,7 +118,7 @@
 		<section id="footer">
 			<div class="inner">
 				<ul class="copyright">
-					<li>&copy; SAC Inc. All rights reserved.</li>
+					<li>&copy; Untitled Inc. All rights reserved.</li>
 				</ul>
 			</div>
 		</section>
