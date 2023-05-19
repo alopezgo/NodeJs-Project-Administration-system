@@ -6,15 +6,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="proyecto" content="Portafolio 2023">
-    <title>Dashboard - SAC</title>
+    <title>Usuarios - SAC</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
 </head>
 
-<body>
-   <!--Id es rellenado con el contenido de navComponent.html que trae componentImport.js-->
+<body class="is-preload">
+
     <div id="nav-component">
     </div>
 
@@ -23,18 +23,16 @@
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar collapse">
                 <div class="position-sticky pt-3 sidebar-sticky">
                     <ul class="nav flex-column">
-
-                        
                         <li class="nav-item">
                             <a id="nombre-usuario" class="nav-link" href="#">
-                                <img id=img-usuario
+                                <img id="img-usuario"
                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK8HJpZl5SDTDZP455OxKbc71lJTRXW4wygA&usqp=CAU"
                                     alt="" width="32" height="32" class="rounded-circle me-2">
                             </a>
                         </li>
                         <hr />
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="dashboard.html">
+                            <a class="nav-link" aria-current="page" href="dashboard.html">
                                 <span data-feather="home" class="align-text-bottom"></span>
                                 Dashboard
                             </a>
@@ -46,7 +44,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="usuarios.html">
+                            <a class="nav-link active" href="usuarios.html">
                                 <span data-feather="users" class="align-text-bottom"></span>
                                 Usuarios
                             </a>
@@ -69,14 +67,14 @@
                                 Permisos
                             </a>
                         </li>
-                        
+
                     </ul>
                     <hr />
 
                     <h6
                         class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
                         <span>Favoritos</span>
-                            <span data-feather="star" class="align-text-bottom"></span>  
+                        <span data-feather="star" class="align-text-bottom"></span>
                     </h6>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
@@ -91,7 +89,6 @@
                                 Preguntas Frecuentes
                             </a>
                         </li>
-                        
 
                     </ul>
                 </div>
@@ -100,12 +97,19 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Servicio Administrativo Complementario</h1>
+                    <h1 class="h2">Gestión de Usuarios</h1>
                 </div>
-                <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
+
+                <div class="table-responsive">
+                    <table id="example" class="display" style="width:100%" class="display table table-striped table-sm">
+                       
+                    </table>
+                </div>
             </main>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
@@ -113,11 +117,49 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
         integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
         integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG"
-        crossorigin="anonymous"></script>
-    <script src="assets/js/dashboard.js"></script>
+        crossorigin="anonymous"></script> -->
+    <script src="assets\js\usuarios.js"></script>
     <script src="assets/js/componentImport.js"></script>
+    <script>
+        $(document).ready(function () {
+            var tabla_consumo = $('#example').DataTable({
+                "language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+                columns: [
+                    { "title": "Empleado", "data": "nom_empleado" },
+                    { "title": "Consumo", "data": "tipo_consumo" },
+                    { "title": "Fecha", "data": "dt_consumo" },
+                    { "title": "Precio", "data": "precio" },
+                    { "title": "Acciones", "defaultContent": "<button class='btnEditar btn btn-success' type='button'>Editar</button>&nbsp;&nbsp;<button class='btnBorrar btn btn-danger' type='button'>Borrar</button>" }
+                ]
+            });
+            GetConsumos();
+
+            // Obtener lista de usuarios
+            function GetConsumos() {
+                const id_empresa = localStorage.getItem('id_empresa');
+                console.log(id_empresa)
+                return $.ajax({
+                    url: 'http://localhost:3000/api/v1/consumos/' + id_empresa,
+                    type: 'GET',
+                    success: function (response) {
+                        const res = response;
+                        const consumo = res.data;
+                        console.log(consumo); //<-aqui hago un console para ver lo que devuelve
+                        consumo.forEach(fila => {
+                            tabla_consumo.row.add({
+                                "nom_empleado": fila.nom_empleado,
+                                "tipo_consumo": fila.tipo_consumo,
+                                "dt_consumo": fila.dt_consumo,
+                                "precio": fila.precio
+                            }).draw();
+                        });
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
