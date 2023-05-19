@@ -124,35 +124,35 @@
     <script src="assets/js/componentImport.js"></script>
     <script>
         $(document).ready(function () {
-            var tabla_consumo = $('#example').DataTable({
+            var tabla_usuario = $('#example').DataTable({
                 "language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
                 columns: [
-                    { "title": "Empleado", "data": "nom_empleado" },
-                    { "title": "Consumo", "data": "tipo_consumo" },
-                    { "title": "Fecha", "data": "dt_consumo" },
-                    { "title": "Precio", "data": "precio" },
+                    { "title": "Usuario", "data": "usuario" },
+                    { "title": "Rol", "data": "rol" },
+                    { "title": "Correo", "data": "correo" },
+                    { "title": "Creado", "data": "fecha_creacion" },
                     { "title": "Acciones", "defaultContent": "<button class='btnEditar btn btn-success' type='button'>Editar</button>&nbsp;&nbsp;<button class='btnBorrar btn btn-danger' type='button'>Borrar</button>" }
                 ]
             });
-            GetConsumos();
+            GetUsuarios();
 
             // Obtener lista de usuarios
-            function GetConsumos() {
+            function GetUsuarios() {
                 const id_empresa = localStorage.getItem('id_empresa');
-                console.log(id_empresa)
+                const id_usuario = localStorage.getItem('id_usuario');
                 return $.ajax({
-                    url: 'http://localhost:3000/api/v1/consumos/' + id_empresa,
+                    url: 'http://localhost:3000/api/v1/usuarios/'+id_usuario + '/' + id_empresa,
                     type: 'GET',
                     success: function (response) {
                         const res = response;
-                        const consumo = res.data;
-                        console.log(consumo); //<-aqui hago un console para ver lo que devuelve
-                        consumo.forEach(fila => {
-                            tabla_consumo.row.add({
-                                "nom_empleado": fila.nom_empleado,
-                                "tipo_consumo": fila.tipo_consumo,
-                                "dt_consumo": fila.dt_consumo,
-                                "precio": fila.precio
+                        const usuario = res.data;
+                        console.log(usuario); //<-aqui hago un console para ver lo que devuelve
+                        usuario.forEach(fila => {
+                            tabla_usuario.row.add({
+                                "usuario": fila.usuario,
+                                "rol": fila.rol,
+                                "correo": fila.correo,
+                                "fecha_creacion": fila.fecha_creacion
                             }).draw();
                         });
                     }

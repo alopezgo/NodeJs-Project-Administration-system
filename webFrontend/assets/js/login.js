@@ -35,13 +35,13 @@ form.addEventListener("submit", (event) => {
     .then((data) => {
       // Extract the required data from the response
       const { token, data: userData } = data;
-      const { id_empresa, id_usuario, nombre } = userData[0];
+      const { id_empresa, nombre, id } = userData[0];
 
       // Save the required data in localStorage or session storage
       localStorage.setItem("token", token);
       localStorage.setItem("id_empresa", id_empresa);
-      localStorage.setItem("id_usuario", id_usuario);
       localStorage.setItem("nombre_usuario", nombre);
+      localStorage.setItem("id_usuario", id);
 
       // The login was successful.
       alert("Inicio de sesión exitoso");

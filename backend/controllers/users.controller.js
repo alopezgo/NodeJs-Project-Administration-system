@@ -109,3 +109,34 @@ exports.deleteUser = async (req, res) => {
     res.status(500).send('Error en el servidor');
   }
 };
+
+//Usuarios por empresa para ser utilizado en vista usuarios
+exports.getUserPorEmpresa = async (req, res) => {
+  try {
+    const { id_empresa } = req.params;
+    const { id_usuario } = req.params;
+
+    // Ejecutar la consulta
+    const query = `
+      Select concat(nombre,' ', ap_paterno,' ', ap_materno) as usuario, rol, 
+      correo, date(created_at) as fecha_creacion
+      from sac.usuario as u
+      join sac.rol as r on u.id_rol = r.id
+      where u.id_rol !=1
+      and u.id_estado=1
+      and u.id_empresa= $1
+      and u.id != $2;`;
+
+    const { rows } = await pool.query(query, [id_empresa, id_usuario]);
+
+    // Devolver los resultados en formato JSON
+    return res.status(200).json({
+      success: true,
+      message: "Usuarios por Empresa obtenidos con éxito",
+      data: rows,
+    });
+  } catch (error) {
+    console.error("Error al obtener los usuarios por empresa", error);
+    return res.status(500).send("Error en el servidor");
+  }
+};
