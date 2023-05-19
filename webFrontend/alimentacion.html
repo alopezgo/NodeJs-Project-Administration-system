@@ -147,14 +147,16 @@
                 "language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
                 columns: [
                     { "title": "Empleado", "data": "nom_empleado" },
+                    { "title": "Rut", "data": "rut" },
                     { "title": "Consumo", "data": "tipo_consumo" },
-                    { "title": "Fecha", "data": "dt_consumo" },
+                    { "title": "Fecha", "data": "fecha" },
+                    { "title": "Hora", "data": "hora" },
                     { "title": "Precio", "data": "precio" }
                 ]
             });
             GetConsumos();
 
-            // Obtener lista de usuarios
+            // Obtener lista de Consumos por Empresa
             function GetConsumos() {
                 const id_empresa = localStorage.getItem('id_empresa');
                 console.log(id_empresa)
@@ -164,12 +166,13 @@
                     success: function (response) {
                         const res = response;
                         const consumo = res.data;
-                        console.log(consumo); //<-aqui hago un console para ver lo que devuelve
                         consumo.forEach(fila => {
                             tabla_consumo.row.add({
                                 "nom_empleado": fila.nom_empleado,
+                                "rut": fila.rut,
                                 "tipo_consumo": fila.tipo_consumo,
-                                "dt_consumo": fila.dt_consumo,
+                                "fecha": fila.fecha,
+                                "hora": fila.hora,
                                 "precio": fila.precio
                             }).draw();
                         });

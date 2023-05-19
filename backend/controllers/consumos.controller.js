@@ -70,9 +70,11 @@ exports.getConsumosPorEmpresa = async (req, res) => {
     // Ejecutar la consulta
     const query = `
       SELECT 
-        e.nombre || ' ' || e.apellido_paterno || ' ' || e.apellido_materno as nom_empleado,
+        concat(e.nombre,' ', e.apellido_paterno,' ',e.apellido_materno) as nom_empleado,
+		concat(e.rut,'-', e.dv) as rut,
         tc.tipo as tipo_consumo,
-        dc.dt_consumo,
+        to_char(dc.dt_consumo, 'YYYY-MM-DD') as fecha,
+		to_char(dc.dt_consumo, 'HH24:MI:SS') as hora,
         '$' || tc.precio::int as precio
       FROM sac.detalle_consumo as dc
       JOIN sac.empleado as e ON dc.id_empleado = e.id

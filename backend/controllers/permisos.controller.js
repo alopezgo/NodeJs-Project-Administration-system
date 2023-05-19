@@ -34,6 +34,34 @@ exports.getDetallePermiso = async (req, res) => {
     }
 };
 
+exports.getPermisoPorEmpresa = async (req, res) => {
+  try {
+    const { id_empresa } = req.params;
+
+    // Ejecutar la consulta
+    const query = `
+      SELECT CONCAT(e.nombre, ' ',e.apellido_paterno,' ', e.apellido_materno) AS empleado,
+       e.rut||'-'||e.dv AS rut,
+       ep.evento AS tipo,
+       unnest(dp.fecha) as fecha
+       FROM sac.detalle_permiso dp JOIN sac.empleado e ON e.id = dp.id_empleado
+	   JOIN sac.evento_permiso ep ON dp.id_evento_permiso = ep.id
+	   Where e.id_empresa = $1;
+    `;
+    const { rows } = await pool.query(query, [id_empresa]);
+
+    // Devolver los resultados en formato JSON
+    return res.status(200).json({
+      success: true,
+      message: "Permisos por Empresa obtenidos con éxito",
+      data: rows,
+    });
+  } catch (error) {
+    console.error("Error al obtener Permisos por Empresa", error);
+    return res.status(500).send("Error en el servidor");
+  }
+};
+
 
 exports.getAsistenciaPermiso = async (req, res) => {
     try {

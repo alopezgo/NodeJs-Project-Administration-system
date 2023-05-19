@@ -38,7 +38,6 @@ HTMLImporter.import = function (url, targetId) {
 
     this.removeEventListener("error", error);
     this.removeEventListener("load", load);
-    console.log(wrapper);
   };
 
   error = function (event) {

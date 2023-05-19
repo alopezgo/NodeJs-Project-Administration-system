@@ -5,6 +5,7 @@ const { AsistenciaController } = require('../controllers');
 
 
 api.get('/v1/asistencias/detalleasistencia', AsistenciaController.getDetalleAsistencia);
+api.get('/v1/asistencias/:id_empresa', AsistenciaController.getAsistenciaPorEmpresa);
 
 
 

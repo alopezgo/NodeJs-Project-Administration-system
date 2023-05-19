@@ -136,7 +136,7 @@
             });
             GetUsuarios();
 
-            // Obtener lista de usuarios
+            // Obtener lista de Usuarios por Empresa y que sean distintos al usuario que consulta
             function GetUsuarios() {
                 const id_empresa = localStorage.getItem('id_empresa');
                 const id_usuario = localStorage.getItem('id_usuario');
@@ -146,7 +146,6 @@
                     success: function (response) {
                         const res = response;
                         const usuario = res.data;
-                        console.log(usuario); //<-aqui hago un console para ver lo que devuelve
                         usuario.forEach(fila => {
                             tabla_usuario.row.add({
                                 "usuario": fila.usuario,

@@ -138,38 +138,38 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
         integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG"
         crossorigin="anonymous"></script> -->
-    <script src="assets\js\usuarios.js"></script>
+    <script src="assets\js\asistencia.js"></script>
     <script src="assets/js/componentImport.js"></script>
     <script>
         $(document).ready(function () {
-            var tabla_consumo = $('#example').DataTable({
+            var tabla_asistencia = $('#example').DataTable({
                 "language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
                 columns: [
-                    { "title": "Empleado", "data": "nom_empleado" },
-                    { "title": "Consumo", "data": "tipo_consumo" },
-                    { "title": "Fecha", "data": "dt_consumo" },
-                    { "title": "Precio", "data": "precio" }
+                    { "title": "Empleado", "data": "empleado" },
+                    { "title": "Rut", "data": "rut" },
+                    { "title": "Evento", "data": "tipo" },
+                    { "title": "Fecha", "data": "fecha" },
+                    { "title": "Hora", "data": "hora" }
                 ]
             });
-            GetConsumos();
+            GetAsistencias();
 
-            // Obtener lista de usuarios
-            function GetConsumos() {
+            // Obtener lista de Asistencias por Empresa
+            function GetAsistencias() {
                 const id_empresa = localStorage.getItem('id_empresa');
-                console.log(id_empresa)
                 return $.ajax({
-                    url: 'http://localhost:3000/api/v1/consumos/' + id_empresa,
+                    url: 'http://localhost:3000/api/v1/asistencias/' + id_empresa,
                     type: 'GET',
                     success: function (response) {
                         const res = response;
-                        const consumo = res.data;
-                        console.log(consumo); //<-aqui hago un console para ver lo que devuelve
-                        consumo.forEach(fila => {
-                            tabla_consumo.row.add({
-                                "nom_empleado": fila.nom_empleado,
-                                "tipo_consumo": fila.tipo_consumo,
-                                "dt_consumo": fila.dt_consumo,
-                                "precio": fila.precio
+                        const asistencia = res.data;
+                        asistencia.forEach(fila => {
+                            tabla_asistencia.row.add({
+                                "empleado": fila.empleado,
+                                "rut": fila.rut,
+                                "tipo": fila.tipo,
+                                "fecha": fila.fecha,
+                                "hora": fila.hora
                             }).draw();
                         });
                     }
