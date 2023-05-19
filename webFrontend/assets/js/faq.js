@@ -1,10 +1,9 @@
 /* globals Chart:false, feather:false */
 
-
 (() => {
-  'use strict'
+  "use strict";
 
-  feather.replace({ 'aria-hidden': 'true' })
+  feather.replace({ "aria-hidden": "true" });
 
   // Graphs
   // const ctx = document.getElementById('myChart')
@@ -49,9 +48,7 @@
   //     }
   //   }
   // })
-})()
-
-
+})();
 
 document.addEventListener("DOMContentLoaded", function () {
   const nombreUsuario = localStorage.getItem("nombre_usuario");
@@ -67,4 +64,3 @@ document.addEventListener("DOMContentLoaded", function () {
     nombreUsuarioElemento.appendChild(nombreElemento);
   }
 });
-
