@@ -106,6 +106,44 @@ exports.getConsumosPorEmpresa = async (req, res) => {
   }
 };
 
+exports.getConsumosPorCCFecha = async (req, res) => {
+  try {
+    const { id_empresa } = req.params;
+    const { id_cc } = req.params;
+    const { fecha_desde } = req.params;
+    const { fecha_hasta } = req.params;
+    // Ejecutar la consulta
+    const query = `
+        SELECT 
+        concat(e.nombre,' ', e.apellido_paterno,' ',e.apellido_materno) as nom_empleado,
+		concat(e.rut,'-', e.dv) as rut,
+        tc.tipo as tipo_consumo,
+        to_char(dc.dt_consumo, 'YYYY-MM-DD') as fecha,
+		to_char(dc.dt_consumo, 'HH24:MI:SS') as hora,
+        '$' || tc.precio::int as precio
+      FROM sac.detalle_consumo as dc
+      JOIN sac.empleado as e ON dc.id_empleado = e.id
+      JOIN sac.tipo_consumo as tc ON dc.id_tipo_consumo = tc.id
+      JOIN sac.empresa as p ON e.id_empresa = p.id
+	  WHERE p.id = $1
+	  and e.id_centro_costos =$2
+	  and date(dc.dt_consumo) between date($3) and date($4);
+    `;
+    const { rows } = await pool.query(query, [id_empresa, id_cc, fecha_desde, fecha_hasta]);
+
+    // Devolver los resultados en formato JSON
+    return res.status(200).json({
+      success: true,
+      message: "Consumos por CC obtenidos con éxito",
+      data: rows,
+    });
+  } catch (error) {
+    console.error("Error al obtener los consumos", error);
+    return res.status(500).send("Error en el servidor");
+  }
+};
+
+//PUEDE SER ÚTIL PARA LOS INFORMES 
 //GET consumos por id empresa y Fecha
 
 exports.getConsumosPorFecha = async (req, res) => {
