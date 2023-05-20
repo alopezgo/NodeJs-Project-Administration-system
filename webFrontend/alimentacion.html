@@ -96,6 +96,57 @@
             </nav>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <!--DESDE AQUI FORMULARIO-->
+                <div class="bd-cheatsheet container-fluid bg-body">
+                    <section id="form-Informe-filtros">
+                        <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Alimentación</h2>
+                        <article class="my-3" id="overview">
+                            <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+                                <h3>Generar Informe</h3>
+                            </div>
+                            <div>
+                                <div class="bd-example-snippet bd-code-snippet">
+                                    <div class="bd-example">
+                                        <form>
+                                            <div class="mb-3">
+                                                <label for="exampleSelect" class="form-label">Selecciona un Centro de Costo</label>
+                                                <select class="form-select" id="exampleSelect">
+                                                    <option selected>Elegir...</option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleSelect" class="form-label">Selecciona Tipo Consumo</label>
+                                                <select class="form-select" id="exampleSelect">
+                                                    <option selected>Elegir...</option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">  
+                                                <label for="exampleSelect" class="form-label">Desde</label>
+                                                <input id="fechaDesde" type="date" id="start" name="trip-start" value="" min="2023-01-01" max="2023-12-31">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleSelect" class="form-label">Hasta:</label>
+                                                <input id="fechaHasta" type="date" id="start" name="trip-start" value="" min="2023-01-01" max="2023-12-31">
+                                            </div>
+                                            
+                                            <button type="submit" class="btn btn-primary">Generar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                
+                            </div>
+                        </article>
+                    </section>
+                </div>
+
+                <!--HASTA AQUI FORMS-->
+                <section id="InformeGeneral">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Registros Alimentación</h1>
@@ -104,17 +155,6 @@
                             <button type="button" class="btn btn-sm btn-outline-secondary">PDF</button>
                             <button type="button" class="btn btn-sm btn-outline-secondary">CSV</button>
                         </div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <!--Esto puede servir para filtrar por fechas y centro de costo-->
-                            <span data-feather="calendar" class="align-text-bottom"></span>
-                            Hoy
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item active" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
                     </div>
                 </div>
 
@@ -124,6 +164,7 @@
                        
                     </table>
                 </div>
+                </section>
             </main>
         </div>
     </div>
