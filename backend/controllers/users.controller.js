@@ -125,7 +125,8 @@ exports.getUserPorEmpresa = async (req, res) => {
       where u.id_rol !=1
       and u.id_estado=1
       and u.id_empresa= $1
-      and u.id != $2;`;
+      and u.id != $2
+      and u.id_rol = 3;`;
 
     const { rows } = await pool.query(query, [id_empresa, id_usuario]);
 

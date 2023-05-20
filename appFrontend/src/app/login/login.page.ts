@@ -41,7 +41,7 @@ export class LoginPage {
           this.loggingIn = false;
           this.username = response.data[0].nombre;
           this.rol = response.data[0].id_rol;
-          if (this.rol == "1"){
+          if (this.rol == "2"){
             this.router.navigate(['/dashboard', { username: this.username }]);
           }else{
             this.router.navigate(['/principal', { username: this.username }]);

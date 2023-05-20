@@ -1,5 +1,9 @@
 const { pool } = require('../db/db');
 
+
+
+//Todo TEST
+
 exports.getDetalleConsumo = async (req, res) => {
   try {
     const query = `
@@ -33,7 +37,7 @@ exports.getDetalleConsumo = async (req, res) => {
   }
 };
 
-//agregar registro a DETALLE_CONSUMO 
+//Agrega registro consumo a BBDD DETALLE_CONSUMO 
 
 exports.addConsumo = async (req, res) => {
   try {
@@ -66,7 +70,8 @@ exports.addConsumo = async (req, res) => {
   }
 };
 
-//mostrar consumo por id empresa
+
+//GET consumos por id empresa
 
 exports.getConsumosPorEmpresa = async (req, res) => {
   try {
@@ -100,6 +105,8 @@ exports.getConsumosPorEmpresa = async (req, res) => {
     return res.status(500).send('Error en el servidor');
   }
 };
+
+//GET consumos por id empresa y Fecha
 
 exports.getConsumosPorFecha = async (req, res) => {
   try {
@@ -167,6 +174,8 @@ exports.getConsumosPorFecha = async (req, res) => {
   }
 };
 
+
+//GET consumos por id empresa, Fecha y Centro Costo
 exports.getConsumosCentroCosto = async (req, res) => {
   try {
     const { fechaInicio, fechaFin, centroCosto } = req.body;

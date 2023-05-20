@@ -159,7 +159,6 @@
             // Obtener lista de Consumos por Empresa
             function GetConsumos() {
                 const id_empresa = localStorage.getItem('id_empresa');
-                console.log(id_empresa)
                 return $.ajax({
                     url: 'http://localhost:3000/api/v1/consumos/' + id_empresa,
                     type: 'GET',
