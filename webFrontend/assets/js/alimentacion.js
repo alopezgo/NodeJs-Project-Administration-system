@@ -34,3 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 });
+
+//Conectar Formulario con servicio http://localhost:3000/api/v1/consumos/:id_empresa/:ccosto/:desde/:hasta
+// 
