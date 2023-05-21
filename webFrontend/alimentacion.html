@@ -8,19 +8,22 @@
     <meta name="proyecto" content="Portafolio 2023">
     <title>Alimentación- SAC</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/"> <!--parece que este no es necesario-->
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
+    <!--parece que este no es necesario-->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/dashboard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
 </head>
 
 <body class="is-preload">
-
+    <!--DESDE AQUI NAVBAR-->
     <div id="nav-component">
     </div>
+    <!--HASTA AQUI NAVBAR-->
 
     <div class="container-fluid">
         <div class="row">
+            <!--DESDE AQUI MENÚ LATERAL-->
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar collapse">
                 <div class="position-sticky pt-3 sidebar-sticky">
                     <ul class="nav flex-column">
@@ -94,69 +97,106 @@
                     </ul>
                 </div>
             </nav>
+            <!--HASTA AQUI MENÚ LATERAL-->
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <!--DESDE AQUI FORMULARIO-->
                 <div class="bd-cheatsheet container-fluid bg-body">
-                    <section id="form-Informe-filtros">
-                        <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Alimentación</h2>
-                        <article class="my-3" id="overview">
-                            <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
-                                <h3>Generar Informe</h3>
+                    <section id="informe-filtros">
+                        <h2 class="sticky-xl-top fw-bold align-self-start pt-3 mt-5 mb-3 mt-xl-0 mb-xl-2 ">Alimentación
+                        </h2>
+                        <article class="my-3 border" id="overview">
+                            <div class="bd-heading sticky-xl-top align-self-start mt-5 mt-xl-0 mb-xl-2">
+                                <h4>Generar Informe</h4>
                             </div>
-                            <div>
+                            <div class="bd-example">
                                 <div class="bd-example-snippet bd-code-snippet">
                                     <div class="bd-example">
                                         <form id="filtro-informe-form">
-                                            <div class="mb-3">
-                                                <label for="exampleSelect" class="form-label">Selecciona un Centro de Costo</label>
-                                                <select class="form-select" id="centroSelect">
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="exampleSelect" class="form-label">Selecciona Tipo Consumo</label>
-                                                <select class="form-select" id="consumoSelect">
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">  
-                                                <label for="exampleSelect" class="form-label">Desde</label>
-                                                <input id="fechaDesde" type="date" id="start" name="trip-start" value="" min="2023-01-01" max="2023-12-31">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="exampleSelect" class="form-label">Hasta:</label>
-                                                <input id="fechaHasta" type="date" id="start" name="trip-start" value="" min="2023-01-01" max="2023-12-31">
-                                            </div>
-                                            
-                                            <button type="submit" class="btn btn-primary">Generar</button>
+                                            <div class="row g-2">
+                                                <div class="col-md col-lg-5">
+                                                    <div class="form-floating">
+                                                        <select class="form-select" id="centroSelect">
+                                                        </select>
+                                                        <label for="floatingSelectGrid">Centros de Costo</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md col-lg-5">
+                                                    <div class="form-floating">
+                                                        <select class="form-select" id="consumoSelect">
+                                                        </select>
+                                                        <label for="floatingSelectGrid">Tipos de Consumo</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-2">
+                                                    <div class="col-md col-lg-5">
+                                                        <div class="form-floating">
+                                                            <input class="form-control" id="fechaDesde" type="date"
+                                                                id="start" name="trip-start" value="" min="2022-01-01"
+                                                                max="2024-12-31">
+                                                            </select>
+                                                            <label for="floatingSelectGrid">Desde</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md col-lg-5">
+                                                        <div class="form-floating">
+                                                            <input class="form-control" id="fechaHasta" type="date"
+                                                                id="start" name="trip-start" value="" min="2022-01-01"
+                                                                max="2024-12-31">
+                                                            </select>
+                                                            <label for="floatingSelectGrid">Hasta</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3">
+                                                    <div class="col-md col-lg-10 d-grid gap-2">
+                                                        <button type="button"
+                                                            class="btn btn-outline-info btn-sm">Generar</button>
+                                                        <button type="button"
+                                                            class="btn btn-outline-warning btn-sm">Limpiar</button>
+                                                    </div>
+
+                                                </div>
+
+
                                         </form>
                                     </div>
                                 </div>
-                
+
                             </div>
                         </article>
                     </section>
                 </div>
-
                 <!--HASTA AQUI FORMS-->
-                <section id="InformeGeneral">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Registros Alimentación</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">PDF</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">CSV</button>
-                        </div>
-                    </div>
+                <!--DESDE AQUI TABLA-->
+                <div class="bd-cheatsheet container-fluid bg-body">
+                    <section id="InformeGeneral">
+                        <article class="my-3 border" id="overview">
+                            <div
+                                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                                <h4>Registros Alimentación</h4>
+                                <div class="btn-toolbar mb-2 mb-md-0">
+                                    <div class="btn-group me-2">
+                                        <button type="button" class="btn btn-sm btn-outline-info">PDF</button>
+                                        <button type="button" class="btn btn-sm btn-outline-info">CSV</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div
+                                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-2">
+                                <h6>Resultados:</h6>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="example" class="display" style="width:100%"
+                                    class="display table table-striped table-sm">
+                                </table>
+                            </div>
+                            
+                        </article>
+                    </section>
                 </div>
-
-                <h5>Título incluirá Periodo + CCosto</h5>
-                <div class="table-responsive">
-                    <table id="example" class="display" style="width:100%" class="display table table-striped table-sm">
-                       
-                    </table>
-                </div>
-                </section>
+                <!--HASTA AQUI TABLA-->
             </main>
         </div>
     </div>
@@ -174,45 +214,6 @@
         crossorigin="anonymous"></script>
     <script src="assets\js\alimentacion.js"></script>
     <script src="assets/js/componentImport.js"></script>
-    <script>
-        $(document).ready(function () {
-            var tabla_consumo = $('#example').DataTable({
-                "language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-                columns: [
-                    { "title": "Empleado", "data": "nom_empleado" },
-                    { "title": "Rut", "data": "rut" },
-                    { "title": "Consumo", "data": "tipo_consumo" },
-                    { "title": "Fecha", "data": "fecha" },
-                    { "title": "Hora", "data": "hora" },
-                    { "title": "Precio", "data": "precio" }
-                ]
-            });
-            GetConsumos();
-
-            // Obtener lista de Consumos por Empresa
-            function GetConsumos() {
-                const id_empresa = localStorage.getItem('id_empresa');
-                return $.ajax({
-                    url: 'http://localhost:3000/api/v1/consumos/' + id_empresa,
-                    type: 'GET',
-                    success: function (response) {
-                        const res = response;
-                        const consumo = res.data;
-                        consumo.forEach(fila => {
-                            tabla_consumo.row.add({
-                                "nom_empleado": fila.nom_empleado,
-                                "rut": fila.rut,
-                                "tipo_consumo": fila.tipo_consumo,
-                                "fecha": fila.fecha,
-                                "hora": fila.hora,
-                                "precio": fila.precio
-                            }).draw();
-                        });
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 
 </html>

@@ -163,3 +163,12 @@ body {
 .bd-mode-toggle {
   z-index: 1500;
 }
+
+.border {
+  padding: 1.5rem;
+  margin-right: 0;
+  margin-left: 0;
+  border-width: 2px !important;
+  border-radius: 0.5rem;
+}
+
