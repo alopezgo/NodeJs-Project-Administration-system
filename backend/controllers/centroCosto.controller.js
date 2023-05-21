@@ -1,20 +1,24 @@
 const { pool } = require('../db/db');
 
+
+//Función para obtener todos los Centros de Costo de la Empresa del Usuario logueado
 exports.getCentroCosto = async (req, res) => {
   try {
-    const query = 'SELECT * FROM sac.centro_costos';
-    const result = await pool.query(query);
-
-    console.log("BD DATA: ", result.rows)
+    const { id_empresa } = req.params;
+    const query = `
+                    SELECT id, id_empresa,id_turno, centro
+                    FROM sac.centro_costos
+                    WHERE id_empresa = $1;`;
+    const result = await pool.query(query, [id_empresa]);
 
     return res.status(200).send({
       success: true,
-      message: "usuario encontrado",
+      message: "centros encontrados",
       Data: result.rows
     })
 
   } catch (error) {
-    console.error('Error al obtener los usuarios', error);
+    console.error('Error al obtener los centros de costos', error);
     res.status(500).send('Error en el servidor');
   }
 };
@@ -32,6 +36,27 @@ exports.getEmpresas = async (req, res) => {
     });
   } catch (error) {
     console.error('Error al obtener empresas', error);
+    res.status(500).send('Error en el servidor');
+  }
+};
+
+
+//Función para obtener todos los Tipos de Consumo
+exports.getTiposConsumo = async (req, res) => {
+  try {
+    const query = `
+                    SELECT id as id_tipo_consumo, tipo as tipo_consumo
+                    FROM sac.tipo_consumo`;
+    const result = await pool.query(query);
+
+    return res.status(200).send({
+      success: true,
+      message: "tipos consumo encontrados",
+      Data: result.rows
+    })
+
+  } catch (error) {
+    console.error('Error al obtener los tipos de consumo', error);
     res.status(500).send('Error en el servidor');
   }
 };
