@@ -80,16 +80,18 @@ exports.getConsumosPorEmpresa = async (req, res) => {
     // Ejecutar la consulta
     let query = `
       SELECT 
+        cc.centro as centro_costos,
         concat(e.nombre,' ', e.apellido_paterno,' ',e.apellido_materno) as nom_empleado,
         concat(e.rut,'-', e.dv) as rut,
         tc.tipo as tipo_consumo,
         to_char(dc.dt_consumo, 'YYYY-MM-DD') as fecha,
         to_char(dc.dt_consumo, 'HH24:MI:SS') as hora,
-        '$' || tc.precio::int as precio
+        '$' || tc.precio as precio
       FROM sac.detalle_consumo as dc
       JOIN sac.empleado as e ON dc.id_empleado = e.id
       JOIN sac.tipo_consumo as tc ON dc.id_tipo_consumo = tc.id
       JOIN sac.empresa as p ON e.id_empresa = p.id
+      JOIN sac.centro_costos as cc ON e.id_centro_costos= cc.id
       WHERE p.id = $1`;
 
     const params = [id_empresa];

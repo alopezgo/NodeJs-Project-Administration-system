@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
       url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
     },
     columns: [
+      { title: "Centro", data: "centro_costos" },
       { title: "Empleado", data: "nom_empleado" },
       { title: "Rut", data: "rut" },
       { title: "Consumo", data: "tipo_consumo" },
@@ -27,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         consumo.forEach((fila) => {
           tabla_consumo.row
             .add({
+              centro_costos: fila.centro_costos,
               nom_empleado: fila.nom_empleado,
               rut: fila.rut,
               tipo_consumo: fila.tipo_consumo,
@@ -147,7 +149,6 @@ form.addEventListener("submit", async (event) => {
   const tipo_consumo = form.elements.consumoSelect.value;
   const fecha_desde = form.elements.fechaDesde.value;
   const fecha_hasta = form.elements.fechaHasta.value;
-  console.log(centro_costos, tipo_consumo, fecha_desde, fecha_hasta);
 
   if ($.fn.dataTable.isDataTable("#example")) {
      $("#example").dataTable().fnClearTable();
@@ -160,6 +161,7 @@ form.addEventListener("submit", async (event) => {
       url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
     },
     columns: [
+      { title: "Centro", data: "centro_costos" },
       { title: "Empleado", data: "nom_empleado" },
       { title: "Rut", data: "rut" },
       { title: "Consumo", data: "tipo_consumo" },
@@ -180,7 +182,6 @@ form.addEventListener("submit", async (event) => {
       url_params += `&consumo=${tipo_consumo}`;
     }
     url_params += `&desde=${fecha_desde}&hasta=${fecha_hasta}`;
-    console.log(url_params);
     return $.ajax({
       url: url_params,
       type: "GET",
@@ -190,6 +191,7 @@ form.addEventListener("submit", async (event) => {
         consumo.forEach((fila) => {
           table.row
             .add({
+              centro_costos: fila.centro_costos,
               nom_empleado: fila.nom_empleado,
               rut: fila.rut,
               tipo_consumo: fila.tipo_consumo,
@@ -203,6 +205,87 @@ form.addEventListener("submit", async (event) => {
     });
   }
 });
+
+//Convertir a CSV
+function tableToCSV() {
+  // Variable to store the final csv data
+  var csv_data = [];
+
+  // Get each row data
+  var rows = document.getElementsByTagName("tr");
+  for (var i = 0; i < rows.length; i++) {
+    // Get each column data
+    var cols = rows[i].querySelectorAll("td,th");
+
+    // Stores each csv row data
+    var csvrow = [];
+    for (var j = 0; j < cols.length; j++) {
+      // Get the text data of each cell
+      // of a row and push it to csvrow
+      csvrow.push(cols[j].innerHTML);
+    }
+
+    // Combine each column value with comma
+    csv_data.push(csvrow.join(","));
+  }
+
+  // Combine each row data with new line character
+  csv_data = csv_data.join("\n");
+
+  // Call this function to download csv file
+  downloadCSVFile(csv_data);
+};
+
+function downloadCSVFile(csv_data) {
+  // Create CSV file object and feed
+  // our csv_data into it
+  CSVFile = new Blob([csv_data], {
+    type: "text/csv;charset=utf-8",
+  });
+
+  // Create to temporary link to initiate
+  // download process
+  var temp_link = document.createElement("a");
+
+  // Download csv file
+  temp_link.download = "registros.csv";
+  var url = window.URL.createObjectURL(CSVFile);
+  temp_link.href = url;
+
+  // This link should not be displayed
+  temp_link.style.display = "none";
+  document.body.appendChild(temp_link);
+
+  // Automatically click the link to
+  // trigger download
+  temp_link.click();
+  document.body.removeChild(temp_link);
+};
+
+//Convertir a PDF
+function tableToPDF() {
+  var sTable = document.getElementsByTagName("table")[0];
+  var style = "<style>";
+  style = style + "table {width: 100%;font: 17px Calibri;}";
+  style =
+    style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+  style = style + "padding: 2px 3px;text-align: center;}";
+  style = style + "</style>";
+
+  // CREATE A WINDOW OBJECT.
+  var win = window.open("", "", "height=700,width=700");
+
+  win.document.write("<html><head>");
+  win.document.write("<title>Print</title>"); // <title> FOR PDF HEADER.
+  win.document.write(style); // ADD STYLE INSIDE THE HEAD TAG.
+  win.document.write("</head><body>");
+  win.document.write("<table>" + sTable.innerHTML + "</table>"); // THE TABLE CONTENTS INSIDE THE BODY TAG.
+  win.document.write("</body></html>");
+  win.document.close(); // CLOSE THE CURRENT WINDOW.
+
+  win.print(); // PRINT THE CONTENTS.
+}
+
   
 //Se invoca funcion para cargar iconos de menu lateral rapidamente
 /* globals Chart:false, feather:false */

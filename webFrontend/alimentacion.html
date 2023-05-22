@@ -175,8 +175,8 @@
                                 <h4>Registros</h4>
                                 <div class="btn-toolbar mb-2 mb-md-0">
                                     <div class="btn-group me-2">
-                                        <button type="button" class="btn btn-sm btn-outline-info">PDF</button>
-                                        <button type="button" class="btn btn-sm btn-outline-info">CSV</button>
+                                        <button type="button" onclick="tableToPDF()" class="btn btn-sm btn-outline-info" >PDF</button>
+                                        <button type="button" onclick="tableToCSV()" class="btn btn-sm btn-outline-info">CSV</button>
                                     </div>
                                 </div>
                             </div>
@@ -185,7 +185,7 @@
                                 class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-2">
                                 <h6>Resultados:</h6>
                             </div>
-                            <div class="table-responsive">
+                            <div id="table-responsive"class="table-responsive">
                                 <table id="example" class="display" style="width:100%"
                                     class="display table table-striped table-sm">
                                 </table>
@@ -201,8 +201,6 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-
-
     <script src="assets/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
