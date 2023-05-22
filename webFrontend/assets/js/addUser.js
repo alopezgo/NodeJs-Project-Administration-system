@@ -2,11 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
   cargarEmpresas();
 });
 
-
 const form = document.querySelector("#add-user-form");
 const empresaSelect = document.querySelector("#id_empresa");
-
-
 
 // Función para cargar las empresas en el select.
 async function cargarEmpresas() {
@@ -60,9 +57,6 @@ form.addEventListener("submit", async (event) => {
   const correo = form.elements.correo.value;
   const contrasena = form.elements.contrasena.value;
   const nombre_empresa = empresaSelect.value;
-
-
-
 
   // Validar que se hayan completado todos los campos.
   if (

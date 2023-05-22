@@ -101,7 +101,7 @@ async function cargarOptions(url, select) {
       // Agrega las opciones al select.
       select.innerHTML = "";
       let newOption = new Option(
-        (text = "Ninguno"),
+        (text = "Seleccionar"),
         (value = "0"),
         (defaultSelected = true),
         (selected = true)
@@ -119,7 +119,7 @@ async function cargarOptions(url, select) {
       // Agrega las opciones al select.
       select.innerHTML = "";
       let newOption = new Option(
-        (text = "Ninguno"),
+        (text = "Seleccionar"),
         (value = "0"),
         (defaultSelected = true),
         (selected = true)
@@ -136,8 +136,74 @@ async function cargarOptions(url, select) {
     console.error(error);
     alert("Error al cargar las opciones");
   }
-}
+};
 
+const form = document.querySelector("#filtro-informe-form");
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  // Obtener los datos del formulario.
+  const centro_costos = form.elements.centroSelect.value;
+  const tipo_consumo = form.elements.consumoSelect.value;
+  const fecha_desde = form.elements.fechaDesde.value;
+  const fecha_hasta = form.elements.fechaHasta.value;
+  console.log(centro_costos, tipo_consumo, fecha_desde, fecha_hasta);
+
+  if ($.fn.dataTable.isDataTable("#example")) {
+     $("#example").dataTable().fnClearTable();
+    $("#example").dataTable().fnDestroy();
+  }
+  
+  table = $("#example").DataTable({
+    language: {
+      destroy: true,
+      url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
+    },
+    columns: [
+      { title: "Empleado", data: "nom_empleado" },
+      { title: "Rut", data: "rut" },
+      { title: "Consumo", data: "tipo_consumo" },
+      { title: "Fecha", data: "fecha" },
+      { title: "Hora", data: "hora" },
+      { title: "Precio", data: "precio" },
+    ],
+  });
+
+  await GetConsumosPorParametros();
+  function GetConsumosPorParametros() {
+    const id_empresa = localStorage.getItem("id_empresa");
+    let url_params = `http://localhost:3000/api/v1/consumos/${id_empresa}?`; 
+    if (centro_costos != 0) {
+      url_params += `&centro=${centro_costos}`;
+    }
+    if (tipo_consumo != 0) {
+      url_params += `&consumo=${tipo_consumo}`;
+    }
+    url_params += `&desde=${fecha_desde}&hasta=${fecha_hasta}`;
+    console.log(url_params);
+    return $.ajax({
+      url: url_params,
+      type: "GET",
+      success: function (response) {
+        const res = response;
+        const consumo = res.data;
+        consumo.forEach((fila) => {
+          table.row
+            .add({
+              nom_empleado: fila.nom_empleado,
+              rut: fila.rut,
+              tipo_consumo: fila.tipo_consumo,
+              fecha: fila.fecha,
+              hora: fila.hora,
+              precio: fila.precio,
+            })
+            .draw();
+        });
+      },
+    });
+  }
+});
+  
 //Se invoca funcion para cargar iconos de menu lateral rapidamente
 /* globals Chart:false, feather:false */
 (() => {
