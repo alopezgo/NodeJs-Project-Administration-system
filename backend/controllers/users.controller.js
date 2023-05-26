@@ -141,3 +141,106 @@ exports.getUserPorEmpresa = async (req, res) => {
     return res.status(500).send("Error en el servidor");
   }
 };
+
+//get user por id
+
+exports.getUserPorId = async (req, res) => {
+  try {
+    const userId = req.params.id; //  
+
+    const query = "SELECT * FROM sac.usuario WHERE id = $1"; // 
+    const values = [userId]; // Establece el valor del id en la consulta preparada
+
+    const result = await pool.query(query, values);
+
+    if (result.rows.length === 0) {
+      // Si no se encuentra ningún usuario con el id proporcionado, devuelve un mensaje adecuado
+      return res.status(404).send({
+        success: false,
+        message: "Usuario no encontrado",
+      });
+    }
+
+    console.log("BD DATA: ", result.rows);
+
+    return res.status(200).send({
+      success: true,
+      message: "Usuario encontrado",
+      Data: result.rows,
+    });
+  } catch (error) {
+    console.error("Error al obtener el usuario", error);
+    res.status(500).send("Error en el servidor");
+  }
+};
+
+
+
+//update user
+
+
+exports.updateUser = async (req, res) => {
+  try {
+    const { id } = req.params; // Obtener el ID del usuario de la ruta
+    const { id_rol, rut, dv, nombre, ap_paterno, ap_materno, correo } = req.body;
+
+    const query = `
+      UPDATE sac.usuario
+      SET
+        id_rol = $1,
+        rut = $2,
+        dv = $3,
+        nombre = $4,
+        ap_paterno = $5,
+        ap_materno = $6,
+        correo = $7,
+        created_at = NOW() -- Establecer la fecha actual
+      WHERE
+        id = $8
+    `;
+    
+    const values = [id_rol, rut, dv, nombre, ap_paterno, ap_materno, correo, id];
+
+    await pool.query(query, values);
+
+    return res.status(200).send({
+      success: true,
+      message: "Usuario actualizado exitosamente",
+    });
+  } catch (error) {
+    console.error("Error al actualizar el usuario", error);
+    res.status(500).send("Error en el servidor");
+  }
+};
+
+//desactivar usuario
+
+exports.updateUserStatus = async (req, res) => {
+  try {
+    const { id } = req.params; // Obtener el ID del usuario de la ruta
+    const { id_estado } = req.body; // Obtener el nuevo estado del usuario
+
+    const query = `
+      UPDATE sac.usuario
+      SET
+        id_estado = $1
+      WHERE
+        id = $2
+    `;
+
+    const values = [id_estado, id];
+
+    await pool.query(query, values);
+
+    return res.status(200).json({
+      success: true,
+      message: "Estado de usuario actualizado exitosamente",
+    });
+  } catch (error) {
+    console.error("Error al actualizar el estado de usuario", error);
+    res.status(500).json({
+      success: false,
+      message: "Error en el servidor",
+    });
+  }
+};
