@@ -118,3 +118,41 @@ exports.getAsistenciaPermiso = async (req, res) => {
         res.status(500).send('Error en el servidor');
     }
 };
+
+// ADD REGISTRO EN TABLA DETALLE_PERMISO
+exports.postRegistroPermiso = async (req, res) => {
+  try {
+    const { id_empleado, id_evento_permiso, fecha_desde, fecha_hasta } =
+      req.body;
+
+    // se crea array de fechas con constantes fecha_desde y fecha_hast
+    const arrayFechas = [];
+    const fechaInicio = new Date(fecha_desde);
+    const fechaFin = new Date(fecha_hasta);
+
+    // Agregar la fecha inicial al array
+    arrayFechas.push(fechaInicio.toISOString().split("T")[0]);
+
+    // Generar las fechas intermedias
+    while (fechaInicio < fechaFin) {
+      fechaInicio.setDate(fechaInicio.getDate() + 1);
+      arrayFechas.push(fechaInicio.toISOString().split("T")[0]);
+      }
+      
+      console.log(arrayFechas);
+
+    //establece el estado y la fecha actual
+    const insertQuery =
+      "INSERT INTO sac.detalle_permiso VALUES (DEFAULT, $1, $2, $3::date[])";
+    const fechas = [arrayFechas];
+    await pool.query(insertQuery, [id_empleado, id_evento_permiso, fechas]);
+
+    return res.status(200).send({
+      success: true,
+      message: "Permiso insertado con éxito en Tabla",
+    });
+  } catch (error) {
+    console.error("Error al insertar Permiso en Tabla", error);
+    res.status(500).send("Error en el servidor");
+  }
+};

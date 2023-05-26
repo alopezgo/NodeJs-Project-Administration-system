@@ -157,6 +157,72 @@ form.addEventListener("submit", async (event) => {
   const fecha_desde = form.elements.fechaDesde.value;
   const fecha_hasta = form.elements.fechaHasta.value;
 
+  // Validar que se hayan completado todos los campos.
+  if (empleadoSelect == 0 || permisoSelect == 0 || !fecha_desde || !fecha_hasta ) {
+    alert("Por favor, complete todos los campos.");
+    return;
+  }
+  console.log(empleadoSelect, permisoSelect, fecha_desde, fecha_hasta);
+  try {
+    // Enviar los datos del formulario.
+    const response = await fetch(
+      "http://localhost:3000/api/v1/registrarPermiso",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id_empleado: empleadoSelect,
+          id_evento_permiso: permisoSelect,
+          fecha_desde: fecha_desde,
+          fecha_hasta: fecha_hasta
+        }),
+      }
+    );
+    const data = await response.json();
+
+    console.log(parseInt(empleadoSelect), parseInt(permisoSelect), fecha_desde, fecha_hasta);
+
+    if (data.success) {
+      // La solicitud se realizó correctamente.
+      //Se obtienen fechas actuales para recargar de inputs tipo date en Formulario
+      var fecha = new Date(); //Fecha actual
+      var mes = fecha.getMonth() + 1; //obteniendo mes
+      var dia = fecha.getDate(); //obteniendo dia
+      var ano = fecha.getFullYear(); //obteniendo año
+      if (dia < 10) dia = "0" + dia; //agrega cero si es menor de 10
+      if (mes < 10) mes = "0" + mes; //agrega cero si es menor de 10
+
+      Swal.fire({
+        icon: "success",
+        title: "Permiso registrado con éxito",
+        text: "Se ha registrado el permiso en la base de datos",
+        showConfirmButton: true,
+        confirmButtonText: "Aceptar",
+      }).then(() => {
+        // Limpiar los campos del formulario
+        form.elements.empleadoSelect.value = "0";
+        form.elements.permisoSelect.value = "0";
+        form.elements.fechaDesde.value = ano + "-" + mes + "-" + dia;
+        form.elements.fechaHasta.value = ano + "-" + mes + "-" + dia;
+      });
+    } else {
+      // La solicitud falló.
+      Swal.fire({
+        icon: "error",
+        title: "¡Error en el servidor!",
+        // Agregar el mensaje de error en la alerta.
+        text: data.message || "Ha ocurrido un error en el servidor.",
+        showConfirmButton: true,
+        confirmButtonText: "Aceptar",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Ha ocurrido un error en el servidor");
+  }
+  
 });
 
 //Convertir a CSV
