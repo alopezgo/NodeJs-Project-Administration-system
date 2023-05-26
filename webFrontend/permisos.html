@@ -203,48 +203,11 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
         integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
         crossorigin="anonymous"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
         integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG"
-        crossorigin="anonymous"></script> -->
+        crossorigin="anonymous"></script>
     <script src="assets\js\permisos.js"></script>
     <script src="assets/js/componentImport.js"></script>
-    <script>
-        $(document).ready(function () {
-            var tabla_permiso = $('#example').DataTable({
-                "language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-                columns: [
-                    { "title": "Empleado", "data": "empleado" },
-                    { "title": "Rut", "data": "rut" },
-                    { "title": "Motivo", "data": "tipo" },
-                    { "title": "Fecha", "data": "fecha" },
-                    { "title": "Acciones", "defaultContent": "<button class='btnEditar btn btn-success' type='button'>Editar</button>&nbsp;&nbsp;<button class='btnBorrar btn btn-danger' type='button'>Borrar</button>" },
-                    
-                ]
-            });
-            GetPermisos();
-
-            // Obtener lista de permisos por Empresa
-            function GetPermisos() {
-                const id_empresa = localStorage.getItem('id_empresa');
-                return $.ajax({
-                    url: 'http://localhost:3000/api/v1/permisos/' + id_empresa,
-                    type: 'GET',
-                    success: function (response) {
-                        const res = response;
-                        const permiso = res.data;
-                        permiso.forEach(fila => {
-                            tabla_permiso.row.add({
-                                "empleado": fila.empleado,
-                                "rut": fila.rut,
-                                "tipo": fila.tipo,
-                                "fecha": fila.fecha
-                            }).draw();
-                        });
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 
 </html>
