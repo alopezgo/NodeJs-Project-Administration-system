@@ -61,7 +61,7 @@ exports.getTiposConsumo = async (req, res) => {
   }
 };
 
-//Función para obtener todos los Tipos de Consumo
+//Función para obtener todos los Tipos de Asistencia
 exports.getTiposAsistencia= async (req, res) => {
   try {
     const query = `
@@ -71,12 +71,31 @@ exports.getTiposAsistencia= async (req, res) => {
 
     return res.status(200).send({
       success: true,
-      message: "tipos eventos encontrados",
+      message: "tipos de asistencia encontrados",
       Data: result.rows
     })
 
   } catch (error) {
-    console.error('Error al obtener los tipos de evento', error);
+    console.error('Error al obtener los tipos de asistencia', error);
     res.status(500).send('Error en el servidor');
+  }
+};
+
+//Función para obtener todos los Tipos de Permiso
+exports.getTiposPermiso = async (req, res) => {
+  try {
+    const query = `
+                    SELECT id as id_tipo_permiso, evento as tipo_permiso
+                    FROM sac.evento_permiso`;
+    const result = await pool.query(query);
+
+    return res.status(200).send({
+      success: true,
+      message: "tipos de permiso encontrados",
+      Data: result.rows,
+    });
+  } catch (error) {
+    console.error("Error al obtener los tipos de permisos", error);
+    res.status(500).send("Error en el servidor");
   }
 };

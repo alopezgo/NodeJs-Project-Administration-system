@@ -14,12 +14,14 @@
 </head>
 
 <body class="is-preload">
-
+    <!--DESDE AQUI NAVBAR-->
     <div id="nav-component">
     </div>
+    <!--HASTA AQUI NAVBAR-->
 
     <div class="container-fluid">
         <div class="row">
+            <!--DESDE AQUI MENÚ LATERAL-->
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar collapse">
                 <div class="position-sticky pt-3 sidebar-sticky">
                     <ul class="nav flex-column">
@@ -93,31 +95,102 @@
                     </ul>
                 </div>
             </nav>
+            <!--HASTA AQUI MENÚ LATERAL-->
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Gestión de Permisos</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <!--Esto puede servir para filtrar por fechas y centro de costo-->
-                            <span data-feather="calendar" class="align-text-bottom"></span>
-                            Hoy
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item active" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
+                <!--DESDE AQUI FORMULARIO-->
+                <div class="bd-cheatsheet container-fluid bg-body">
+                    <section id="informe-filtros">
+                        <h2 class="sticky-xl-top fw-bold align-self-start pt-3 mt-5 mb-3 mt-xl-0 mb-xl-2 ">Permisos
+                        </h2>
+                        <article class="my-3 border" id="overview">
+                            <div class="bd-heading sticky-xl-top align-self-start mt-5 mt-xl-0 mb-xl-2">
+                                <h4>Ingresar nuevo Permiso</h4>
+                            </div>
+                            <div class="bd-example">
+                                <div class="bd-example-snippet bd-code-snippet">
+                                    <div class="bd-example">
+                                        <form id="filtro-informe-form">
+                                            <div class="row g-2">
+                                                <div class="col-md col-lg-5">
+                                                    <div class="form-floating">
+                                                        <select class="form-select" id="empleadoSelect" name="empleadoSelect">
+                                                        </select>
+                                                        <label for="empleadoSelect">Empleado</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md col-lg-5">
+                                                    <div class="form-floating">
+                                                        <select class="form-select" id="permisoSelect" name="permisoSelect">
+                                                        </select>
+                                                        <label for="permisoSelect">Tipo Permiso</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-2">
+                                                    <div class="col-md col-lg-5">
+                                                        <div class="form-floating">
+                                                            <input class="form-control" id="fechaDesde" type="date"
+                                                                name="fechaDesde" value="" min="2022-01-01" max="2024-12-31">
+                                                            <label for="fechaDesde">Desde</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md col-lg-5">
+                                                        <div class="form-floating">
+                                                            <input class="form-control" id="fechaHasta" type="date"
+                                                                name="fechaHasta" value="" min="2022-01-01" max="2024-12-31">
+                                                            <label for="fechaHasta">Hasta</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3">
+                                                    <div class="col-md col-lg-10 d-grid gap-2">
+                                                        <button type="submit" class="btn btn-outline-info btn-sm">Ingresar</button>
+                                                        <!-- <button type="reset"
+                                                                        class="btn btn-outline-warning btn-sm">Limpiar</button> -->
+                                                    </div>
+            
+                                                </div>
+            
+            
+                                        </form>
+                                    </div>
+                                </div>
+            
+                            </div>
+                        </article>
+                    </section>
                 </div>
-
-                <div class="table-responsive">
-                    <table id="example" class="display" style="width:100%" class="display table table-striped table-sm">
-
-                    </table>
+                <!--HASTA AQUI FORMS-->
+                <!--DESDE AQUI TABLA-->
+                <div class="bd-cheatsheet container-fluid bg-body">
+                    <section id="InformeGeneral">
+                        <article class="my-3 border" id="overview">
+                            <div
+                                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                                <h4>Registros</h4>
+                                <div class="btn-toolbar mb-2 mb-md-0">
+                                    <div class="btn-group me-2">
+                                        <button type="button" onclick="tableToPDF()"
+                                            class="btn btn-sm btn-outline-info">PDF</button>
+                                        <button type="button" onclick="tableToCSV()"
+                                            class="btn btn-sm btn-outline-info">CSV</button>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 pb-1 mb-2">
+                                <h6>Resultados:</h6>
+                            </div>
+                            <div id="table-responsive" class="table-responsive">
+                                <table id="example" class="display" style="width:100%" class="display table table-striped table-sm">
+                                </table>
+                            </div>
+            
+                        </article>
+                    </section>
                 </div>
+                <!--HASTA AQUI TABLA-->
+            
             </main>
         </div>
     </div>
