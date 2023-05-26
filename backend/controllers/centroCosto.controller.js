@@ -60,3 +60,23 @@ exports.getTiposConsumo = async (req, res) => {
     res.status(500).send('Error en el servidor');
   }
 };
+
+//Función para obtener todos los Tipos de Consumo
+exports.getTiposAsistencia= async (req, res) => {
+  try {
+    const query = `
+                    SELECT id as id_tipo_asistencia, evento as tipo_asistencia
+                    FROM sac.evento_asistencia`;
+    const result = await pool.query(query);
+
+    return res.status(200).send({
+      success: true,
+      message: "tipos eventos encontrados",
+      Data: result.rows
+    })
+
+  } catch (error) {
+    console.error('Error al obtener los tipos de evento', error);
+    res.status(500).send('Error en el servidor');
+  }
+};
