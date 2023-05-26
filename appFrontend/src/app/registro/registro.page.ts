@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IonicModule, NavController } from '@ionic/angular'; // Importa IonicModule
-import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
-
 
 @Component({
   selector: 'app-registro',
@@ -11,7 +9,6 @@ import { NFC, Ndef } from '@ionic-native/nfc/ngx';
   styleUrls: ['./registro.page.scss'],
 })
 export class RegistroPage {
-
   nfcContent: string = '';
   rut: string = '';
   dv: string = '';
@@ -20,8 +17,10 @@ export class RegistroPage {
   telefono: string = '';
   email: string = '';
 
-  
-  constructor(private http: HttpClient, private navCtrl: NavController, private nfc: NFC, private ndef: Ndeft) {
+  constructor(private http: HttpClient, private navCtrl: NavController, private nfc: NFC, private ndef: Ndef) {}
+
+  ionViewDidEnter() {
+    this.startNfcReader();
   }
 
   startNfcReader() {
@@ -77,42 +76,36 @@ export class RegistroPage {
       this.direccion = direccion;
       this.telefono = telefono;
       this.email = email;
-
-      this.registerNfcContent();
     } else {
       console.error('Contenido de tarjeta NFC no válido');
     }
   }
 
-  registerNfcContent() {
-    const data = {
-      rut_empleado: this.rut,
-      dv: this.dv,
-      empresa: this.empresa,
-      direccion: this.direccion,
-      telefono: this.telefono,
-      email: this.email
+  addConsumo(idConsumo: number) {
+    const consumo = {
+      id_tipo_consumo: idConsumo,
+      precio: 0
     };
 
-    this.http.post('http://localhost:3000/api/v1/nfc/register', data)
+    const data = {
+      rut_empleado: this.rut,
+      consumo: consumo,
+    };
+
+    this.http.post('http://localhost:3000/api/v1/consumos/registrarConsumo', data)
       .subscribe(
         (response: any) => {
           console.log(response);
-          alert("Contenido de tarjeta NFC registrado correctamente");
+          alert("Se ha registrado el consumo correctamente");
         },
         (error) => {
-          console.error('Error al registrar contenido de tarjeta NFC', error);
-          alert("Error al registrar contenido de tarjeta NFC");
+          console.error(error);
+          alert("NO SE PUDO registrar el consumo correctamente");
         }
       );
   }
 
-  
-
-  
-
-  //funcion para volver atrás en la pagina
-  goBack(): void {
+  goBack() {
     this.navCtrl.back();
   }
 }

@@ -1,39 +1,32 @@
-
-
 <ion-content class="fondo"> 
   
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button href="/principal-empresa">
-        <ion-icon size="large" color="light" name="arrow-back-circle-outline" ></ion-icon>
-      </ion-button>
+        <ion-button (click)="goBack()">
+          <ion-icon size="large" color="light" name="arrow-back-circle-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
       <h3>Registro de consumos</h3>
-      <ion-buttons slot="end" >
+      <ion-buttons slot="end">
         <ion-button href="/login">
-        <ion-icon size="large" color="light" name="log-out-outline" ></ion-icon>
-      </ion-button>
+          <ion-icon size="large" color="light" name="log-out-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
-  
 
   <div class="container">
     <div class="registros">
       <ion-button (click)="addConsumo(1)">DESAYUNO</ion-button>
-      <ion-button  (click)="addConsumo(2)">ALMUERZO</ion-button>
+      <ion-button (click)="addConsumo(2)">ALMUERZO</ion-button>
       <ion-button (click)="addConsumo(3)">ONCE</ion-button>
       <ion-button (click)="addConsumo(4)">CENA</ion-button> 
       <br><br><br>
-      <ion-button color ="danger">ASISTENCIA</ion-button> 
+      <ion-button color="danger">ASISTENCIA</ion-button> 
 
       <ion-button (click)="goBack()" color="primary" class="boton-volver">Cancelar</ion-button>
-
-
-    
     </div>
   </div>
-    
-
-  </ion-content>
+  
+</ion-content>

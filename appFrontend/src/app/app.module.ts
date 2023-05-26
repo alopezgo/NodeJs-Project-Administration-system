@@ -8,7 +8,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
-import { RegistroPage } from './registro/registro.page';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 
 
@@ -21,6 +20,6 @@ import { NFC, Ndef } from '@ionic-native/nfc/ngx';
   imports: [BrowserModule, HttpClientModule ,IonicModule.forRoot(), AppRoutingModule, FormsModule, IonicModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, NFC,
     Ndef,],
-  bootstrap: [AppComponent, RegistroPage],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

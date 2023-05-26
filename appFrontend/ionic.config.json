@@ -1,5 +1,5 @@
 {
-  "name": "SacApp",
+  "name": "app-api",
   "integrations": {
     "capacitor": {}
   },
