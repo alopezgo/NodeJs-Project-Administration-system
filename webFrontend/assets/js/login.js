@@ -43,8 +43,6 @@ form.addEventListener("submit", (event) => {
       localStorage.setItem("nombre_usuario", nombre);
       localStorage.setItem("id_usuario", id);
 
-      // The login was successful.
-      alert("Inicio de sesión exitoso");
       // Redirect to the next page
       window.location.href = "dashboard.html";
     })

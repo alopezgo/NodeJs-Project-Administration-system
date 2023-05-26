@@ -111,12 +111,24 @@ form.addEventListener("submit", async (event) => {
 
     if (data.success) {
       // La solicitud se realizó correctamente.
+      
       Swal.fire({
         icon: "success",
         title: "Usuario insertado con éxito",
         text: "Se enviará un mensaje al correo ingresado.",
         showConfirmButton: true,
         confirmButtonText: "Aceptar",
+      }).then(() => {
+        // Limpiar los campos del formulario
+        form.elements.id_rol.value = "";
+        form.elements.rut.value = "";
+        form.elements.dv.value = "";
+        form.elements.nombre.value = "";
+        form.elements.ap_paterno.value = "";
+        form.elements.ap_materno.value = "";
+        form.elements.correo.value = "";
+        form.elements.contrasena.value = "";
+        empresaSelect.value = ""; // Limpiar el select
       });
     } else {
       // La solicitud falló.
