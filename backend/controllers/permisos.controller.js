@@ -40,13 +40,19 @@ exports.getPermisoPorEmpresa = async (req, res) => {
 
     // Ejecutar la consulta
     const query = `
-      SELECT CONCAT(e.nombre, ' ',e.apellido_paterno,' ', e.apellido_materno) AS empleado,
+      With base as  (SELECT dp.id, CONCAT(e.nombre, ' ',e.apellido_paterno,' ', e.apellido_materno) AS empleado,
        e.rut||'-'||e.dv AS rut,
        ep.evento AS tipo,
        unnest(dp.fecha) as fecha
        FROM sac.detalle_permiso dp JOIN sac.empleado e ON e.id = dp.id_empleado
 	   JOIN sac.evento_permiso ep ON dp.id_evento_permiso = ep.id
-	   Where e.id_empresa = $1;
+	   Where e.id_empresa = $1)
+	   
+	   SELECT id, empleado, rut, tipo, 
+	   to_char(min(fecha), 'YYYY-MM-DD') as desde, 
+	   to_char(max(fecha), 'YYYY-MM-DD') as hasta 
+	   FROM base
+	   GROUP BY id, empleado, rut, tipo;
     `;
     const { rows } = await pool.query(query, [id_empresa]);
 

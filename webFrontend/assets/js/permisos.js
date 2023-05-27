@@ -13,12 +13,8 @@ document.addEventListener("DOMContentLoaded", function () {
         { title: "Empleado", data: "empleado" },
         { title: "Rut", data: "rut" },
         { title: "Motivo", data: "tipo" },
-        { title: "Fecha", data: "fecha" },
-        {
-          title: "Acciones",
-          defaultContent:
-            "<button class='btnEditar btn btn-success' type='button'>Editar</button>&nbsp;&nbsp;<button class='btnBorrar btn btn-danger' type='button'>Borrar</button>",
-        },
+        { title: "Desde", data: "desde" },
+        { title: "Hasta", data: "hasta" },
       ],
     });
     GetPermisos();
@@ -38,7 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 empleado: fila.empleado,
                 rut: fila.rut,
                 tipo: fila.tipo,
-                fecha: fila.fecha,
+                desde: fila.desde,
+                hasta: fila.hasta,
               })
               .draw();
           });
