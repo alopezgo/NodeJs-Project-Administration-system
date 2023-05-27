@@ -30,7 +30,18 @@ export class RegistroPage {
         pass: this.consumo,
       }
     }
-    this.router.navigate(['desayuno'], extras);
+    if (this.consumo == 1){
+      this.router.navigate(['desayuno'], extras);
+    }     
+    if (this.consumo == 2){
+      this.router.navigate(['almuerzo'], extras);
+    }
+    if (this.consumo == 3){
+      this.router.navigate(['once'], extras);
+    }
+    if (this.consumo == 4){
+      this.router.navigate(['cena'], extras);
+    }
     
     
   }

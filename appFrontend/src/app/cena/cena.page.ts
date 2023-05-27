@@ -5,18 +5,16 @@ import { Router } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular'; // Importa IonicModule
 
 @Component({
-  selector: 'app-desayuno',
-  templateUrl: './desayuno.page.html',
-  styleUrls: ['./desayuno.page.scss'],
+  selector: 'app-cena',
+  templateUrl: './cena.page.html',
+  styleUrls: ['./cena.page.scss'],
 })
-export class DesayunoPage implements OnInit {
+export class CenaPage implements OnInit {
 
   rut_empleado: string;
   consumo: number = 0;
 
-
   constructor(private http: HttpClient, private navCtrl: NavController,private router:Router) { }
-
   ngOnInit() {
 
     try {
@@ -28,8 +26,6 @@ export class DesayunoPage implements OnInit {
      
     }
   }
-
-
   
   addConsumo(consumoForm: NgForm) {
 

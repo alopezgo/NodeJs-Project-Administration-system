@@ -5,15 +5,14 @@ import { Router } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular'; // Importa IonicModule
 
 @Component({
-  selector: 'app-desayuno',
-  templateUrl: './desayuno.page.html',
-  styleUrls: ['./desayuno.page.scss'],
+  selector: 'app-almuerzo',
+  templateUrl: './almuerzo.page.html',
+  styleUrls: ['./almuerzo.page.scss'],
 })
-export class DesayunoPage implements OnInit {
+export class AlmuerzoPage implements OnInit {
 
   rut_empleado: string;
   consumo: number = 0;
-
 
   constructor(private http: HttpClient, private navCtrl: NavController,private router:Router) { }
 
