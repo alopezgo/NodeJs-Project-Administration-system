@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="proyecto" content="Portafolio 2023">
-    <title>Usuarios - SAC</title>
+    <title>Editar usuarios</title>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/dashboard.css" rel="stylesheet">
@@ -14,12 +15,14 @@
 </head>
 
 <body class="is-preload">
-
+    <!--DESDE AQUI NAVBAR-->
     <div id="nav-component">
     </div>
+    <!--HASTA AQUI NAVBAR-->
 
     <div class="container-fluid">
         <div class="row">
+            <!--DESDE AQUI MENÚ LATERAL-->
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar collapse">
                 <div class="position-sticky pt-3 sidebar-sticky">
                     <ul class="nav flex-column">
@@ -44,13 +47,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="usuarios.html">
+                            <a class="nav-link" href="usuarios.html">
                                 <span data-feather="users" class="align-text-bottom"></span>
                                 Usuarios
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="alimentacion.html">
+                            <a class="nav-link active" href="alimentacion.html">
                                 <span data-feather="coffee" class="align-text-bottom"></span>
                                 Alimentación
                             </a>
@@ -93,89 +96,81 @@
                     </ul>
                 </div>
             </nav>
+            <!--HASTA AQUI MENÚ LATERAL-->
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Gestión de Usuarios</h1>
-                        
-                </div>
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-2 pb-3">
-                    <a class="btn btn-warning" href="agregar_usuario.html" role="button">Agregar Usuario</a>
-                </div>
-                
+                <!--DESDE AQUI FORMULARIO-->
+                <div class="bd-cheatsheet container-fluid bg-body">
+                    <section id="informe-filtros">
+                        <h2 class="sticky-xl-top fw-bold align-self-start pt-3 mt-5 mb-3 mt-xl-0 mb-xl-2 ">Editar usuarios
+                        </h2>
+                        <article class="my-3 border" id="overview">
+                            <div class="bd-heading sticky-xl-top align-self-start mt-5 mt-xl-0 mb-xl-2">
+                                <h4>Ingrese los datos que desea modificar</h4>
+                            </div>
+                            <div class="bd-example">
+                                <div class="bd-example-snippet bd-code-snippet">
+                                    <div class="bd-example">
+										<div class="form-group">
+											<form id="add-user-form">
+												<label for="id_rol">Rol:</label>
+												<select id="id_rol" name="id_rol" class="form-control">
+												<option value="2">Administrador</option>
+												<option value="3">Básico</option>
+												</select><br><br>
+											
+												<label for="id_empresa">Empresa:</label>
+												<select id="id_empresa" name="id_empresa" class="form-control">
+												<!-- Aquí se cargarán las opciones desde JavaScript -->
+												</select><br><br>
+											
+												<label for="rut">RUT:</label>
+												<input type="text" id="rut" name="rut" class="form-control"><br><br>
+											
+												<label for="dv">DV:</label>
+												<input type="text" id="dv" name="dv" class="form-control"><br><br>
+											
+												<label for="nombre">Nombre:</label>
+												<input type="text" id="nombre" name="nombre" class="form-control"><br><br>
+											
+												<label for="ap_paterno">Apellido paterno:</label>
+												<input type="text" id="ap_paterno" name="ap_paterno" class="form-control"><br><br>
+											
+												<label for="ap_materno">Apellido materno:</label>
+												<input type="text" id="ap_materno" name="ap_materno" class="form-control"><br><br>
+											
+												<label for="correo">Correo electrónico:</label>
+												<input type="email" id="correo" name="correo" class="form-control"><br><br>
+											
+												<input type="submit" value="Confirmar cambios" class="btn btn-outline-info btn-md">
+											</form>
+										</div>
+										  
+                                    </div>
+                                </div>
 
-                <div class="table-responsive">
-                    <table id="example" class="display" style="width:100%" class="display table table-striped table-sm">
-                       
-                    </table>
+                            </div>
+                        </article>
+                    </section>
                 </div>
+                <!--HASTA AQUI FORMS-->
+        
+
             </main>
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-
-
     <script src="assets/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
         integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
         crossorigin="anonymous"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
         integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG"
-        crossorigin="anonymous"></script> -->
-    <script src="assets\js\usuarios.js"></script>
+        crossorigin="anonymous"></script>
+		<script src="assets\js\addUser.js"></script>
     <script src="assets/js/componentImport.js"></script>
-    <script>
-
-        function editar(){
-        location.href="editar_usuario.html"
-        }
-
-        function borrar(){  
-        alert("¿Estás seguro de querer desactivar este usuario?")
-        }
-
-
-        $(document).ready(function () {
-            var tabla_usuario = $('#example').DataTable({
-                "language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-                columns: [
-                    { "title": "Usuario", "data": "usuario" },
-                    { "title": "Rol", "data": "rol" },
-                    { "title": "Correo", "data": "correo" },
-                    { "title": "Creado", "data": "fecha_creacion" },
-                    { "title": "Acciones", "defaultContent": "<button class='btnEditar btn btn-sm btn-outline-primary' type='button' data-id='ID_USUARIO' onclick='editar()'>Editar</button>&nbsp;&nbsp;<button class='btnBorrar btn btn-sm btn-outline-danger' type='button' onclick='borrar()'>Borrar</button>" }
-                ]
-            });
-            GetUsuarios();
-
-            // Obtener lista de Usuarios por Empresa y que sean distintos al usuario que consulta
-            function GetUsuarios() {
-                const id_empresa = localStorage.getItem('id_empresa');
-                const id_usuario = localStorage.getItem('id_usuario');
-                return $.ajax({
-                    url: 'http://localhost:3000/api/v1/usuarios/'+id_usuario + '/' + id_empresa,
-                    type: 'GET',
-                    success: function (response) {
-                        const res = response;
-                        const usuario = res.data;
-                        usuario.forEach(fila => {
-                            tabla_usuario.row.add({                           
-                                "usuario": fila.usuario,
-                                "rol": fila.rol,
-                                "correo": fila.correo,
-                                "fecha_creacion": fila.fecha_creacion
-                            }).draw();
-                            
-                            
-                        });
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 
 </html>
