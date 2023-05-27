@@ -5,8 +5,13 @@
 // })();
 
 
+
+
 document.addEventListener("DOMContentLoaded", function () {
   const nombreUsuario = localStorage.getItem("nombre_usuario");
+  
+
+  
 
   if (nombreUsuario) {
     const nombreUsuarioElemento = document.getElementById("nombre-usuario");
@@ -19,3 +24,5 @@ document.addEventListener("DOMContentLoaded", function () {
     nombreUsuarioElemento.appendChild(nombreElemento);
   }
 });
+
+

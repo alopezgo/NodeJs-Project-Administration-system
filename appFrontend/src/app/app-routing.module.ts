@@ -32,6 +32,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'desayuno',
+    redirectTo: 'desayuno',
+    pathMatch: 'full'
+  },
+  {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
@@ -47,6 +52,23 @@ const routes: Routes = [
     path: 'principal',
     loadChildren: () => import('./principal/principal.module').then( m => m.PrincipalPageModule)
   },
+  {
+    path: 'desayuno',
+    loadChildren: () => import('./desayuno/desayuno.module').then( m => m.DesayunoPageModule)
+  },  {
+    path: 'almuerzo',
+    loadChildren: () => import('./almuerzo/almuerzo.module').then( m => m.AlmuerzoPageModule)
+  },
+  {
+    path: 'once',
+    loadChildren: () => import('./once/once.module').then( m => m.OncePageModule)
+  },
+  {
+    path: 'cena',
+    loadChildren: () => import('./cena/cena.module').then( m => m.CenaPageModule)
+  },
+
+
 
 ];
 
