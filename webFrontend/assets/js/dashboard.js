@@ -54,6 +54,12 @@
 
 
 document.addEventListener("DOMContentLoaded", function () {
+  const tokenUsuario = localStorage.getItem("token");
+  const isLoginPage = window.location.href.includes("login.html");
+
+  if (!tokenUsuario && !isLoginPage) {
+    window.location.href = "login.html";
+  }
   const nombreUsuario = localStorage.getItem("nombre_usuario");
 
   if (nombreUsuario) {
