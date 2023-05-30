@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const tokenUsuario = localStorage.getItem("token");
+  const isLoginPage = window.location.href.includes("login.html");
+
+  if (!tokenUsuario && !isLoginPage) {
+    window.location.href = "login.html";
+  }
   //Se establecen opciones de la tabla y se llama a función Getconsumo
   var tabla_consumo = $("#example").DataTable({
     language: {
