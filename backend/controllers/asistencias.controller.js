@@ -84,3 +84,23 @@ exports.getAsistenciaPorEmpresa = async (req, res) => {
     return res.status(500).send("Error en el servidor") ;
   }
 };
+
+//Función para obtener todos los Tipos de Asistencia
+exports.getTiposAsistencia= async (req, res) => {
+  try {
+    const query = `
+                    SELECT id as id_tipo_asistencia, evento as tipo_asistencia
+                    FROM sac.evento_asistencia`;
+    const result = await pool.query(query);
+
+    return res.status(200).send({
+      success: true,
+      message: "tipos de asistencia encontrados",
+      Data: result.rows
+    })
+
+  } catch (error) {
+    console.error('Error al obtener los tipos de asistencia', error);
+    res.status(500).send('Error en el servidor');
+  }
+};
