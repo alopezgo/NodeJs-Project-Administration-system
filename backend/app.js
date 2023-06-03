@@ -14,7 +14,7 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-// module.exports = cors(corsOptions);
+module.exports = cors(corsOptions);
 
 const PORT = process.env.PORT || 3000;
 
@@ -24,14 +24,12 @@ app.use(cors());
 
 app.use('/api', require('./routes'));
 
-// app.get('/', (req, res) => {
-//   res.send('¡Bienvenido a la API REST!');
-// });
+app.get('/', (req, res) => {
+  res.send('¡Bienvenido a la API REST!');
+});
 
-// app.listen(PORT, () => {
-//   console.log(`El servidor está escuchando en http://localhost:${PORT}`);
-// });
-
-module.exports = app, cors(corsOptions);
+app.listen(PORT, () => {
+  console.log(`El servidor está escuchando en http://localhost:${PORT}`);
+});
 
 
