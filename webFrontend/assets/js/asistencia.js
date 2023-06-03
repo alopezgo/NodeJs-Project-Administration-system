@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const tokenUsuario = localStorage.getItem("token");
+  const isLoginPage = window.location.href.includes("login.html");
+
+  if (!tokenUsuario && !isLoginPage) {
+    window.location.href = "login.html";
+  }
   var tabla_asistencia = $("#example").DataTable({
     language: {
       url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",

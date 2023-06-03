@@ -162,3 +162,22 @@ exports.postRegistroPermiso = async (req, res) => {
     res.status(500).send("Error en el servidor");
   }
 };
+
+//Función para obtener todos los Tipos de Permiso
+exports.getTiposPermiso = async (req, res) => {
+  try {
+    const query = `
+                    SELECT id as id_tipo_permiso, evento as tipo_permiso
+                    FROM sac.evento_permiso`;
+    const result = await pool.query(query);
+
+    return res.status(200).send({
+      success: true,
+      message: "tipos de permiso encontrados",
+      Data: result.rows,
+    });
+  } catch (error) {
+    console.error("Error al obtener los tipos de permisos", error);
+    res.status(500).send("Error en el servidor");
+  }
+};
