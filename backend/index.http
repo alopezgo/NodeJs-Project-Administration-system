@@ -1,10 +1,27 @@
 POST http://localhost:3000/api/v1/user/login HTTP/1.1
 Content-Type: application/json
 
+SuperUser BD_JP
 {
-    "correo" : "test3@mail.com",
-    "contrasena": "test3"
+    "correo" : "dios3@sac.cl",
+    "contrasena" : "Dios123&cl"
 }
+
+
+Base para crear usuario en Postman
+{
+    "id_empresa" : 1,
+    "id_rol" : 1,
+    "rut" : "99999998",
+    "dv": "0",
+    "nombre": "Dios",
+    "ap_paterno": "Alá",
+    "ap_materno": "Smith",
+    "correo": "diosa@sac.cl",
+    "contrasena": "Dios123.cl"  ::: Caracteres especiales: +/@$#|!¡%*¿?&.-_
+}
+
+
 
 ###
 

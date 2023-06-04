@@ -3,25 +3,41 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 
-async function  login(correo, contraseña) {
-    const query = `SELECT  id, id_empresa, id_rol, nombre, correo, contrasena 
-                     FROM   sac.usuario 
-                     WHERE  correo = $1 
-                     AND id_estado = 1`;
+// Función Actualizada. Al recibir un correo erroneo ya no se cae el servidor
+async function login(correo, contrasena) {
+    const query = `SELECT id, id_empresa, id_rol, nombre, correo, contrasena 
+                   FROM sac.usuario 
+                   WHERE correo = $1 
+                   AND id_estado = 1`;
 
     const { rows } = await pool.query(query, [correo]);
+
+    if (rows.length === 0) {
+        return {
+            success: false,
+            message: "El correo ingresado no se encuentra registrado",
+            data: null,
+        };
+    }
+
     const isPasswordCorrect = await bcrypt.compare(
-        contraseña,
+        contrasena,
         rows[0].contrasena
     );
+
+    if (!isPasswordCorrect) {
+        return {
+            success: false,
+            message: "La contraseña ingresada es incorrecta",
+            data: null,
+        };
+    }
+
     // Genera un token JWT para el usuario
-    const token = jwt.sign(
-        { userId: rows[0].id },
-        "tu_secreto_secreto",
-        {
-            expiresIn: "1h",
-        }
-    );
+    const token = jwt.sign({ userId: rows[0].id }, "tu_secreto_secreto", {
+        expiresIn: "1h",
+    });
+
     console.log(token);
 
     if (rows.length === 0) {
@@ -46,7 +62,7 @@ async function  login(correo, contraseña) {
         };
     }
 
-    return { success: true, message: "Login exitoso", token: token, data: rows};
+    return { success: true, message: "Login exitoso", token: token, data: rows };
 };
 
 async function deleteUser(correo) {
@@ -55,23 +71,36 @@ async function deleteUser(correo) {
       SET id_estado = 2
       WHERE correo = $1
     `;
-  
+
     return new Promise((resolve, reject) => {
-      pool.query(query, [correo], (err, result) => {
-        if (err) {
-          console.error('Error al cambiar el estado del usuario', err);
-          return reject(err);
-        }
-        console.log(`El usuario ${correo} ha sido eliminado`);
-        resolve({ success: true });
-      });
+        pool.query(query, [correo], (err, result) => {
+            if (err) {
+                console.error('Error al cambiar el estado del usuario', err);
+                return reject(err);
+            }
+            console.log(`El usuario ${correo} ha sido eliminado`);
+            resolve({ success: true });
+        });
     });
-  }
+}
+
+// Validación de la contraseña, al menos una mayúscula, una minúscula, un número y un caracter especial
+async function validatePassword(contrasena) {
+    console.log('**pass vlaidation**', contrasena)
+    const hasUpperCase = /[A-Z]/.test(contrasena);
+    const hasLowerCase = /[a-z]/.test(contrasena);
+    const hasNumber = /\d/.test(contrasena);
+    const hasSpecialChar = /[+/@$#|!¡%*¿?&.-_]/.test(contrasena);
+
+    return hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
+}
 
 
-    module.exports = {
-        login,
-        deleteUser,
-    }
+
+module.exports = {
+    login,
+    deleteUser,
+    validatePassword
+}
 
 
