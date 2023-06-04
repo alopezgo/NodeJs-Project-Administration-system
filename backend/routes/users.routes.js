@@ -11,6 +11,7 @@ api.post('/v1/addUser', UsersController.addUser);
 api.put('/v1/deleteUser', UsersController.deleteUser);
 api.get('/v1/usuarios/:id_usuario/:id_empresa', UsersController.getUserPorEmpresa);
 api.put('/v1/usuarios/:id', UsersController.updateUser);
+api.put('/v1/usuarios/:id_usuario/updatePass', UsersController.updatePasswordApp);
 api.put('/v1/usuarios/estado/:id', UsersController.updateUserStatus);
 
 //user por id

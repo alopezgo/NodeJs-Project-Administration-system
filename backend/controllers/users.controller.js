@@ -46,7 +46,7 @@ exports.loginUser = async (req, res) => {
 };
 
 //Actualizado con nuevas validaciones
-exports.addUser = async (req, res) => {                                                                    
+exports.addUser = async (req, res) => {
   try {
     console.log('body', req.body)
     const { id_empresa, id_rol, rut, dv, nombre, ap_paterno, ap_materno, correo, contrasena } = req.body;
@@ -297,3 +297,59 @@ exports.updateUserStatus = async (req, res) => {
     });
   }
 };
+
+
+// Cambio de contraseña para usuarios. Incluye validaciones para la nueva contraseña
+exports.updatePasswordApp = async (req, res) => {
+  try {
+    const { contrasena_actual, nueva_contrasena } = req.body;
+    const {id_usuario} = req.params;
+
+    // Verificar si el usuario existe
+    const usuarioQuery = 'SELECT * FROM sac.usuario WHERE id = $1';
+    const { rows: usuarioRows } = await pool.query(usuarioQuery, [id_usuario]);
+    if (usuarioRows.length === 0) {
+      return res.status(404).send({
+        success: false,
+        message: 'El usuario no existe',
+      });
+    }
+
+    const usuario = usuarioRows[0];
+    const contrasenaCoincide = await bcrypt.compare(contrasena_actual, usuario.contrasena);
+
+    if (!contrasenaCoincide) {
+      return res.status(400).send({
+        success: false,
+        message: 'La contraseña actual ingresada es incorrecta',
+      });
+    }
+
+    // Validar la nueva contraseña
+    if (typeof nueva_contrasena !== 'string' || nueva_contrasena.trim() === '') {
+      throw new Error('Error al recibir la nueva contraseña');
+    }
+
+    // Validación de la nueva contraseña con los caracteres de seguridad
+    const validatedPass = await validatePassword(nueva_contrasena);
+    if (!validatedPass) {
+      throw new Error('La nueva contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial (+/@$#|!¡%*¿?&.-_)');
+    }
+
+    // Encriptación de la nueva contraseña
+    const hashedPassword = await bcrypt.hash(nueva_contrasena, 10);
+
+    // Actualizar la contraseña en la base de datos
+    const updatePassQuery = 'UPDATE sac.usuario SET contrasena = $1 WHERE id = $2';
+    await pool.query(updatePassQuery, [hashedPassword, id_usuario]);
+
+    return res.status(200).send({
+      success: true,
+      message: 'Contraseña actualizada con éxito',
+    });
+  } catch (error) {
+    console.error('Error al actualizar contraseña', error);
+    res.status(500).send('Error en el servidor');
+  }
+};
+
