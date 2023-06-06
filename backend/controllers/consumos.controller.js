@@ -36,12 +36,27 @@ exports.getDetalleConsumo = async (req, res) => {
 };
 
 //Agrega registro consumo a BBDD DETALLE_CONSUMO 
-
+//Actualizado con nuevas validaciones
 exports.addConsumo = async (req, res) => {
   try {
+    console.log('body', req.body)
     const { rut_empleado, consumo } = req.body;
     if (!rut_empleado || !consumo) {
       return res.status(400).send({ success: false, message: "Se requiere el rut del empleado y los datos del consumo" });
+    }
+
+    if (typeof rut_empleado !== "string" || rut_empleado.trim() === "") {
+      throw new Error("Error al recibir el rut del empleado");
+    }
+    if (typeof consumo.id_tipo_consumo !== "number" || isNaN(consumo.id_tipo_consumo)) {
+      throw new Error("Error: al recibir el ID del consumo");
+    }
+
+    // Busca el id del empleado a partir del rut
+    const consumoQuery = 'SELECT * FROM sac.tipo_consumo WHERE id = $1';
+    const { rowCount } = await pool.query(consumoQuery, [consumo.id_tipo_consumo]);
+    if (rowCount === 0) {
+      return res.status(400).send({ success: false, message: "No existe el consumo que intenta registrar" });
     }
 
     // Busca el id del empleado a partir del rut
@@ -64,7 +79,10 @@ exports.addConsumo = async (req, res) => {
     }
   } catch (error) {
     console.error('Error al insertar consumo', error);
-    res.status(500).send('Error en el servidor');
+    res.status(500).send({
+      success: false,
+      message: error.message
+    });
   }
 };
 
@@ -107,9 +125,8 @@ exports.getConsumosPorEmpresa = async (req, res) => {
     }
 
     if (desde !== undefined && hasta !== undefined) {
-      query += ` AND date(dc.dt_consumo) between $${
-        params.length + 1
-      } AND $${params.length + 2}`;
+      query += ` AND date(dc.dt_consumo) between $${params.length + 1
+        } AND $${params.length + 2}`;
       params.push(desde);
       params.push(hasta);
     }
@@ -242,7 +259,7 @@ exports.getConsumosCentroCosto = async (req, res) => {
   try {
     const { fechaInicio, fechaFin, centroCosto } = req.body;
     const { id_empresa } = req.params;
-    
+
     if (!fechaInicio || !fechaFin) {
       return res.status(400).send({ success: false, message: "Debe indicar una fecha de inicio y término." });
     };

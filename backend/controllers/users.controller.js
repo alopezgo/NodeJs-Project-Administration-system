@@ -1,6 +1,6 @@
 const { pool } = require("../db/db");
 const bcrypt = require("bcrypt");
-const { login, deleteUser } = require("../services/user.services");
+const { login, deleteUser, validatePassword } = require("../services/user.services");
 const { mailValidation } = require("../services/mail.services");
 
 
@@ -22,10 +22,12 @@ exports.getUser = async (req, res) => {
   }
 };
 
+//Funcion login actualizada
 exports.loginUser = async (req, res) => {
   try {
+    console.log('body', req.body)
     const { correo, contrasena } = req.body;
-    if (!correo || !contrasena){
+    if (!correo || !contrasena) {
       return res.status(400).send({ success: false, message: "Se requiere correo y contraseña para iniciar sesión" });
     }
     if (!mailValidation(correo)) {
@@ -43,19 +45,59 @@ exports.loginUser = async (req, res) => {
   }
 };
 
+//Actualizado con nuevas validaciones
 exports.addUser = async (req, res) => {
   try {
-    const { nombre_empresa, id_rol, rut, dv, nombre, ap_paterno, ap_materno, correo, contrasena } = req.body;
-    if (!correo || !contrasena){
+    console.log('body', req.body)
+    const { id_empresa, id_rol, rut, dv, nombre, ap_paterno, ap_materno, correo, contrasena } = req.body;
+    if (!correo || !contrasena) {
       return res.status(400).send({ success: false, message: "Se requiere correo y contraseña para iniciar sesión" });
     }
     if (!mailValidation(correo)) {
       return res.status(400).send({ success: false, message: "No es un formato válido de correo" });
     }
+    //Validar id_empresa como número y que no sea vacío o null
+    if (!id_empresa || typeof id_empresa !== "number" || !Number.isInteger(id_empresa)) {
+      throw new Error("Error al recibir la ID de la empresa del nuevo usuario");
+    }
+    //Validar apellido como string - Elimina posible espacios al inicio y al final - que no sea vacío o null
+    if (!id_rol || typeof id_rol !== "number" || !Number.isInteger(id_rol)) {
+      throw new Error("Error al recibir el ID del rol del nuevo usuario");
+    }
+    //Validar rut como string - Elimina posible espacios al inicio y al final
+    if (!rut || typeof rut !== "string" || rut.trim() === "") {
+      throw new Error("Error al recibir el rut del nuevo usuario");
+    }
+    //Validar dv como string - Elimina posible espacios al inicio y al final - que no sea vacío o null
+    if (!dv || typeof dv !== "string" || dv.trim() === "") {
+      throw new Error("Error al recibir el dígito verificador del nuevo usuario");
+    }
+    //Validar nombre como string - Elimina posible espacios al inicio y al final - que no sea vacío o null
+    if (!nombre || typeof nombre !== "string" || nombre.trim() === "") {
+      throw new Error("Error al recibir el nombre del nuevo usuario");
+    }
+    //Validar apellido como string - Elimina posible espacios al inicio y al final - que no sea vacío o null
+    if (!ap_paterno || typeof ap_paterno !== "string" || ap_paterno.trim() === "") {
+      throw new Error("Error al recibir el apellido paterno del nuevo usuario");
+    }
+    //Validar apellido como string - Elimina posible espacios al inicio y al final - que no sea vacío o null
+    if (!ap_materno || typeof ap_materno !== "string" || ap_materno.trim() === "") {
+      throw new Error("Error al recibir el apellido materno del nuevo usuario");
+    }
+    //Validar contraseña como string - Elimina posible espacios al inicio y al final - que no sea vacío o null
+    if (!contrasena || typeof contrasena !== "string" || contrasena.trim() === "") {
+      throw new Error("Error al recibir el rut del nuevo usuario");
+    }
+    // Validación de la contraseña con los caracteres de seguridad
+    const validatedPass = await validatePassword(contrasena);
+    if (!validatedPass) {
+      throw new Error("La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial (+/@$#|!¡%*¿?&.-_)");
+    }
 
-    // Obtiene el ID de la empresa a partir del nombre
-    const empresaQuery = 'SELECT id FROM sac.empresa WHERE nombre = $1';
-    const { rows: empresaRows } = await pool.query(empresaQuery, [nombre_empresa]);
+
+    // Obtiene el nombre de la empresa a partir del id_empresa
+    const empresaQuery = 'SELECT nombre FROM sac.empresa WHERE id = $1';
+    const { rows: empresaRows } = await pool.query(empresaQuery, [id_empresa]);
     if (empresaRows.length === 0) {
       return res.status(400).send({
         success: false,
@@ -63,16 +105,28 @@ exports.addUser = async (req, res) => {
       });
     }
 
-    const id_empresa = empresaRows[0].id;
+    const nombre_empresa = empresaRows[0].nombre;
+
 
     // Verifica si el correo ya existe en la tabla de usuario
     const correoQuery = 'SELECT COUNT(*) AS count FROM sac.usuario WHERE correo = $1';
     const { rows: correoRows } = await pool.query(correoQuery, [correo]);
-    const count = correoRows[0].count;
-    if (count > 0) {
+    const countCorreo = correoRows[0].count;
+    if (countCorreo > 0) {
       return res.status(400).send({
         success: false,
         message: 'El correo ingresado ya existe',
+      });
+    }
+
+    // Verifica si el rut ya existe en la tabla de usuario
+    const rutQuery = 'SELECT COUNT(*) AS count FROM sac.usuario WHERE rut = $1';
+    const { rows: rutRows } = await pool.query(rutQuery, [rut]);
+    const countRut = rutRows[0].count;
+    if (countRut > 0) {
+      return res.status(400).send({
+        success: false,
+        message: 'El rut ya está registrado',
       });
     }
 
@@ -93,7 +147,6 @@ exports.addUser = async (req, res) => {
     res.status(500).send('Error en el servidor');
   }
 }
-
 
 
 exports.deleteUser = async (req, res) => {
@@ -198,7 +251,7 @@ exports.updateUser = async (req, res) => {
       WHERE
         id = $8
     `;
-    
+
     const values = [id_rol, rut, dv, nombre, ap_paterno, ap_materno, correo, id];
 
     await pool.query(query, values);
@@ -244,3 +297,59 @@ exports.updateUserStatus = async (req, res) => {
     });
   }
 };
+
+
+// Cambio de contraseña para usuarios. Incluye validaciones para la nueva contraseña
+exports.updatePasswordApp = async (req, res) => {
+  try {
+    const { contrasena_actual, nueva_contrasena } = req.body;
+    const {id_usuario} = req.params;
+
+    // Verificar si el usuario existe
+    const usuarioQuery = 'SELECT * FROM sac.usuario WHERE id = $1';
+    const { rows: usuarioRows } = await pool.query(usuarioQuery, [id_usuario]);
+    if (usuarioRows.length === 0) {
+      return res.status(404).send({
+        success: false,
+        message: 'El usuario no existe',
+      });
+    }
+
+    const usuario = usuarioRows[0];
+    const contrasenaCoincide = await bcrypt.compare(contrasena_actual, usuario.contrasena);
+
+    if (!contrasenaCoincide) {
+      return res.status(400).send({
+        success: false,
+        message: 'La contraseña actual ingresada es incorrecta',
+      });
+    }
+
+    // Validar la nueva contraseña
+    if (typeof nueva_contrasena !== 'string' || nueva_contrasena.trim() === '') {
+      throw new Error('Error al recibir la nueva contraseña');
+    }
+
+    // Validación de la nueva contraseña con los caracteres de seguridad
+    const validatedPass = await validatePassword(nueva_contrasena);
+    if (!validatedPass) {
+      throw new Error('La nueva contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial (+/@$#|!¡%*¿?&.-_)');
+    }
+
+    // Encriptación de la nueva contraseña
+    const hashedPassword = await bcrypt.hash(nueva_contrasena, 10);
+
+    // Actualizar la contraseña en la base de datos
+    const updatePassQuery = 'UPDATE sac.usuario SET contrasena = $1 WHERE id = $2';
+    await pool.query(updatePassQuery, [hashedPassword, id_usuario]);
+
+    return res.status(200).send({
+      success: true,
+      message: 'Contraseña actualizada con éxito',
+    });
+  } catch (error) {
+    console.error('Error al actualizar contraseña', error);
+    res.status(500).send('Error en el servidor');
+  }
+};
+
