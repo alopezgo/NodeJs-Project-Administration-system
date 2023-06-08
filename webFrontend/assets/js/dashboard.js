@@ -65,12 +65,23 @@ document.addEventListener("DOMContentLoaded", function () {
   if (nombreUsuario) {
     const nombreUsuarioElemento = document.getElementById("nombre-usuario");
 
-    const imagenElemento = document.getElementById("img-usuario");
+    //const imagenElemento = document.getElementById("img-usuario");
     const nombreElemento = document.createElement("span");
     nombreElemento.innerHTML = "Hola " + nombreUsuario;
 
-    nombreUsuarioElemento.appendChild(imagenElemento);
+    // nombreUsuarioElemento.appendChild(imagenElemento);
     nombreUsuarioElemento.appendChild(nombreElemento);
   }
 });
 
+
+function cerrarSesion() {
+  // Borra las variables almacenadas en el local storage
+  localStorage.removeItem('token');
+  localStorage.removeItem('id_empresa');
+  localStorage.removeItem('nombre_usuario');
+  localStorage.removeItem('id_usuario');
+
+  // Redirecciona al usuario a la página de inicio de sesión
+  window.location.href = 'index.html';
+}
