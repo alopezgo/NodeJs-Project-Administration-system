@@ -104,3 +104,51 @@ exports.getTiposAsistencia= async (req, res) => {
     res.status(500).send('Error en el servidor');
   }
 };
+
+//Agrega registro consumo a BBDD DETALLE_CONSUMO 
+//Actualizado con nuevas validaciones
+exports.addAsistencia = async (req, res) => {
+  try {
+    console.log('body', req.body)
+    const { rut_empleado, id_tipo_asistencia } = req.body;
+    if (!rut_empleado || !id_tipo_asistencia) {
+      return res.status(400).send({ success: false, message: "Se requiere el rut del empleado y los datos de asistencia" });
+    }
+
+    if (typeof rut_empleado !== "string" || rut_empleado.trim() === "") {
+      throw new Error("Error al recibir el rut del empleado");
+    }
+
+    // Busca el id del empleado a partir del rut
+    const eventoQuery = 'SELECT id FROM sac.evento_asistencia WHERE id = $1';
+    const { rowCount } = await pool.query(eventoQuery, [id_tipo_asistencia]);
+    if (rowCount === 0) {
+      return res.status(400).send({ success: false, message: "No existe el evento asistencia que intenta registrar" });
+    }
+
+    // Busca el id del empleado a partir del rut
+    const query = 'SELECT id FROM sac.empleado WHERE rut = $1';
+    const { rows } = await pool.query(query, [rut_empleado]);
+
+    if (rows.length > 0) {
+      const id_empleado = rows[0].id;
+
+      // Inserta el registro en detalle_consumo
+      const insertQuery = 'INSERT INTO sac.detalle_asistencia (id, id_empleado, id_evento_asistencia, dt_evento) VALUES (DEFAULT, $1, $2, NOW())';
+      await pool.query(insertQuery, [id_empleado, id_tipo_asistencia]);
+
+      return res.status(200).send({
+        success: true,
+        message: 'Asistencia registrada con éxito',
+      });
+    } else {
+      return res.status(400).send({ success: false, message: "No se encontró el empleado con el rut proporcionado" });
+    }
+  } catch (error) {
+    console.error('Error al registrar la asistencia', error);
+    res.status(500).send({
+      success: false,
+      message: error.message
+    });
+  }
+};
