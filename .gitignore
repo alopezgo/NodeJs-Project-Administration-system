@@ -1,3 +1,4 @@
 */node_modules
 /backend/package-lock.json
 *./package-lock.json
+*/backend/db/db.js
