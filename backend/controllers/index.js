@@ -5,6 +5,8 @@ const controllers = {
     ConsumoController: require('./consumos.controller'),
     AsistenciaController: require('./asistencias.controller'),
     EmpleadosEmpresaController: require ('./empleadosEmpresa.controller'),
+    InfoController: require ('./info.controller'),
+    MailController: require ('./mail.controller'),
     
 };
 

@@ -1,6 +1,7 @@
 const { pool } = require("../db/db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const generator = require('password-generator');
 
 
 // Función Actualizada. Al recibir un correo erroneo ya no se cae el servidor
@@ -65,6 +66,23 @@ async function login(correo, contrasena) {
     return { success: true, message: "Login exitoso", token: token, data: rows };
 };
 
+async function existMail(mail) {
+    const query = `SELECT id, id_empresa, id_rol, nombre, correo, contrasena 
+                       FROM sac.usuario 
+                       WHERE correo = $1 
+                       AND id_estado = 1`;
+
+    const { rows } = await pool.query(query, [mail]);
+
+    if (rows.length === 0) {
+        return {
+            success: false,
+            message: "El correo ingresado no se encuentra registrado",
+            data: null,
+        };
+    }
+}
+
 async function deleteUser(correo) {
     const query = `
       UPDATE sac.usuario
@@ -95,12 +113,18 @@ async function validatePassword(contrasena) {
     return hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
 }
 
+async function generatePassword() {
+    const password = generator(8, false, /[\w\d\?\-@#$%&]/);
+    return password;
+}
 
 
 module.exports = {
     login,
     deleteUser,
-    validatePassword
+    validatePassword,
+    generatePassword,
+    existMail
 }
 
 
