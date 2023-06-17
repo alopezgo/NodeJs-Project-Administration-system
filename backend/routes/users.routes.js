@@ -14,6 +14,8 @@ api.put('/v1/usuarios/:id', UsersController.updateUser);
 api.put('/v1/usuarios/:id_usuario/updatePass', UsersController.updatePasswordApp);
 api.put('/v1/usuarios/estado/:id', UsersController.updateUserStatus);
 
+api.post('/v1/usuarios/recovery', UsersController.recovery);
+
 //user por id
 
 api.get('/v1/usuarios/:id', UsersController.getUserPorId);

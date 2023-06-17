@@ -1,7 +1,7 @@
 const { pool } = require("../db/db");
 const bcrypt = require("bcrypt");
-const { login, deleteUser, validatePassword } = require("../services/user.services");
-const { mailValidation } = require("../services/mail.services");
+const { login, deleteUser, validatePassword, generatePassword, existMail } = require("../services/user.services");
+const { mailValidation, sendEmail } = require("../services/mail.services");
 
 
 exports.getUser = async (req, res) => {
@@ -303,7 +303,7 @@ exports.updateUserStatus = async (req, res) => {
 exports.updatePasswordApp = async (req, res) => {
   try {
     const { contrasena_actual, nueva_contrasena } = req.body;
-    const {id_usuario} = req.params;
+    const { id_usuario } = req.params;
 
     // Verificar si el usuario existe
     const usuarioQuery = 'SELECT * FROM sac.usuario WHERE id = $1';
@@ -343,6 +343,7 @@ exports.updatePasswordApp = async (req, res) => {
     const updatePassQuery = 'UPDATE sac.usuario SET contrasena = $1 WHERE id = $2';
     await pool.query(updatePassQuery, [hashedPassword, id_usuario]);
 
+
     return res.status(200).send({
       success: true,
       message: 'Contraseña actualizada con éxito',
@@ -353,3 +354,66 @@ exports.updatePasswordApp = async (req, res) => {
   }
 };
 
+
+//En construcción
+exports.recovery = async (req, res) => {
+  try {
+    const { newMail } = req.body;
+    console.log('**newMail**', newMail)
+    
+    if (!newMail) {
+      return res.status(400).send({ success: false, message: "Se requiere correo para generar la solicitud" });
+    }
+    if (!mailValidation(newMail)) {
+      return res.status(400).send({ success: false, message: "No es un formato válido de correo" });
+    }
+    console.log('caida 0')
+    const correoBD = await existMail(newMail);
+    console.log('caida 1')
+
+    if (correoBD.success == false){
+      console.log('caida 2')
+      const subject = 'Solicitud de registro';
+      const text = `Hemos recibido su solicitud. Su correo no se encuentra en nuestros registros. Pongase en contacto con su administrador.`
+  
+      await sendEmail(newMail, subject, text);
+
+      return res.status(200).json({
+        success: true,
+        message: "Solicitud recibida correctamente",
+      });
+
+    } else {
+      console.log('caida 3')
+      const password = await generatePassword();
+      console.log('caida 4')
+      console.log(password);
+  
+      const subject = 'Solicitud de registro';
+      const text = `<p>Hemos recibido su solicitud exitosamente! Esta es tu nueva contraseña, úsala para iniciar sesión y luego cámbiala por una de tu elección para mayor seguridad.</p>
+      <p>Recuerda que la contraseña debe cumplir con los siguientes requisitos:</p>
+      <ul>
+        <li>Tener al menos una letra mayúscula</li>
+        <li>Tener al menos una letra minúscula</li>
+        <li>Tener al menos un número</li>
+        <li>Tener al menos un carácter especial ([+/@$#|!¡%*¿?&.-_])</li>
+      </ul>
+      <p>Tu nueva contraseña es: <strong>${password}</strong></p>`;
+
+      await sendEmail(newMail, subject, text);
+  
+      return res.status(200).json({
+        success: true,
+        message: "Solicitud recibida correctamente",
+      });
+    }
+
+ 
+
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: "Error en el servidor"
+    });
+  }
+};

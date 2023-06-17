@@ -7,6 +7,8 @@ router.use('/', require('./permisos.routes'));
 router.use('/', require('./consumos.routes'));
 router.use('/', require('./asistencias.routes'));
 router.use('/', require('./empleadosEmpresas.routes'));
+router.use('/', require('./info.routes'));
+router.use('/', require('./mail.routes'));
 
 
 module.exports = router;
