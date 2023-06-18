@@ -49,7 +49,7 @@ exports.loginUser = async (req, res) => {
 exports.addUser = async (req, res) => {
   try {
     console.log('body', req.body)
-    const { id_empresa, id_rol, rut, dv, nombre, ap_paterno, ap_materno, correo, contrasena } = req.body;
+    let { id_empresa, id_rol, rut, dv, nombre, ap_paterno, ap_materno, correo, contrasena } = req.body;
     if (!correo || !contrasena) {
       return res.status(400).send({ success: false, message: "Se requiere correo y contraseña para iniciar sesión" });
     }
@@ -94,22 +94,14 @@ exports.addUser = async (req, res) => {
       throw new Error("La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial (+/@$#|!¡%*¿?&.-_)");
     }
 
-
-    // Obtiene el nombre de la empresa a partir del id_empresa
-    const empresaQuery = 'SELECT nombre FROM sac.empresa WHERE id = $1';
-    const { rows: empresaRows } = await pool.query(empresaQuery, [id_empresa]);
-    if (empresaRows.length === 0) {
-      return res.status(400).send({
-        success: false,
-        message: 'La empresa ingresada no existe',
-      });
-    }
-
-    const nombre_empresa = empresaRows[0].nombre;
-
+    //Otorga formato antes de insertar/contrastar a/con la base:
+    correo = correo.toLowerCase()
+    nombre = nombre.charAt(0).toUpperCase() + nombre.slice(1).toLowerCase();
+    ap_paterno = ap_paterno.charAt(0).toUpperCase() + ap_paterno.slice(1).toLowerCase();
+    ap_materno = ap_materno.charAt(0).toUpperCase() + ap_materno.slice(1).toLowerCase();
 
     // Verifica si el correo ya existe en la tabla de usuario
-    const correoQuery = 'SELECT COUNT(*) AS count FROM sac.usuario WHERE correo = $1';
+    const correoQuery = 'SELECT COUNT(id) AS count FROM sac.usuario WHERE correo = $1';
     const { rows: correoRows } = await pool.query(correoQuery, [correo]);
     const countCorreo = correoRows[0].count;
     if (countCorreo > 0) {
@@ -120,7 +112,7 @@ exports.addUser = async (req, res) => {
     }
 
     // Verifica si el rut ya existe en la tabla de usuario
-    const rutQuery = 'SELECT COUNT(*) AS count FROM sac.usuario WHERE rut = $1';
+    const rutQuery = 'SELECT COUNT(id) AS count FROM sac.usuario WHERE rut = $1';
     const { rows: rutRows } = await pool.query(rutQuery, [rut]);
     const countRut = rutRows[0].count;
     if (countRut > 0) {
@@ -140,7 +132,6 @@ exports.addUser = async (req, res) => {
     return res.status(200).send({
       success: true,
       message: 'Usuario insertado con éxito',
-      nombre_empresa: nombre_empresa //añade el nombre de la empresa al objeto de respuesta
     });
   } catch (error) {
     console.error('Error al insertar usuario', error);

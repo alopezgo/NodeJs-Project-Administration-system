@@ -1,3 +1,5 @@
+// Al cargar el DOM se verifica si existe un token de usuario en el local storage, 
+// en caso contrario te direcciona al Login
 document.addEventListener('DOMContentLoaded', function() {
   const tokenUsuario = localStorage.getItem("token");
   const isLoginPage = window.location.href.includes("login.html");
@@ -11,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 const form = document.querySelector("#add-user-form");
 const empresaSelect = document.querySelector("#id_empresa");
 
-// Función para cargar las empresas en el select.
+// Función asyncrona para cargar opciones de empresa en Formulario
 async function cargarEmpresas() {
   try {
     // Obtiene las empresas.
@@ -21,40 +23,36 @@ async function cargarEmpresas() {
         "Content-Type": "application/json",
       },
     });
-
     const data = await response.json();
  
-
     // Verifica si la respuesta es un objeto y lo convierte en un arreglo.
     const empresas = Array.isArray(data.data) ? data.data : [data.data];
 
-
     if (Array.isArray(empresas) && empresas.length > 0) {
+      // Agrega las opciones al select.
+      empresaSelect.innerHTML = "";
+      empresas.forEach((empresa) => {
+      const option = document.createElement("option");
+      option.value = empresa.id; // Modificación aquí
+      option.textContent = empresa.nombre;
+      empresaSelect.appendChild(option);
+    });
       // Código para agregar las opciones al select
     } else {
       alert("No se pudieron cargar las empresas");
     }
 
-    // Agrega las opciones al select.
-    empresaSelect.innerHTML = "";
-    empresas.forEach((empresa) => {
-      const option = document.createElement("option");
-      option.value = empresa.nombre; // Modificación aquí
-      option.textContent = empresa.nombre;
-      empresaSelect.appendChild(option);
-    });
-    
   } catch (error) {
     console.error(error);
-    alert("Error al cargar las empresas");
+    alert("Error en el servidor");
   }
 }
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
-
   // Obtener los datos del formulario.
   const id_rol = form.elements.id_rol.value;
+  const id_empresa = form.elements.id_empresa.value;
   const rut = form.elements.rut.value;
   const dv = form.elements.dv.value;
   const nombre = form.elements.nombre.value;
@@ -62,24 +60,23 @@ form.addEventListener("submit", async (event) => {
   const ap_materno = form.elements.ap_materno.value;
   const correo = form.elements.correo.value;
   const contrasena = form.elements.contrasena.value;
-  const nombre_empresa = empresaSelect.value;
 
   // Validar que se hayan completado todos los campos.
   if (
     !id_rol ||
+    !id_empresa||
     !rut ||
     !dv ||
     !nombre ||
     !ap_paterno ||
     !ap_materno ||
     !correo ||
-    !contrasena ||
-    !nombre_empresa
+    !contrasena 
+
   ) {
     alert("Por favor, complete todos los campos.");
     return;
   }
-  console.log(id_empresa)
   try {
     // Enviar los datos del formulario.
     const response = await fetch("http://localhost:3000/api/v1/addUser", {
@@ -90,7 +87,7 @@ form.addEventListener("submit", async (event) => {
       body: JSON.stringify({
         id_estado: 1,
         id_rol: parseInt(id_rol),
-        nombre_empresa,
+        id_empresa: parseInt(id_empresa),
         rut,
         dv,
         nombre,
@@ -102,22 +99,7 @@ form.addEventListener("submit", async (event) => {
     });
     const data = await response.json();
 
-    console.log(  1,
-       parseInt(id_rol),
-       nombre_empresa,
-      rut,
-      dv,
-      nombre,
-      ap_paterno,
-      ap_materno,
-      correo,
-      contrasena);
-  
-    
-
-    if (data.success) {
-      // La solicitud se realizó correctamente.
-      
+    if (data.success) {      
       Swal.fire({
         icon: "success",
         title: "Usuario insertado con éxito",
@@ -127,6 +109,7 @@ form.addEventListener("submit", async (event) => {
       }).then(() => {
         // Limpiar los campos del formulario
         form.elements.id_rol.value = "";
+        form.elements.id_empresa.value = "";
         form.elements.rut.value = "";
         form.elements.dv.value = "";
         form.elements.nombre.value = "";
@@ -134,7 +117,6 @@ form.addEventListener("submit", async (event) => {
         form.elements.ap_materno.value = "";
         form.elements.correo.value = "";
         form.elements.contrasena.value = "";
-        empresaSelect.value = ""; // Limpiar el select
       });
     } else {
       // La solicitud falló.
@@ -142,7 +124,7 @@ form.addEventListener("submit", async (event) => {
         icon: "error",
         title: "¡Error en el servidor!",
         // Agregar el mensaje de error en la alerta.
-        text: data.message || "Ha ocurrido un error en el servidor.",
+        text: data.message || "Ha ocurrido un error mientras se ingresaban los datos a la base",
         showConfirmButton: true,
         confirmButtonText: "Aceptar",
       });
@@ -152,5 +134,3 @@ form.addEventListener("submit", async (event) => {
     alert("Ha ocurrido un error en el servidor");
   }
 });
-
-cargarEmpresas();
