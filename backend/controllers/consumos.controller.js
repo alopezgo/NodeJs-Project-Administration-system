@@ -324,3 +324,46 @@ exports.getConsumosCentroCosto = async (req, res) => {
     return res.status(500).json({ success: false, message: 'Error al obtener los consumos' });
   }
 };
+
+
+// Servicio para obtener total consumo mensual
+exports.getInformeConsumoMensual = async (req, res) => {
+  try {
+    const { id_empresa } = req.params;
+
+    const query = `
+    Select  cont.nombre as nom_contratista, 
+    count(distinct empl.id) as cant_empleados,
+    empl.id_centro_costos,
+    extract(YEAR from cons.dt_consumo) as año,
+    extract(MONTH from cons.dt_consumo) as mes,
+    count(cons.dt_consumo) as cant_consumos,
+    tipo.tipo,
+    sum(tipo.precio) as total
+    from sac.contratista as cont
+    join sac.empresa as emp
+    on cont.id_empresa = emp.id
+    join sac.empleado as empl 
+    on cont.id_empresa = empl.id_empresa
+    and empl.id = empl.id_empresa 
+    join sac.detalle_consumo as cons
+    on cons.id_empleado = empl.id
+    join sac.tipo_consumo as tipo on cons.id_tipo_consumo = tipo.id
+    where cont.id_servicio = 1
+    and cont.id_empresa = $1
+    GROUP BY cont.nombre, emp.nombre, empl.id, empl.id_centro_costos, tipo.tipo, año, mes
+      `;
+    const params = [id_empresa];
+    const { rows } = await pool.query(query, params);
+
+    // Devuelve el resumen de consumo como respuesta
+    return res.status(200).json({
+      success: true,
+      message: "Informe consumo mensual obtenido con éxito",
+      data: rows,
+    });
+  } catch (error) {
+    console.error('Error al obtener informe consumo mensual:', error);
+    return res.status(500).json({ success: false, message: 'Error al obtener Informe consumo mensual' });
+  }
+};
