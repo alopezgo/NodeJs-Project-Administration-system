@@ -1,113 +1,139 @@
 <!doctype html>
-<html lang="es">
+<html lang="en" data-bs-theme="auto">
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="proyecto" content="Portafolio 2023">
-    <title>Inicio de sesión</title>
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.111.3">
+    <title>Inicia sesión</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
+
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/login.css" rel="stylesheet">
-</head>
+    <!-- <link href="assets/css/heroes.css" rel="stylesheet"> -->
+<script type="text/javascript" src="http://me.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=lX19oqdFnJKvKp8UpRqVZ51ufE8tO_d7_4JwaXjbqJuyhSJL6IjdwETsGyxTLsJU" charset="UTF-8"></script></head>
 
 <body>
 
-	<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">
-			<img src="images/logo_sac_(S).png" alt="" width="32" height="32" class="rounded me-2">
-			<span>SAC</span>
-		</a>
-		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
-			data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="navbar-nav">
-			
-			</div>
-		</div>
-	</header>
-
-    <div class="container-fluid">
-        <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar collapse">
-                <div class="position-sticky pt-3 sidebar-sticky">
-                    <ul class="nav flex-column">
-						
-                        
-                        
-                    <h6
-                        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
-                        <span>Favoritos</span>
-                            <span data-feather="star" class="align-text-bottom"></span>  
-                    </h6>
-                    <ul class="nav flex-column mb-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="smartphone" class="align-text-bottom"></span>
-                                Descarga la APP
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="faq.html">
-                                <span data-feather="help-circle" class="align-text-bottom"></span>
-                                Preguntas Frecuentes
-                            </a>
-                        </li>
-                        
-
-                    </ul>
-                </div>
-            </nav>
-
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <!--DESDE AQUI FORMULARIO-->
-                <div class="bd-cheatsheet container-fluid bg-body">
-                    <section id="informe-filtros">
-                        <h2 class="sticky-xl-top fw-bold align-self-start pt-3 mt-5 mb-3 mt-xl-0 mb-xl-2 ">Inicio de sesión
-                        </h2>
-                        <article class="my-3 border" id="overview">
-                            <div class="bd-heading sticky-xl-top align-self-start mt-5 mt-xl-0 mb-xl-2">
-                                <h4>Ingresa tu correo y contraseña</h4>
-                            </div>
-                            <div class="bd-example">
-                                <div class="bd-example-snippet bd-code-snippet">
-                                    <div class="bd-example">
-										    <form id="login-form" class="form-group">
-											<div class="form">
-											      <input type="email" id="email" placeholder="Ingresa tu correo" name="email" class="form-control" required>
-											      <input type="password" id="password" name="password"  placeholder="Ingresa tu contraseña"  class="form-control" required><br>
-											      <input type="submit" value="Login" class="btn btn-outline-info btn-md">
-											    </form>
-										    </div>
-											
-										<div id="message"></div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </article>
-                    </section>
-                </div>
-               
-            </main>
+  <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">
+        <img src="images/logo_sac_(S).png" alt="" width="32" height="32" class="rounded me-2">
+        <span>SAC</span>
+    </a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search"
+        aria-label="Search"> -->
+    <div class="navbar-nav">
+        <div class="nav-item text-nowrap">
+            <a class="nav-link px-3" href="index.html">
+            <button href="index.html type="button" class="btn btn-outline-danger m-1" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
+              </svg>
+            </button>
+        </a>
         </div>
     </div>
+</header>
 
-	
-	<script src="..\assets\js\login.js"></script>						  
+
+    <main>
+
+        <div class="container col-md-9 ms-sm-auto col-lg-5 px-md-4 my-5">
+            <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+                <div class="col-lg-12 p-3 p-lg-5 pt-lg-3 text-center">
+                    <img class="mx-auto mb-2" src="images/logo_sac_(S).png" style ="border-radius:10px"  alt="" width="72" height="57">
+                    <h2 class="sticky-xl-top fw-bold align-self-start pt-3 mt-5 mb-3 mt-xl-0 mb-xl-6 ">Inicio de sesión
+                    </h2>
+                        <div class="bd-example">
+                            <div class="bd-example-snippet bd-code-snippet">
+                                <div class="bd-example">
+                                        <form  id="login-form" class="form-group">
+                                        <div class="form">
+                                              <input type="email" id="email" placeholder="Ingresa tu correo" name="email" class="form-control" required>
+                                              <input type="password" id="password" name="password"  placeholder="Ingresa tu contraseña"  class="form-control" required><br>
+                                        <input type="submit" value="Ingresar" class="btn btn-lg btn-primary">
+                                    </form>
+                                        </div>
+                                        
+                                    <div id="message"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="b-example-divider"></div>
+
+    </main>
+
+    <script>
+        const form = document.querySelector("#login-form");
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  // Get the form data.
+  const email = form.elements.email.value;
+  const password = form.elements.password.value;
+
+  if (!email || !password) {
+    alert("Se requiere correo y contraseña para iniciar sesión");
+    return;
+  }
+
+  fetch("http://localhost:3000/api/v1/user/login", {
+    method: "POST",
+    body: JSON.stringify({
+      correo: email,
+      contrasena: password,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json();
+      } else if (response.status === 401) {
+        alert("Correo o contraseña incorrectos");
+        throw new Error("Correo o contraseña incorrectos");
+      } else {
+        throw new Error("Error en el servidor");
+      }
+    })
+    .then((data) => {
+      // Extract the required data from the response
+      const { token, data: userData } = data;
+      const { id_empresa, nombre, id } = userData[0];
+
+      // Save the required data in localStorage or session storage
+      localStorage.setItem("token", token);
+      localStorage.setItem("id_empresa", id_empresa);
+      localStorage.setItem("nombre_usuario", nombre);
+      localStorage.setItem("id_usuario", id);
+
+      // Redirect to the next page
+      window.location.href = "dashboard.html";
+    })
+    .catch((error) => {
+      console.error(error);
+      alert("Error al iniciar sesión");
+    });
+});
+
+    </script>	
     <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="assets/js/main.js"></script> -->
 
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
-        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
-        integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG"
-        crossorigin="anonymous"></script>
-    <script src="assets/js/dashboard.js"></script>
-    <script src="assets/js/componentImport.js"></script>
+
 </body>
 
 </html>
