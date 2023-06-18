@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Recuperación de Contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="actualizarContrasena()" #passwordForm="ngForm">
+    <ion-item>
+      <ion-label>Contraseña Actual</ion-label>
+      <ion-input
+        type="password"
+        name="contrasenaActual"
+        [(ngModel)]="contrasenaActual"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Nueva Contraseña</ion-label>
+      <ion-input
+        type="password"
+        name="nuevaContrasena"
+        [(ngModel)]="nuevaContrasena"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <div class="ion-padding">
+      <ion-button expand="full" type="submit" [disabled]="!passwordForm.valid">
+        Actualizar Contraseña
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

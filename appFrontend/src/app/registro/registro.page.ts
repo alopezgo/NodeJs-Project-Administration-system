@@ -10,16 +10,12 @@ import { NavigationExtras, Router } from '@angular/router';
   styleUrls: ['./registro.page.scss'],
 })
 export class RegistroPage {
-  contenido: string = "Maria Susana Gallardo Yevenes; 22222222-0; sac; Mishi St. 555 Santiago Cl; +56912345678; sgallardo@sac.cl";
-  rut_empleado: string;
-  arreglo: Array<string>;
+
 
   consumo: number = 0;
 
   constructor(private http: HttpClient, private navCtrl: NavController, private router:Router) {
-    this.arreglo = this.contenido.split(';');
-    this.rut_empleado = this.arreglo[1].split('-')[0].trim();
-    console.log(this.rut_empleado)
+   
   }
 
   addConsumo(id_tipo_consumo:number){

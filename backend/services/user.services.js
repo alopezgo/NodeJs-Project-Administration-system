@@ -68,9 +68,9 @@ async function login(correo, contrasena) {
 
 async function existMail(mail) {
     const query = `SELECT id, id_empresa, id_rol, nombre, correo, contrasena 
-                       FROM sac.usuario 
-                       WHERE correo = $1 
-                       AND id_estado = 1`;
+                   FROM sac.usuario 
+                   WHERE correo = $1 
+                   AND id_estado = 1`;
 
     const { rows } = await pool.query(query, [mail]);
 
@@ -80,8 +80,15 @@ async function existMail(mail) {
             message: "El correo ingresado no se encuentra registrado",
             data: null,
         };
+    } else {
+        return {
+            success: true,
+            message: "El correo ingresado se encuentra registrado",
+            data: rows[0],
+        };
     }
 }
+
 
 async function deleteUser(correo) {
     const query = `

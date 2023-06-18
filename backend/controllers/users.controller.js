@@ -359,61 +359,70 @@ exports.updatePasswordApp = async (req, res) => {
 exports.recovery = async (req, res) => {
   try {
     const { newMail } = req.body;
-    console.log('**newMail**', newMail)
-    
+
     if (!newMail) {
       return res.status(400).send({ success: false, message: "Se requiere correo para generar la solicitud" });
     }
     if (!mailValidation(newMail)) {
       return res.status(400).send({ success: false, message: "No es un formato válido de correo" });
     }
-    console.log('caida 0')
     const correoBD = await existMail(newMail);
-    console.log('caida 1')
-
-    if (correoBD.success == false){
-      console.log('caida 2')
+    if (correoBD.success == false) {
       const subject = 'Solicitud de registro';
-      const text = `Hemos recibido su solicitud. Su correo no se encuentra en nuestros registros. Pongase en contacto con su administrador.`
-  
-      await sendEmail(newMail, subject, text);
+      const html = `<h1>Hemos recibido su solicitud</h1> 
+      <p>Su correo no se encuentra en nuestros registros. Póngase en contacto con su <strong>administrador</strong>.</p>
+      <br>
+      <br>
+      <p>Este es un correo generado autamáticamente, no intente responderlo.</p>`;
 
+      await sendEmail(newMail, subject, html);
       return res.status(200).json({
         success: true,
         message: "Solicitud recibida correctamente",
       });
 
-    } else {
-      console.log('caida 3')
+    } else if (correoBD.success == true) {
       const password = await generatePassword();
-      console.log('caida 4')
       console.log(password);
-  
+
       const subject = 'Solicitud de registro';
-      const text = `<p>Hemos recibido su solicitud exitosamente! Esta es tu nueva contraseña, úsala para iniciar sesión y luego cámbiala por una de tu elección para mayor seguridad.</p>
-      <p>Recuerda que la contraseña debe cumplir con los siguientes requisitos:</p>
+      const html = `<h1>Hemos recibido su solicitud exitosamente!</h1> 
+      <p>Te enviamos una nueva contraseña. Úsala para iniciar sesión y luego cámbiala por una de tu elección para mayor seguridad.</p>
+      <p>Recuerda que al momento de crear una nueva contraseña ésta debe cumplir con los siguientes requisitos:</p>
       <ul>
         <li>Tener al menos una letra mayúscula</li>
         <li>Tener al menos una letra minúscula</li>
         <li>Tener al menos un número</li>
         <li>Tener al menos un carácter especial ([+/@$#|!¡%*¿?&.-_])</li>
       </ul>
-      <p>Tu nueva contraseña es: <strong>${password}</strong></p>`;
+      <br>
+      <br>
+      <p>Tu nueva contraseña es: <h1>${password}</h1></p>
+      <br>
+      <br>
+      <p>Este es un correo generado autamáticamente, no intente responderlo.</p>`;
 
-      await sendEmail(newMail, subject, text);
-  
+
+      await sendEmail(newMail, subject, html);
+
+      // Encriptación de la nueva contraseña
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Actualizar la contraseña en la base de datos
+      const updatePassQuery = 'UPDATE sac.usuario SET contrasena = $1 WHERE correo = $2';
+      await pool.query(updatePassQuery, [hashedPassword, newMail]);
+
+
       return res.status(200).json({
         success: true,
         message: "Solicitud recibida correctamente",
       });
     }
-
- 
-
   } catch (e) {
+    console.log('Error:', e);
     res.status(500).json({
       success: false,
-      message: "Error en el servidor"
+      message: "Error en el servidor",
     });
   }
 };

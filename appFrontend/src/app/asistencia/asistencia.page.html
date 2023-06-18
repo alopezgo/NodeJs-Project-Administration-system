@@ -1,0 +1,29 @@
+<ion-content class="fondo"> 
+  
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button>
+          <ion-icon size="large" color="light" name="arrow-back-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <h3>Registro de asistencia</h3>
+      <ion-buttons slot="end">
+        <ion-button href="/login">
+          <ion-icon size="large" color="light" name="log-out-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="container">
+    <div class="registros">
+      <ion-button (click)="addAsistencia(1)" >ENTRADA</ion-button>
+      <ion-button (click)="addAsistencia(2)">SALIDA</ion-button>
+
+
+      <ion-button color="primary" class="boton-volver">Cancelar</ion-button>
+    </div>
+  </div>
+  
+</ion-content>

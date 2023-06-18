@@ -5,7 +5,7 @@ function mailValidation(correo) {
     return expresionRegular.test(correo);
   }
 
-async function sendEmail (to, subject, text) {
+async function sendEmail (to, subject, html) {
     try {
       // Configurar el transporte de correo
       const transporter = nodemailer.createTransport({
@@ -18,10 +18,10 @@ async function sendEmail (to, subject, text) {
   
       // Configurar el contenido del correo
       const mailOptions = {
-        from: 'sac.mailservice@gmail.com',
+        from: '"SAC internal service" <sac.mailservice@gmail.com>',
         to: to,
         subject: subject,
-        text: text,
+        html: html,
       };
   
       // Enviar el correo
