@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular'; // Importa IonicModule
+import { Plugins } from '@capacitor/core';
+
+const { BarcodeScanner } = Plugins;
 
 @Component({
   selector: 'app-almuerzo',
@@ -11,55 +14,104 @@ import { IonicModule, NavController } from '@ionic/angular'; // Importa IonicMod
 })
 export class AlmuerzoPage implements OnInit {
 
-  rut_empleado: string;
+  rut_empleado: string = '';
   consumo: number = 0;
+
+  hiddenPage: boolean = false; // Variable para controlar la visibilidad de la página
+
 
   constructor(private http: HttpClient, private navCtrl: NavController,private router:Router) { }
 
   ngOnInit() {
-
     try {
-      this.consumo = this.router.getCurrentNavigation().extras.state.pass;
-      
+      const navigationState = this.router.getCurrentNavigation();
+      if (navigationState && navigationState.extras && navigationState.extras.state && navigationState.extras.state['pass']) {
+        this.consumo = navigationState.extras.state['pass'];
+      } else {
+        throw new Error('El objeto es nulo');
+      }
     } catch (error) {
-      this.router.navigate(['registro'])       
-      
-     
+      console.error(error);
+      this.router.navigate(['registro']);
     }
   }
 
+  async leerQR() {
 
-  
-  addConsumo(consumoForm: NgForm) {
+    let that = this;
 
-    const rut  = consumoForm.value.rut;
+   this.router.navigate(['qr'])
 
-    console.log(rut)
-    console.log(this.consumo)
-
-    const consumo = {
-       id_tipo_consumo: this.consumo
-     };
-
-    const data = {
-      rut_empleado: rut.trim(),
-      consumo: consumo,
-    };
-    console.log(data)
-    this.http.post('http://localhost:3000/api/v1/consumos/registrarConsumo', data)
-      .subscribe(
-        (response: any) => {
-          console.log(response);
-          alert("Se ha registrado el consumo correctamente");
-        },
-        (error) => {
-          console.error(error);
-          alert("NO SE PUDO registrar el consumo correctamente");
-        }
-      );
+   const bodyElement = document.querySelector('body');
+    if (bodyElement) {
+    bodyElement.classList.add('scanner-active');
+    bodyElement.style.display = 'none';
   }
 
-  goBack(): void {
-    this.navCtrl.back();
+
+   await BarcodeScanner["checkPermission"]({ force: true });
+
+      BarcodeScanner["hideBackground"]();
+
+      this.hiddenPage = false; // Mostrar la página nuevamente después de cerrar la cámara
+
+      const result = await BarcodeScanner["startScan"]();
+      if (result.hasContent) {
+        let contenido = result.content;
+        that.rut_empleado = contenido.trim();
+        console.log('Contenido del código QR:', contenido);
+      }
+
+      const bodyElement2 = document.querySelector('body');
+      if (bodyElement2) {
+        bodyElement2.classList.add('scanner-active');
+        bodyElement2.style.display = 'block';
+      }
+      
+     this.router.navigate(['registro'])
+
+
   }
-}
+
+
+  async addConsumo(consumoForm: NgForm) {
+
+    let that = this;
+
+    await this.leerQR(); //llamamos la función del QR
+
+    
+
+
+        const consumo = {
+          id_tipo_consumo: that.consumo
+        };
+
+        const data = {
+          rut_empleado: that.rut_empleado.trim(),
+          consumo: consumo,
+        };
+
+        this.http.post('http://192.168.1.120:3000/api/v1/consumos/registrarConsumo', data)
+          .subscribe(
+            (response: any) => {
+              console.log(response);
+              alert("Se ha registrado el consumo correctamente");
+            },
+            (error) => {
+              console.error(error);
+              alert("NO SE PUDO registrar el consumo correctamente");
+            }
+          );
+
+         
+      }
+
+      goBack(): void {
+        this.navCtrl.back();
+      }
+    
+    
+    
+  }
+

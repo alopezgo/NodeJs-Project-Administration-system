@@ -26,12 +26,12 @@
   <ion-img src="\assets\icon\user.png"></ion-img> 
 </div>
 
-  
+
 
   
   <ion-content class="fondo">
   
-    <h3>Bienvenido {{username}}</h3>
+    <h3>Bienvenido {{nombre}}</h3>
 
     <ion-button class="registroButton" shape="round" expand="block" href="/registro">Registrar</ion-button>
 
@@ -40,10 +40,10 @@
 
 <div class="categorias">
 
-      <ion-card class="caja" color="secondary">
+      <ion-card class="caja" color="secondary"  (click)="goToPerfil()">
         <ion-card-header>
           <ion-icon name="document-outline"></ion-icon>
-          <ion-card-title>Registros</ion-card-title>
+          <ion-card-title>Mi perfil</ion-card-title>
         </ion-card-header>
       </ion-card>
 

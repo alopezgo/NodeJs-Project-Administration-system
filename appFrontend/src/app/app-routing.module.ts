@@ -37,6 +37,41 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'qr',
+    redirectTo: 'qr',
+    pathMatch: 'full'
+  },
+  {
+    path: 'perfil',
+    redirectTo: 'perfil',
+    pathMatch: 'full'
+  },
+  {
+    path: 'recovery',
+    redirectTo: 'recovery',
+    pathMatch: 'full'
+  },
+  {
+    path: 'entrada',
+    redirectTo: 'entrada',
+    pathMatch: 'full'
+  },
+  {
+    path: 'salida',
+    redirectTo: 'salida',
+    pathMatch: 'full'
+  },
+  {
+    path: 'asistencia',
+    redirectTo: 'asistencia',
+    pathMatch: 'full'
+  },
+  {
+    path: 'recuperarPass',
+    redirectTo: 'recuperarPass',
+    pathMatch: 'full'
+  },
+  {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
@@ -55,7 +90,8 @@ const routes: Routes = [
   {
     path: 'desayuno',
     loadChildren: () => import('./desayuno/desayuno.module').then( m => m.DesayunoPageModule)
-  },  {
+  },
+  {
     path: 'almuerzo',
     loadChildren: () => import('./almuerzo/almuerzo.module').then( m => m.AlmuerzoPageModule)
   },
@@ -67,6 +103,39 @@ const routes: Routes = [
     path: 'cena',
     loadChildren: () => import('./cena/cena.module').then( m => m.CenaPageModule)
   },
+  {
+    path: 'qr',
+    loadChildren: () => import('./qr/qr.module').then( m => m.QrPageModule)
+  },
+  {
+    path: 'perfil',
+    loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+  {
+    path: 'recovery',
+    loadChildren: () => import('./recovery/recovery.module').then( m => m.RecoveryPageModule)
+  },
+  {
+    path: 'entrada',
+    loadChildren: () => import('./entrada/entrada.module').then( m => m.EntradaPageModule)
+  },
+  {
+    path: 'salida',
+    loadChildren: () => import('./salida/salida.module').then( m => m.SalidaPageModule)
+  },
+  {
+    path: 'asistencia',
+    loadChildren: () => import('./asistencia/asistencia.module').then( m => m.AsistenciaPageModule)
+  },
+  {
+    path: 'recuperarpass',
+    loadChildren: () => import('./recuperarpass/recuperarpass.module').then( m => m.RecuperarpassPageModule)
+  },
+
+
+
+
+
 
 
 
