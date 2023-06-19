@@ -6,7 +6,7 @@ exports.getCentroCosto = async (req, res) => {
   try {
     const { id_empresa } = req.params;
     const query = `
-                    SELECT id, id_empresa,id_turno, centro
+                    SELECT id, id_empresa, centro
                     FROM sac.centro_costos
                     WHERE id_empresa = $1;`;
     const result = await pool.query(query, [id_empresa]);
