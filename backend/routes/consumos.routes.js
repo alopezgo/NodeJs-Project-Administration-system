@@ -12,4 +12,5 @@ api.get('/v1/consumos/:id_empresa/ccosto', ConsumoController.getConsumosCentroCo
 api.get('/v1/consumos/:id_empresa/:id_cc/:fecha_desde/:fecha_hasta', ConsumoController.getConsumosPorCCFecha);
 api.get('/v1/consumos/informeconsumos/:id_empresa', ConsumoController.getInformeConsumoMensual);
 
+
 module.exports = api;

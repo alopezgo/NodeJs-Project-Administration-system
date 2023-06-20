@@ -336,7 +336,7 @@ exports.getInformeConsumoMensual = async (req, res) => {
     count(distinct empl.id) as cant_empleados,
     empl.id_centro_costos,
     extract(YEAR from cons.dt_consumo) as año,
-    extract(MONTH from cons.dt_consumo) as mes,
+	extract(MONTH from cons.dt_consumo) as mes,
     count(cons.dt_consumo) as cant_consumos,
     tipo.tipo,
     sum(tipo.precio) as total
