@@ -79,6 +79,7 @@ form.addEventListener("submit", async (event) => {
         form.elements.ap_materno.value = "";
         form.elements.correo.value = "";
         form.elements.contrasena.value = "";
+        
       });
     } else {
       // La solicitud falló.

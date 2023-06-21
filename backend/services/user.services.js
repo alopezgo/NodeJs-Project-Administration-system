@@ -6,7 +6,7 @@ const generator = require('password-generator');
 
 // Función Actualizada. Al recibir un correo erroneo ya no se cae el servidor
 async function login(correo, contrasena) {
-    const query = `SELECT id, id_empresa, id_rol, nombre, correo, contrasena 
+    const query = `SELECT id, id_empresa, id_rol, nombre, ap_paterno, correo, contrasena 
                    FROM sac.usuario 
                    WHERE correo = $1 
                    AND id_estado = 1`;
@@ -48,13 +48,13 @@ async function login(correo, contrasena) {
             data: null,
         };
     }
-    if (rows[0].id_rol == 3) {
-        return {
-            success: false,
-            message: "No cuenta con los permisos necesarios para ingresar al sitio web",
-            data: null,
-        };
-    }
+    // if (rows[0].id_rol == 3) {
+    //     return {
+    //         success: false,
+    //         message: "No cuenta con los permisos necesarios para ingresar al sitio web",
+    //         data: null,
+    //     };
+    // }
     if (!isPasswordCorrect) {
         return {
             success: false,

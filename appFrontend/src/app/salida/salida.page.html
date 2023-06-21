@@ -1,5 +1,26 @@
 <ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="dark" (click)="goBack()">
+          <ion-icon name="arrow-back-circle-outline" size="large"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <h3>Salida</h3>
+      <ion-buttons slot="end">
+        <ion-button (click)="logOut()" color="dark">
+          <ion-icon (click)="logOut()"size="large" color="dark" name="log-out-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
   <form #consumoForm="ngForm" (ngSubmit)="addAsistencia(consumoForm)">
-    <ion-button expand="block" type="submit" (click)="goBack()">Leer credencial</ion-button>
+    <div class="qr-button-container">
+      <img src="assets/icon/qr.png" alt="QR" class="qr-icon" />
+      <ion-button expand="block" type="submit" class="red-button">
+        Leer credencial
+      </ion-button>
+    </div>
   </form>
 </ion-content>

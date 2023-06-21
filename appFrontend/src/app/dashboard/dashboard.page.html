@@ -1,46 +1,32 @@
-
-<ion-content class="fondo"> 
-
-  
+<ion-content class="fondo">
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button href="/login">
-        <ion-icon size="large" color="light" name="arrow-back-circle-outline" ></ion-icon>
-      </ion-button>
+        <ion-button color="dark" (click)="goBack()">
+          <ion-icon name="arrow-back-circle-outline" size="large"></ion-icon>
+        </ion-button>
       </ion-buttons>
       <h3>Home</h3>
-      <ion-buttons slot="end" >
-        <ion-button href="/login">
-        <ion-icon size="large" color="light" name="log-out-outline" ></ion-icon>
-      </ion-button>
+      <ion-buttons slot="end">
+        <ion-button (click)="logOut()" color="dark">
+          <ion-icon (click)="logOut()"size="large" color="dark" name="log-out-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
-  
-  
 
-  
-<div class="cabecera">
-  <ion-searchbar></ion-searchbar>
-  <ion-img src="\assets\icon\user.png"></ion-img> 
-</div>
-
-
-
-  
   <ion-content class="fondo">
-  
-    <h3>Bienvenido {{nombre}}</h3>
+    <div class="logo-container">
+      <ion-img src="assets/icon/00_log_sac.png" class="logo-sac"></ion-img>
+    </div>
+    <h3 class="bienvenida-text">Bienvenido {{nombre}}</h3>
 
-    <ion-button class="registroButton" shape="round" expand="block" href="/registro">Registrar</ion-button>
+    <ion-button class="registroButton" shape="round" expand="full" href="/registro" color="primary">Registrar</ion-button>
 
-    
     <h3>Categorias</h3>
 
-<div class="categorias">
-
-      <ion-card class="caja" color="secondary"  (click)="goToPerfil()">
+    <div class="categorias">
+      <ion-card class="caja" color="secondary" (click)="goToPerfil()">
         <ion-card-header>
           <ion-icon name="document-outline"></ion-icon>
           <ion-card-title>Mi perfil</ion-card-title>
@@ -53,25 +39,22 @@
           <ion-card-title>Usuarios</ion-card-title>
         </ion-card-header>
       </ion-card>
-</div>
+    </div>
 
-<div class="categorias">
+    <div class="categorias">
+      <ion-card class="caja" color="warning">
+        <ion-card-header>
+          <ion-icon name="podium-outline"></ion-icon>
+          <ion-card-title>Infomes</ion-card-title>
+        </ion-card-header>
+      </ion-card>
 
-  <ion-card class="caja" color="warning">
-    <ion-card-header>
-      <ion-icon name="podium-outline"></ion-icon>
-      <ion-card-title>Infomes</ion-card-title>
-    </ion-card-header>
-  </ion-card>
-
-  <ion-card class="caja" color="danger">
-    <ion-card-header>
-      <ion-icon name="help-outline"></ion-icon>
-      <ion-card-title>FAQ</ion-card-title>
-    </ion-card-header>
-  </ion-card>
-</div>
-    
-  </ion-content>  
+      <ion-card class="caja" color="danger">
+        <ion-card-header>
+          <ion-icon name="help-outline"></ion-icon>
+          <ion-card-title>FAQ</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </div>
   </ion-content>
-  
+</ion-content>

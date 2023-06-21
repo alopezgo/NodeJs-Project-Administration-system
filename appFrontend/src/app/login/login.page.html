@@ -1,18 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Iniciar sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-    <ion-item>
-      <ion-label position="floating">Correo electrónico</ion-label>
-      <ion-input type="email" name="email" ngModel required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" name="password" ngModel required></ion-input>
-    </ion-item>
-    <ion-button expand="block" type="submit" [disabled]="loggingIn || !loginForm.valid">Iniciar sesión</ion-button>
-  </form>
+  <div class="ion-text-center" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;">
+    <div class="logo-container">
+      <img src="assets/icon/00_log_sac.png" style="width: 100px;height: 100px;">
+    </div>
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" style="margin-top: 2rem;">
+      <ion-item>
+        <ion-label position="floating">Correo electrónico</ion-label>
+        <ion-input type="email" name="email" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" name="password" ngModel required></ion-input>
+      </ion-item>
+      <ion-button expand="block" type="submit" [disabled]="loggingIn || !loginForm.valid">Iniciar sesión</ion-button>
+    </form>
+  </div>
 
   <p class="center-text">
-    <a href="/recuperarpass" >¿Olvidaste tu contraseña?. Ingresa aquí para recuperarla</a>
+    <a href="/recuperarpass">¿Olvidaste tu contraseña? Ingresa aquí para recuperarla</a>
   </p>
- 
+
+  
+
+
 </ion-content>

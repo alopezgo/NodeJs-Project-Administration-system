@@ -109,6 +109,11 @@ export class OncePage implements OnInit {
       goBack(): void {
         this.navCtrl.back();
       }
+
+      logOut(): void {
+        localStorage.clear();
+        this.router.navigate(['login'])
+      }
     
     
     

@@ -1,38 +1,35 @@
-
 <ion-content class="fondo"> 
-
   
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button href="/login">
-        <ion-icon size="large" color="light" name="arrow-back-circle-outline" ></ion-icon>
-      </ion-button>
+        <ion-button color="dark" (click)=goToDashboard()>
+          <ion-icon name="arrow-back-circle-outline" size="large"></ion-icon>
+        </ion-button>
       </ion-buttons>
       <h3>Perfil</h3>
-      <ion-buttons slot="end" >
-        <ion-button href="/login">
-        <ion-icon size="large" color="light" name="log-out-outline" ></ion-icon>
-      </ion-button>
+      <ion-buttons slot="end">
+        <ion-button  (click)="logOut()"  color="dark">
+          <ion-icon size="large" color="dark" name="log-out-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
   
-  
-  <ion-card>
+  <ion-card class="perfil-card">
     <ion-card-header>
       <ion-card-subtitle>Usuario</ion-card-subtitle>
       <ion-card-title>{{nombre}} {{apellido}}</ion-card-title>
       <ion-card-subtitle>{{correo}}</ion-card-subtitle>
-      <br>
-      <button (click)="goToRecovery()">Modificar contraseña</button>
-      <br>
-      <button (click)="goToDashboard()">Volver</button>
     </ion-card-header>
-  
-  
+    <ion-card-content>
+      <ion-button expand="full" (click)="goToRecovery()" color="primary">
+        Modificar contraseña
+      </ion-button>
+      <ion-button expand="full" (click)="goToDashboard()" color="secondary">
+        Volver
+      </ion-button>
+    </ion-card-content>
   </ion-card>
-  
 
-  </ion-content>
-  
+</ion-content>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+import { NavController } from '@ionic/angular';
 
 interface UpdatePasswordResponse {
   success: boolean;
@@ -19,7 +20,7 @@ export class RecoveryPage implements OnInit {
   contrasenaActual: string = '';
   nuevaContrasena: string = '';
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient, private navCtrl: NavController) {}
 
   ngOnInit() {
     try {
@@ -58,5 +59,14 @@ export class RecoveryPage implements OnInit {
     } catch (error) {
       console.error('Error al actualizar contraseña', error);
     }
+  }
+
+  goBack(): void {
+    this.navCtrl.back();
+  }
+
+  logOut(): void {
+    localStorage.clear();
+    this.router.navigate(['login'])
   }
 }

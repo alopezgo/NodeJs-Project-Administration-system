@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { IonicModule, NavController } from '@ionic/angular'; // Importa IonicModule
 
 
 @Component({
@@ -15,11 +16,12 @@ export class DashboardPage implements OnInit {
   rol : string| null= '';
 
 
-  constructor(private activatedRoute: ActivatedRoute, private router:Router) {}
+  constructor(private activatedRoute: ActivatedRoute, private router:Router, private navCtrl: NavController) {}
 
   ngOnInit() {
 
-    this.nombre = localStorage.getItem('nombre')
+    this.apellido = JSON.parse(localStorage.getItem('apellido') || '{}');
+    this.nombre = JSON.parse(localStorage.getItem('nombre') || '{}');
 
   
       try {
@@ -30,11 +32,12 @@ export class DashboardPage implements OnInit {
           this.id = navigationState.extras.state['id'];
           this.correo = navigationState.extras.state['correo'];
           this.rol = navigationState.extras.state['rol'];
+          
         } else {
-          this.router.navigate(['perfil']);
+          this.router.navigate(['dashboard']);
         }
       } catch (error) {
-        this.router.navigate(['perfil']);
+        this.router.navigate(['dashboard']);
       }
 
  }
@@ -54,6 +57,15 @@ export class DashboardPage implements OnInit {
         this.router.navigate(['perfil'], extras)
       }
       
+      goBack() {
+        this.navCtrl.back();
+      }
+
+      logOut(): void {
+        localStorage.clear();
+        this.router.navigate(['login'])
+      }
+
     
   }
 

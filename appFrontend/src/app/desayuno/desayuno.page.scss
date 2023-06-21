@@ -1,14 +1,42 @@
 .boton-volver {
-    font-size: 12px;
-    margin-top: 20px;
-    width: 80px;
-  }
-  
-  .hidden-page {
-    display: none;
-  }
-  
-  .scanner-active {
-    display: none;
-  }
-  
+  font-size: 12px;
+  margin-top: 20px;
+  width: 80px;
+}
+
+.hidden-page {
+  display: none;
+}
+
+.scanner-active {
+  display: none;
+}
+
+ion-content {
+  --background: #f4f4f4;
+}
+
+.qr-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.red-button {
+  --background: #ff0000;
+  --color: #ffffff;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --border-radius: 8px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+}
+
+.qr-icon {
+  width: 128px;
+  height: 128px;
+  margin-bottom: 16px;
+}

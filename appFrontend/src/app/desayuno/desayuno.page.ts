@@ -111,6 +111,12 @@ export class DesayunoPage implements OnInit {
       goBack(): void {
         this.navCtrl.back();
       }
+
+      logOut(): void {
+        localStorage.clear();
+        this.router.navigate(['login'])
+      }
+	  
     
     
     
