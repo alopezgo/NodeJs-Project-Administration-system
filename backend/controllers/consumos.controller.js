@@ -39,7 +39,7 @@ exports.getDetalleConsumo = async (req, res) => {
 //Actualizado con nuevas validaciones
 exports.addConsumo = async (req, res) => {
   try {
-    console.log('body', req.body)
+    console.log('body', req.body);
     const { rut_empleado, consumo } = req.body;
     if (!rut_empleado || !consumo) {
       return res.status(400).send({ success: false, message: "Se requiere el rut del empleado y los datos del consumo" });
@@ -66,6 +66,14 @@ exports.addConsumo = async (req, res) => {
     if (rows.length > 0) {
       const id_empleado = rows[0].id;
 
+      // Verifica si ya existe un consumo registrado para el empleado y tipo de consumo en la fecha actual
+      const consumoExistenteQuery = 'SELECT id FROM sac.detalle_consumo WHERE id_empleado = $1 AND id_tipo_consumo = $2 AND dt_consumo::date = CURRENT_DATE';
+      const { rowCount: consumoExistenteCount } = await pool.query(consumoExistenteQuery, [id_empleado, consumo.id_tipo_consumo]);
+
+      if (consumoExistenteCount > 0) {
+        return res.status(400).send({ success: false, message: "Ya se ha registrado un consumo para este empleado y tipo de consumo el día de hoy" });
+      }
+
       // Inserta el registro en detalle_consumo
       const insertQuery = 'INSERT INTO sac.detalle_consumo (id_empleado, id_tipo_consumo, dt_consumo) VALUES ($1, $2, NOW())';
       await pool.query(insertQuery, [id_empleado, consumo.id_tipo_consumo]);
@@ -85,6 +93,7 @@ exports.addConsumo = async (req, res) => {
     });
   }
 };
+
 
 ////GET consumos por id empresa CON PARAMETROS OPCIONALES
 exports.getConsumosPorEmpresa = async (req, res) => {

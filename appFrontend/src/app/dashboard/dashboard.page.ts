@@ -22,6 +22,9 @@ export class DashboardPage implements OnInit {
 
     this.apellido = JSON.parse(localStorage.getItem('apellido') || '{}');
     this.nombre = JSON.parse(localStorage.getItem('nombre') || '{}');
+    this.rol = JSON.parse(localStorage.getItem('rol') || '{}');
+
+    console.log(typeof(this.rol))
 
   
       try {
@@ -63,7 +66,7 @@ export class DashboardPage implements OnInit {
 
       logOut(): void {
         localStorage.clear();
-        this.router.navigate(['login'])
+        this.router.navigate(['home'])
       }
 
     

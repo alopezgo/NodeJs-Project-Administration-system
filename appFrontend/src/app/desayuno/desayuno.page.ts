@@ -3,8 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+
 
 import { Plugins } from '@capacitor/core';
+
 
 const { BarcodeScanner } = Plugins;
 
@@ -17,13 +20,19 @@ export class DesayunoPage implements OnInit {
 
   rut_empleado: string = '';
   consumo: number = 0;
+  rol : string | null = ''
+  lastRegisteredDate: string = '';
+
 
   hiddenPage: boolean = false; // Variable para controlar la visibilidad de la página
 
 
-  constructor(private http: HttpClient, private navCtrl: NavController, private router: Router) { }
+  constructor(private http: HttpClient, private navCtrl: NavController, private router: Router, private alertController: AlertController) { }
 
   ngOnInit() {
+
+    this.rol = localStorage.getItem('rol')
+    console.log(this.rol)
     try {
       const navigationState = this.router.getCurrentNavigation();
       if (navigationState && navigationState.extras && navigationState.extras.state && navigationState.extras.state['pass']) {
@@ -41,7 +50,7 @@ export class DesayunoPage implements OnInit {
 
     let that = this;
 
-   this.router.navigate(['qr'])
+  
 
    const bodyElement = document.querySelector('body');
     if (bodyElement) {
@@ -74,14 +83,21 @@ export class DesayunoPage implements OnInit {
 
   }
 
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['Aceptar']
+    });
+  
+    await alert.present();
+  }
 
   async addConsumo(consumoForm: NgForm) {
 
     let that = this;
 
-    await this.leerQR(); //llamamos la función del QR
-
-    
+    await this.leerQR(); //llamamos la función del QR    
 
 
         const consumo = {
@@ -97,11 +113,12 @@ export class DesayunoPage implements OnInit {
           .subscribe(
             (response: any) => {
               console.log(response);
-              alert("Se ha registrado el consumo correctamente");
+              this.showAlert('Éxito', 'Se ha registrado el consumo correctamente');
+
             },
             (error) => {
               console.error(error);
-              alert("NO SE PUDO registrar el consumo correctamente");
+              this.showAlert('Error', 'Ya existe un consumo el día de hoy' );
             }
           );
 
@@ -109,15 +126,14 @@ export class DesayunoPage implements OnInit {
       }
 
       goBack(): void {
-        this.navCtrl.back();
-      }
+       
+        this.router.navigate(['registro'])
 
+    }
       logOut(): void {
         localStorage.clear();
-        this.router.navigate(['login'])
+        this.router.navigate(['home'])
       }
-	  
-    
     
     
   }

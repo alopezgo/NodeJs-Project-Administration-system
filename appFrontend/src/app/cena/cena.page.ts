@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular'; // Importa IonicModule
+import { AlertController } from '@ionic/angular';
 
 import { Plugins } from '@capacitor/core';
 
@@ -20,7 +21,7 @@ export class CenaPage implements OnInit {
   hiddenPage: boolean = false; // Variable para controlar la visibilidad de la página
 
 
-  constructor(private http: HttpClient, private navCtrl: NavController,private router:Router) { }
+  constructor(private http: HttpClient, private navCtrl: NavController,private router:Router, private alertController: AlertController) { }
 
   ngOnInit() {
     try {
@@ -73,6 +74,15 @@ export class CenaPage implements OnInit {
 
   }
 
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['Aceptar']
+    });
+  
+    await alert.present();
+  }
 
   async addConsumo(consumoForm: NgForm) {
 
@@ -94,11 +104,12 @@ export class CenaPage implements OnInit {
           .subscribe(
             (response: any) => {
               console.log(response);
-              alert("Se ha registrado el consumo correctamente");
+              this.showAlert('Éxito', 'Se ha registrado el consumo correctamente');
+
             },
             (error) => {
               console.error(error);
-              alert("NO SE PUDO registrar el consumo correctamente");
+              this.showAlert('Error', 'Ya existe un consumo el día de hoy' );
             }
           );
 
@@ -106,12 +117,13 @@ export class CenaPage implements OnInit {
       }
 
       goBack(): void {
-        this.navCtrl.back();
-      }
-      
+       
+        this.router.navigate(['registro'])
+
+    }
       logOut(): void {
         localStorage.clear();
-        this.router.navigate(['login'])
+        this.router.navigate(['home'])
       }
     
     

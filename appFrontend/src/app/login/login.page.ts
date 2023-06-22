@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, NavigationExtras } from '@angular/router';
 import { Platform } from '@ionic/angular';
 
+import { AlertController } from '@ionic/angular';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -20,10 +22,12 @@ export class LoginPage implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private platform: Platform
+    private platform: Platform,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
+    localStorage.clear()
    
   }
 
@@ -83,8 +87,18 @@ export class LoginPage implements OnInit {
         console.error(error);
         this.loggingIn = false;
 
-        alert('Correo o contraseña incorrecto');
+        this.showAlert("Error,", "Correo o contraseña no son correctos")
       }
     );
+  }
+
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['Aceptar']
+    });
+  
+    await alert.present();
   }
 }

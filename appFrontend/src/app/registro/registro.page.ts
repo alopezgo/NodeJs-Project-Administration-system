@@ -14,15 +14,22 @@ export class RegistroPage {
   nombre:string = '';
   apellido: string = '';
   correo: string = '';
+  rol : string | null= '';
 
   consumo: number = 0;
+
+
 
   constructor(private http: HttpClient, private navCtrl: NavController, private router:Router) {
    
   }
 
+
   addConsumo(id_tipo_consumo:number){
+    this.rol = localStorage.getItem('rol')
     this.consumo = id_tipo_consumo;
+
+ 
 
     let extras: NavigationExtras = {
       state: {
@@ -47,14 +54,18 @@ export class RegistroPage {
 
 
 
-  goBack() {
-    
-    window.history.back();
+  goBack(): void {
+    if (this.rol == '3'){
+      this.router.navigate(['principal'])
+
+    }else{
+      this.router.navigate(['dashboard'])
+    }
   }
 
   logOut(): void {
     localStorage.clear();
-    this.router.navigate(['login'])
+    this.router.navigate(['home'])
   }
   
 }

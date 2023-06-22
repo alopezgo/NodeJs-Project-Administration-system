@@ -92,7 +92,7 @@ export class PerfilPage implements OnInit {
 
   logOut(): void {
     localStorage.clear();
-    this.router.navigate(['login'])
+    this.router.navigate(['home'])
   }
 
 }
