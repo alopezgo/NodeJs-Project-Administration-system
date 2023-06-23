@@ -283,6 +283,13 @@ var myChart6 = new Chart(ctx6,  {
   } catch (error) {
     console.error('Error:', error);
   }
+
+  try {
+    const data = await GetMetricas();
+    createTable(data);
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 async function GetInformeConsumoMensual() {
@@ -322,3 +329,35 @@ async function GetMetricas() {
     alert("Error en servicio informemetricas");
   }
 }
+
+function createTable(data) {
+  const table = document.getElementById("table-metricas");
+  const tableHeader = document.createElement("thead");
+  const tableBody = document.createElement("tbody");
+
+  // Crear encabezado de la tabla
+  const headers = Object.keys(data[0]);
+  const headerRow = document.createElement("tr");
+  headers.forEach(header => {
+    const th = document.createElement("th");
+    th.textContent = header;
+    th.setAttribute("scope", "col");
+    headerRow.appendChild(th);
+  });
+  tableHeader.appendChild(headerRow);
+
+  // Crear filas de datos
+  data.forEach(item => {
+    const row = document.createElement("tr");
+    headers.forEach(header => {
+      const td = document.createElement("td");
+      td.textContent = item[header];
+      row.appendChild(td);
+    });
+    tableBody.appendChild(row);
+  });
+
+  table.appendChild(tableHeader);
+  table.appendChild(tableBody);
+}
+

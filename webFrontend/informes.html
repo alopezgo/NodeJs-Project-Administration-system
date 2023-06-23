@@ -98,11 +98,17 @@
             </nav>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="text-center">
+                    <br>
+                    <h6 class="text-light-emphasis text-bg-warning"> *Los datos consideran los últimos 6 meses a partir de la fecha actual de consulta</h6>
+
+                </div>
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h4">Métricas Consumo</h1>
-
                 </div>
+                <h6 class="text-light-emphasis"> *Totales y Cantidad incluye a todos los tipos de alimentación</h6>
+                
                 <div class="row">
                     <div class = "col-md-6">
                         <canvas class="my-4 w-60" id="myChart" width="900" height="380"></canvas>
@@ -112,10 +118,6 @@
                         <canvas class="my-4 w-60" id="myChart2" width="900" height="380"></canvas>
     
                     </div>
-
-                </div>
-                <div class="text-center">
-                    <h6 class="text-light-emphasis text-bg-light"> *Los datos consideran los últimos 6 meses a partir de la fecha actual de consulta</h6>
 
                 </div>
                 <div
@@ -140,6 +142,7 @@
                     <h1 class="h4">Métricas Globales</h1>
 
                 </div>
+                <h6 class="text-light-emphasis"> *Se contrasta únicamente con servicio alimentación tipo "almuerzo"</h6>
                 <div class="row">
                     <div class = "col-md-6">
                         <canvas class="my-4 w-60" id="myChart5" width="900" height="380"></canvas>
@@ -174,9 +177,39 @@
                                 <td>Asistencia Real</td>
                                 <td>Consiste en la suma de asistencias registradas por los empleados en el mes </td>
                             </tr>
+                            <tr>
+                               
+                                <td>Porcentaje Cumplimiento Asistencia Esperada vs Real</td>
+                                <td>Es el porcentaje que representa la asistencia real respecto de la asistencia esperada </td>
+                            </tr>
+                            <tr>
+                               
+                                <td>Delta Almuerzos</td>
+                                <td>Se calcula como la resta de la asistencia real menos los almuerzos reales. Si el delta llegase a ser negativo, indica que se registtran más almuerzos que asistencias. </td>
+                            </tr>
+                            <tr>
+                               
+                                <td>Q empleados asisten</td>
+                                <td>Es la cantidad de empleados de la empresa que registraron asistencia en el mes</td>
+                            </tr>
+                            <tr>
+                               
+                                <td>Q empleados almuerzo</td>
+                                <td>Es la cantidad de empleados de la empresa que registraron almorzar durante el mes</td>
+                            </tr>
                            
                         </tbody>
                     </table>
+
+                    
+                </div>
+                <div class="table-responsive">
+                    <table id="table-metricas" class="table table-sm">
+                        <thead>
+                            
+                        </thead>
+                    </table>
+
                 </div>
             </main>
         </div>
