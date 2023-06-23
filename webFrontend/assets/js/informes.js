@@ -31,6 +31,8 @@ var ctx = document.getElementById("myChart").getContext('2d');
 var ctxl = document.getElementById("myChart2").getContext('2d');
 var ctx3 = document.getElementById("myChart3").getContext('2d');
 var ctx4 = document.getElementById("myChart4").getContext('2d');
+var ctx5 = document.getElementById("myChart5").getContext('2d');
+var ctx6 = document.getElementById("myChart6").getContext('2d');
 
 const id_empresa = localStorage.getItem("id_empresa");
 
@@ -61,7 +63,7 @@ const monthTranslations = {
       data: {
         labels: labels,
         datasets: [{
-          label: 'Total en $ por consumo mensual',
+          label: `Total en $ por consumo mensual`,
           data: valuesTotal,
           backgroundColor: [
             // 'rgba(255, 99, 132, 0.2)',
@@ -127,12 +129,14 @@ var myLineChart = new Chart(ctxl, {
   try {
     const data = await GetMetricas();
     var labels = data.map(item => monthTranslations[item.mes] || item.mes);
-    var valuesObjAsistencia = data.map(item => item.objetivo_asistencia);
-    var valuesPorcObjAsistencia = data.map(item => item.porc_obj_asist);
-    var valuesAsistencia = data.map(item => item.asistencias);
+    var valuesAsistEsperada = data.map(item => item.asistencia_esperada);
+    var valuesPorcAsist = data.map(item => item.porc_obj_asist);
+    var valuesAsistReal = data.map(item => item.asistencia_real);
     var valuesPermisos = data.map(item => item.permisos);
-    var valuesAlmuerzos = data.map(item => item.almuerzos);
-    var valuesmaxAlmuerzos = data.map(item => item.control_almuerzos);
+    var q_emp_asiste = data.map(item => item.q_emp_asiste);
+    var q_emp_consume = data.map(item => item.q_emp_consume);
+    var valuesAlmReal = data.map(item => item.almuerzos_real);
+    var valuesDeltaAlm = data.map(item => item.delta_almuerzos);
 
     //line
 var myLineChart = new Chart(ctx3, {
@@ -141,7 +145,7 @@ var myLineChart = new Chart(ctx3, {
     labels: labels,
     datasets: [{
       label: "Asistencia Esperada",
-      data: valuesObjAsistencia,
+      data: valuesAsistEsperada,
       backgroundColor: [
         'rgba(105, 0, 132, .2)',
       ],
@@ -152,7 +156,7 @@ var myLineChart = new Chart(ctx3, {
     },
     {
       label: "Asistencia Real",
-      data: valuesAsistencia,
+      data: valuesAsistReal,
       backgroundColor: [
         'rgba(0, 137, 132, .2)',
       ],
@@ -179,8 +183,8 @@ var myHorizChart = new Chart(ctx4,  {
   "data": {
     "labels": labels,
     "datasets": [{
-      "label": "Porcentaje cumplimineto Asistencia Esperada",
-      "data": valuesPorcObjAsistencia,
+      "label": "Porcentaje cumplimiento Asistencia Esperada vs Real",
+      "data": valuesPorcAsist,
       "fill": false,
       "backgroundColor": ["rgba(255, 159, 64, 0.2)",
         "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",
@@ -203,12 +207,82 @@ var myHorizChart = new Chart(ctx4,  {
     }
   }
 });
+
+var myChart5 = new Chart(ctx5,  {
+  "type": "line",
+  "data": {
+    "labels": labels,
+    "datasets": [{
+      "label": "Asistencia Real",
+      "data": valuesAsistReal,
+      "fill": false,
+      "backgroundColor": ["rgba(127, 63, 191, 0.2)"],
+      "borderColor": ["rgb(127, 63, 191)"],
+      "borderWidth": 1
+    },
+    {
+      "label": "Almuerzos Real",
+      "data": valuesAlmReal,
+      "fill": false,
+      "backgroundColor": ["rgba(255, 99, 132, 0.2)"],
+      "borderColor": ["rgb(255, 99, 132)"],
+      "borderWidth": 1
+    },
+    {
+      "label": "Delta Almuerzos",
+      "data": valuesDeltaAlm,
+      "fill": false,
+      "backgroundColor": ["rgba(63, 191, 191, 0.2)"],
+      "borderColor": ["rgb(63, 191, 191)"],
+      "borderWidth": 1
+    }]
+  },
+  "options": {
+    "scales": {
+      "xAxes": [{
+        "ticks": {
+          "beginAtZero": true
+        }
+      }]
+    }
+  }
+});
+var myChart6 = new Chart(ctx6,  {
+  "type": "bar",
+  "data": {
+    "labels": labels,
+    "datasets": [{
+      "label": "Q empleados que almuerzan",
+      "data": q_emp_consume,
+      "fill": false,
+      "backgroundColor": [
+        "rgba(63, 191, 127, 0.2)"
+      ],
+      "borderColor": ["rgb(63, 191, 127)"],
+      "borderWidth": 1
+    },
+    {
+      "label": "Q empleados que asisten",
+      "data": q_emp_asiste,
+      "fill": false,
+      "backgroundColor": ["rgba(4, 76, 51, 0.2)"],
+      "borderColor": ["rgb(4, 153, 102)"],
+      "borderWidth": 1
+    }]
+  },
+  "options": {
+    "scales": {
+      "xAxes": [{
+        "ticks": {
+          "beginAtZero": true
+        }
+      }]
+    }
+  }
+});
   } catch (error) {
     console.error('Error:', error);
   }
-
-
-
 });
 
 async function GetInformeConsumoMensual() {

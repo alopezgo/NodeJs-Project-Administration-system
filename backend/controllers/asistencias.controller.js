@@ -287,13 +287,13 @@ exports.getMetricas = async (req, res) =>{
     (select count(id) from sac.empleado where id_empresa = $1) as q_emp_total,
     coalesce(a.count_emp,0) as q_emp_asiste,
     c.count_emp as q_emp_consume,
-    coalesce(a.dias_asiste, 0) as asistencias, 
-    c.dias_almuerza as almuerzos,
+    coalesce(a.dias_asiste, 0) as asistencia_real, 
+    c.dias_almuerza as almuerzos_real,
     coalesce(p.dias_permisos, 0) as permisos,
-    ((select count(id) from sac.empleado where id_empresa = $1) * d.dias_mes) - coalesce(p.dias_permisos, 0)  as objetivo_asistencia,
-    coalesce(a.count_emp,0) * coalesce(a.dias_asiste, 0)  as objetivo_almuerzo,
+    ((select count(id) from sac.empleado where id_empresa = $1) * d.dias_mes) - coalesce(p.dias_permisos, 0)  as asistencia_esperada,
+	coalesce(a.dias_asiste, 0) as almuerzos_esperado,
     ((coalesce(a.dias_asiste, 0)*100)/((select count(id) from sac.empleado) * d.dias_mes))::float as porc_obj_asist,
-    (coalesce(a.count_emp,0) * coalesce(a.dias_asiste, 0) ) - c.dias_almuerza  as control_almuerzos
+    coalesce(a.dias_asiste, 0) - c.dias_almuerza as delta_almuerzos
     from almuerzos as c 
     join dias as d on d.annio = c.annio and d.mes = c.mes
     left join asistencias as a on c.annio = a.annio and c.mes = a.mes
