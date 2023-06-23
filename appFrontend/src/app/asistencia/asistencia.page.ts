@@ -46,4 +46,9 @@ export class AsistenciaPage implements OnInit {
   goBack(): void {
     this.navCtrl.back();
   }
+
+  logOut(): void {
+    localStorage.clear();
+    this.router.navigate(['home'])
+  }
 }

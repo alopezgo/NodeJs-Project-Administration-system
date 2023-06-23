@@ -1,11 +1,21 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Recuperación de Contraseña</ion-title>
+    <ion-buttons slot="start">
+      <ion-button color="dark" (click)="goBack()">
+        <ion-icon name="arrow-back-circle-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <h3>Recuperar contraseña</h3>
+    <ion-buttons slot="end">
+      <ion-button (click)="logOut()" color="dark">
+        <ion-icon (click)="logOut()"size="large" color="dark" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form (ngSubmit)="actualizarContrasena()" #passwordForm="ngForm">
+<ion-content class="ion-padding">
+  <form (ngSubmit)="actualizarContrasena()" #passwordForm="ngForm" class="login-form">
     <ion-item>
       <ion-label>Contraseña Actual</ion-label>
       <ion-input

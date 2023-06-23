@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="proyecto" content="Portafolio 2023">
     <title>Usuarios - SAC</title>
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/dashboard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
@@ -129,13 +129,60 @@
     <script src="assets/js/componentImport.js"></script>
     <script>
 
-        function editar(){
-        location.href="editar_usuario.html"
+        function editarUsuario(button) {
+        
+        const id = button.getAttribute("data-id");
+        if (id) {
+            window.location.href = `editar_usuario.html?id=${id}`;
+            localStorage.setItem('idUser', id )
+        } else {
+            console.error('ID de usuario no válido');
+        }
         }
 
-        function borrar(){  
-        alert("¿Estás seguro de querer desactivar este usuario?")
-        }
+        function borrar(button) {
+            // Obtén el ID del usuario desde el atributo data-id del botón
+            const id = button.getAttribute("data-id");
+
+            // Muestra la ventana emergente con Swal
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "¿Quieres desactivar este usuario?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, desactivar",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                const id_estado = 2;
+
+                // Realiza una solicitud para actualizar el estado del usuario
+                $.ajax({
+                    url: `http://localhost:3000/api/v1/usuarios/estado/${id}`,
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ id_estado }),
+                    success: function (response) {
+          // La solicitud se ha completado correctamente
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Éxito',
+                            text: 'Usuario desactivado exitosamente'
+                        }).then(function () {
+                            // Redirecciona a la página de usuarios después de cerrar el cuadro de diálogo
+                            window.location.href = 'usuarios.html';
+                        });
+                        },
+                    error: function (xhr, status, error) {
+                    console.log('Error al actualizar el estado de usuario');
+                    }
+                });
+                }
+            });
+            }
+
 
 
         $(document).ready(function () {
@@ -146,7 +193,8 @@
                     { "title": "Rol", "data": "rol" },
                     { "title": "Correo", "data": "correo" },
                     { "title": "Creado", "data": "fecha_creacion" },
-                    { "title": "Acciones", "defaultContent": "<button class='btnEditar btn btn-sm btn-outline-primary' type='button' data-id='ID_USUARIO' onclick='editar()'>Editar</button>&nbsp;&nbsp;<button class='btnBorrar btn btn-sm btn-outline-danger' type='button' onclick='borrar()'>Borrar</button>" }
+                    { "title": "Acciones", "render": function (data, type, row) { return "<button class='btnEditar btn btn-sm btn-outline-primary' type='button' data-id='" + row.id + "' onclick='editarUsuario(this)'>Editar</button>&nbsp;&nbsp;<button class='btnBorrar btn btn-sm btn-outline-danger' type='button' data-id='" + row.id + "' onclick='borrar(this)'>Borrar</button>"; } }
+
                 ]
             });
             GetUsuarios();
@@ -162,7 +210,10 @@
                         const res = response;
                         const usuario = res.data;
                         usuario.forEach(fila => {
-                            tabla_usuario.row.add({                           
+                            console.log('ID de usuario:', fila.id);
+                            
+                            tabla_usuario.row.add({
+                                "id": fila.id,
                                 "usuario": fila.usuario,
                                 "rol": fila.rol,
                                 "correo": fila.correo,
@@ -175,6 +226,8 @@
                 });
             }
         });
+
+       
     </script>
 </body>
 

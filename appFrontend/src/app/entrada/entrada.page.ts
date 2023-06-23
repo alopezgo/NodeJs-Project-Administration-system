@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule, NavController } from '@ionic/angular'; // Importa IonicModule
+import { AlertController, IonicModule, NavController } from '@ionic/angular'; // Importa IonicModule
 
 import { Plugins } from '@capacitor/core';
 
@@ -20,7 +20,7 @@ export class EntradaPage implements OnInit {
   hiddenPage: boolean = false; // Variable para controlar la visibilidad de la página
 
 
-  constructor(private http: HttpClient, private navCtrl: NavController,private router:Router) { }
+  constructor(private http: HttpClient, private navCtrl: NavController,private router:Router, private alertController: AlertController) { }
 
   ngOnInit() {
     try {
@@ -92,11 +92,11 @@ export class EntradaPage implements OnInit {
           .subscribe(
             (response: any) => {
               console.log(response);
-              alert("Se ha registrado la asistencia correctamente");
+              this.showAlert('Exito', 'Se ha registrado la asistencia correctamente');
             },
             (error) => {
               console.error(error);
-              alert("NO SE PUDO registrar la asistencia correctamente");
+              this.showAlert('Error', 'No ha registrado la asistencia correctamente');
             }
           );
 
@@ -104,8 +104,27 @@ export class EntradaPage implements OnInit {
       }
 
       goBack(): void {
-        this.navCtrl.back();
+       
+        this.router.navigate(['registro'])
+
+    }
+
+      logOut(): void {
+        localStorage.clear();
+        this.router.navigate(['home'])
       }
+
+      
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['Aceptar']
+    });
+  
+    await alert.present();
+  }
+	  
     
     
     

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router, NavigationExtras } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,22 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    if (
+      localStorage.getItem('rol') != null &&
+      localStorage.getItem('rol') === '2'
+    ) {
+      this.router.navigate(['/dashboard']);
+    } else if (
+      localStorage.getItem('rol') != null &&
+      localStorage.getItem('rol') === '3'
+    ) {
+      this.router.navigate(['/principal']);
+    } else {
+      localStorage.clear();
+    }
+  }
 
 }

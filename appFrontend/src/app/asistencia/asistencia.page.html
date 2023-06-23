@@ -3,14 +3,14 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-button>
-          <ion-icon size="large" color="light" name="arrow-back-circle-outline"></ion-icon>
+        <ion-button color="dark" (click)="goBack()">
+          <ion-icon name="arrow-back-circle-outline" size="large"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <h3>Registro de asistencia</h3>
+      <h3>Registros</h3>
       <ion-buttons slot="end">
-        <ion-button href="/login">
-          <ion-icon size="large" color="light" name="log-out-outline"></ion-icon>
+        <ion-button (click)="logOut()" color="dark">
+          <ion-icon (click)="logOut()" size="large" color="dark" name="log-out-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
@@ -18,11 +18,19 @@
 
   <div class="container">
     <div class="registros">
-      <ion-button (click)="addAsistencia(1)" >ENTRADA</ion-button>
-      <ion-button (click)="addAsistencia(2)">SALIDA</ion-button>
-
-
-      <ion-button color="primary" class="boton-volver">Cancelar</ion-button>
+      <div class="texto-instruccion">Pulse el botón del evento que desea registrar</div>
+      <ion-button (click)="addAsistencia(1)" color="success" class="boton-asistencia">
+        <ion-icon name="log-in-outline" slot="start"></ion-icon>
+        ENTRADA
+      </ion-button>
+      <ion-button (click)="addAsistencia(2)" color="danger" class="boton-asistencia">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        SALIDA
+      </ion-button>
+      <ion-button color="primary" class="boton-volver" (click)="goBack()">
+        <ion-icon name="close-circle-outline" slot="start"></ion-icon>
+        Cancelar
+      </ion-button>
     </div>
   </div>
   

@@ -1,4 +1,23 @@
 <ion-content>
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="dark" (click)="goBack()">
+          <ion-icon name="arrow-back-circle-outline" size="large"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <h3>Recuperar contraseña</h3>
+      <ion-buttons slot="end">
+        <ion-button (click)="logOut()"color="dark">
+          <ion-icon (click)="logOut()" size="large" color="dark" name="log-out-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+
+
   <ion-card>
     <ion-card-content>
       <form (ngSubmit)="onSubmit(recoveryForm)" #recoveryForm="ngForm">

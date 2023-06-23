@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { AlertController } from '@ionic/angular';
+
 
 
 
@@ -17,6 +20,7 @@ import { DesayunoPage } from './desayuno.page';
     IonicModule,
     DesayunoPageRoutingModule
   ],
-  declarations: [DesayunoPage]
+  declarations: [DesayunoPage],
+  providers: [DatePipe]
 })
 export class DesayunoPageModule {}

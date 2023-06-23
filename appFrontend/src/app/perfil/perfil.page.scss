@@ -44,4 +44,41 @@ ion-button{
 .caja{
     width: 45%;
 }
-    
+
+.perfil-card {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .perfil-card ion-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .perfil-card ion-card-title,
+  .perfil-card ion-card-subtitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .perfil-card ion-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .perfil-card ion-button {
+    margin-top: 10px;
+    --background: var(--ion-color-primary);
+    --color: white;
+  }
+  
+  .perfil-card ion-button.secondary {
+    --background: var(--ion-color-secondary);
+  }

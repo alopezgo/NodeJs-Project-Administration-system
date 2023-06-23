@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-perfil',
@@ -9,18 +10,18 @@ import { NavigationExtras, Router } from '@angular/router';
 export class PerfilPage implements OnInit {
 
   nombre:string= '';
-  apellido:string = '';
+  apellido:string | null = '';
   correo:string = '';
   id: any = '';
   rol : string| null= '';
 
- 
 
 
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,private navCtrl: NavController) { }
 
   ngOnInit() {
+    
     try {
       const navigationState = this.router.getCurrentNavigation();
       if (navigationState?.extras?.state) {
@@ -29,6 +30,14 @@ export class PerfilPage implements OnInit {
         this.correo = navigationState.extras.state['correo'];
         this.id = navigationState.extras.state['id'];
         this.rol = navigationState.extras.state['rol'];
+
+        this.rol = JSON.parse(localStorage.getItem('rol') || '{}');
+        this.apellido = JSON.parse(localStorage.getItem('apellido') || '{}');
+        this.correo = JSON.parse(localStorage.getItem('correo') || '{}');
+
+       
+
+      
         
         
       } else {
@@ -39,7 +48,7 @@ export class PerfilPage implements OnInit {
     }
   }
   
-
+  
   goToRecovery(){  
     let extras: NavigationExtras = {
       state: {
@@ -53,6 +62,7 @@ export class PerfilPage implements OnInit {
       }
 
     goToDashboard(){  
+      
       let extras: NavigationExtras = {
         state: {
           nombre: this.nombre,
@@ -61,6 +71,7 @@ export class PerfilPage implements OnInit {
           rol:this.rol
         
       }}  
+    
       const rolNumero = parseInt(this.rol ?? '0', 10); // Convertir this.rol a número, si es nulo, se utiliza '0' como valor predeterminado
 
       if (rolNumero === 2) {
@@ -73,5 +84,15 @@ export class PerfilPage implements OnInit {
       
           
         }
+
+        
+  goBack(): void {
+    this.navCtrl.back();
+  }
+
+  logOut(): void {
+    localStorage.clear();
+    this.router.navigate(['home'])
+  }
 
 }

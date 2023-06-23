@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+import { AlertController, NavController } from '@ionic/angular';
 
 interface UpdatePasswordResponse {
   success: boolean;
@@ -19,7 +20,7 @@ export class RecoveryPage implements OnInit {
   contrasenaActual: string = '';
   nuevaContrasena: string = '';
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient, private navCtrl: NavController,private alertController: AlertController) {}
 
   ngOnInit() {
     try {
@@ -48,15 +49,35 @@ export class RecoveryPage implements OnInit {
 
       if (response && response.success) {
         console.log(response.message);
-        alert('Contraseña actualizada correctamente')
+        this.showAlert('Exito', 'Contraseña actualizada correctamente')
         this.router.navigate(['perfil']);
       } else {
         console.error(response?.message || 'Error al actualizar la contraseña');
-        alert('Contraseña debe cumplir con validacion')
+        this.showAlert('Error', 'Contraseña demasiado simple')
 
       }
     } catch (error) {
       console.error('Error al actualizar contraseña', error);
     }
+  }
+
+  goBack(): void {
+    this.navCtrl.back();
+  }
+
+  logOut(): void {
+    localStorage.clear();
+    this.router.navigate(['home'])
+  }
+
+  
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['Aceptar']
+    });
+  
+    await alert.present();
   }
 }

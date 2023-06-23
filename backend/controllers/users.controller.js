@@ -162,7 +162,7 @@ exports.getUserPorEmpresa = async (req, res) => {
 
     // Ejecutar la consulta
     const query = `
-      Select concat(nombre,' ', ap_paterno,' ', ap_materno) as usuario, rol, 
+      Select u.id, concat(nombre,' ', ap_paterno,' ', ap_materno) as usuario, rol, 
       correo, date(created_at) as fecha_creacion
       from sac.usuario as u
       join sac.rol as r on u.id_rol = r.id

@@ -1,3 +1,40 @@
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .logo-sac {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .bienvenida-text {
+    color: black;
+    text-align: center;
+  }
+  
+  .registroButton {
+    margin-top: 30px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .categorias {
+    display: flex;
+    margin: 20px auto;
+    width: 80%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .caja {
+    width: 45%;
+  }
+
 h3{
     color: black;
     text-align: center;
@@ -16,7 +53,8 @@ ion-img{
 }
 
 p{
-    color: white;
+    color: black;
+    text-align: center;
 }
 
 ion-card{
