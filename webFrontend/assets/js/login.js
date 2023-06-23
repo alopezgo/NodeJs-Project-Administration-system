@@ -24,30 +24,38 @@ form.addEventListener("submit", (event) => {
   })
     .then((response) => {
       if (response.status === 200) {
-        return response.json();
+          return response.json();
+        
       } else if (response.status === 401) {
         alert("Correo o contraseña incorrectos");
         throw new Error("Correo o contraseña incorrectos");
-      } else {
+      } else if (response.status === 403){
+        throw new Error("holaaa ");
+      }else {
         throw new Error("Error en el servidor");
       }
+      
     })
     .then((data) => {
       // Extract the required data from the response
       const { token, data: userData } = data;
-      const { id_empresa, nombre, id } = userData[0];
+      
+      const { id_empresa, nombre, id } = userData[0];     
 
       // Save the required data in localStorage or session storage
       localStorage.setItem("token", token);
       localStorage.setItem("id_empresa", id_empresa);
       localStorage.setItem("nombre_usuario", nombre);
-      localStorage.setItem("id_usuario", id);
+      localStorage.setItem("id_usuario", id); 
+      localStorage.setItem("id_rol", id_rol); 
+     
+     
 
       // Redirect to the next page
       window.location.href = "dashboard.html";
     })
     .catch((error) => {
       console.error(error);
-      alert("Error al iniciar sesión");
+      alert("Error al iniciar sesión : " + error.message);
     });
 });

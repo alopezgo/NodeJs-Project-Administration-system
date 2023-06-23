@@ -5,6 +5,13 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Platform } from '@ionic/angular';
 
 import { AlertController } from '@ionic/angular';
+import { Plugins } from '@capacitor/core';
+const { App } = Plugins;
+
+const userAgent = navigator.userAgent;
+
+
+
 
 @Component({
   selector: 'app-login',
@@ -19,6 +26,9 @@ export class LoginPage implements OnInit {
   correo: string = '';
   id: any = '';
 
+
+
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -30,6 +40,9 @@ export class LoginPage implements OnInit {
     localStorage.clear()
    
   }
+
+
+
 
   login(loginForm: NgForm): void {
     this.loggingIn = true;
@@ -46,7 +59,7 @@ export class LoginPage implements OnInit {
       contrasena: password,
     };
 
-    let serverUrl = 'http://192.168.1.120:3000/api/v1/user/login';
+    let serverUrl = 'http://192.168.1.120:3000/api/v1/user/loginApp';
 
     this.http.post(serverUrl, data, { headers }).subscribe(
       (response: any) => {
@@ -101,4 +114,7 @@ export class LoginPage implements OnInit {
   
     await alert.present();
   }
+
+
+
 }

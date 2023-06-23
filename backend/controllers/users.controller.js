@@ -1,6 +1,6 @@
 const { pool } = require("../db/db");
 const bcrypt = require("bcrypt");
-const { login, deleteUser, validatePassword, generatePassword, existMail } = require("../services/user.services");
+const { loginWeb, loginApp, deleteUser, validatePassword, generatePassword, existMail } = require("../services/user.services");
 const { mailValidation, sendEmail } = require("../services/mail.services");
 
 
@@ -25,6 +25,37 @@ exports.getUser = async (req, res) => {
 //Funcion login actualizada
 exports.loginUser = async (req, res) => {
   try {
+    console.log('body', req.body);
+    const { correo, contrasena } = req.body;
+
+    if (!correo || !contrasena) {
+      return res.status(400).send({ success: false, message: "Se requiere correo y contraseña para iniciar sesión" });
+    }
+
+    if (!mailValidation(correo)) {
+      return res.status(400).send({ success: false, message: "No es un formato válido de correo" });
+    }
+
+    const resultado = await loginWeb(correo, contrasena);
+
+    if (resultado.isError) {
+      return res.status(403).json(resultado);
+    } else {
+      return res.status(200).json(resultado);
+    }
+  } catch (e) {
+    console.error("Error con la conexión a la base de datos", e);
+    res.status(500).send(e);
+  }
+};
+
+
+
+//login app 
+
+//Funcion login actualizada
+exports.loginUserApp = async (req, res) => {
+  try {
     console.log('body', req.body)
     const { correo, contrasena } = req.body;
     if (!correo || !contrasena) {
@@ -33,7 +64,7 @@ exports.loginUser = async (req, res) => {
     if (!mailValidation(correo)) {
       return res.status(400).send({ success: false, message: "No es un formato válido de correo" });
     }
-    const resultado = await login(correo, contrasena);
+    const resultado = await loginApp(correo, contrasena);
     if (resultado.success == true) {
       return res.status(200).json(resultado);
     } else {
