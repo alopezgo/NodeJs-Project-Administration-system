@@ -64,7 +64,7 @@ body {
     background-color: #f2f2f2;
     color: #000;
     padding: 0px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     border-radius: 10px;
     padding-left: 5px;
     padding-right: 5px;
@@ -72,6 +72,7 @@ body {
     overflow: hidden;
     transition: max-height 0.5s ease;
     text-align: justify;
+    /* Agrega la transición de 0.3 segundos */
 }
 
 .faq-card+.faq-answer {
