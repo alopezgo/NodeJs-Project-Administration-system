@@ -11,6 +11,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/faq.css">
 </head>
 
 <body>
@@ -93,168 +94,104 @@
                         </li>
 
 
+                        <!--Sección de preguntas frecuentes-->
+
                     </ul>
                 </div>
             </nav>
 
-            <!-- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Registro diario</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">PDF</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">CSV</button>
-                        </div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span data-feather="calendar" class="align-text-bottom"></span>
-                            This week
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item active" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="container">
+                    <h1 class="h2">Preguntas frecuentes</h1>
+                    <p class="text-light-emphasis">
+                        Bienvenido a nuestra sección de Preguntas Frecuentes.
+                        Aquí encontrarás respuestas a las preguntas más comunes que nuestros clientes suelen hacer.
+                        Esperamos que encuentres la información que necesitas.
+                    </p>
+                    <div class="faq-card" onclick="toggleAnswer(1)">
+                        <h6>¿Qué es S.A.C.®?</h6>
                     </div>
+                    <div id="answer-1" class="faq-answer">
+                        <p>S.A.C.® es una solución administrativa con la capacidad de ayudar a las diferentes áreas de las empresas
+                            que requieran realizar registros y obtener informes que le permitan tomar decisiones con rapidez.</p>
+                    </div>
+                    <div class="faq-card" onclick="toggleAnswer(2)">
+                        <h6>¿Cómo puede ayudarme S.A.C.® en la actualidad?</h6>
+                    </div>
+                    <div id="answer-2" class="faq-answer">
+                        <p>Actualmente, este software cuenta con los módulos para alimentación y asistencia.</p>
+                    </div>
+                    <div class="faq-card" onclick="toggleAnswer(3)">
+                        <h6>¿Tienen pensado otros servicios a futuro?</h6>
+                    </div>
+                    <div id="answer-3" class="faq-answer">
+                        <p>Así es. Creemos que existe un potencial crecimiento y para ello seguiremos trabajando en nuevas maneras
+                            de ayudarte, sin olvidarnos de mejorar cada dia la experiencia con S.A.C.®.</p>
+                    </div>
+                    <div class="faq-card" onclick="toggleAnswer(4)">
+                        <h6>¿Cómo puedo utilizar S.A.C.®?</h6>
+                    </div>
+                    <div id="answer-4" class="faq-answer">
+                        <p>Ponte en contacto con nosotros. Envíanos un correo a <strong>sac.mailservice@gmail.com</strong> con tu nombre completo,
+                        y el nombre de tu empresa. Nos pondremos en contacto contigo a la brevedad!.</p>
+                    </div>
+                    <div class="faq-card" onclick="toggleAnswer(5)">
+                        <h6>¿Eres de los nuestros y quieres descargar <i>S.A.C.® mobile service</i>? </h6>
+                    </div>
+                    <div id="answer-5" class="faq-answer">
+                        <p>Ingresando con tu correo y contraseña podrás ver en la barra lateral izquierda, en el apartado de favoritos, la opción <strong>"Descarga la App"</strong>, pincha en ella y automáticamente comenzará la descarga.<br>
+                        Hazlo desde tu dispositivo móvil para descargarlo e instalarlo en el mismo dispositivo.</p>
+                    </div>
+                    <div class="faq-card" onclick="toggleAnswer(6)">
+                        <h6>¿Dónde puedo encontrar más información del uso de <i>S.A.C.® y S.A.C.® mobile service?</i></h6>
+                    </div>
+                    <div id="answer-6" class="faq-answer">
+                        <p>Ingresando con tu correo y contraseña podrás ver en la barra lateral izquierda, en el apartado de favoritos, la opción <strong>"Descarga el Manual"</strong>, pincha en ella y automáticamente comenzará la descarga del manual de usuario.<br>
+                            En este documento encontrarás toda la información necesaria. Recuerda, lo puedes descargar desde cualquier dispositivo.</p>
+                    </div>
+                    <div class="faq-card" onclick="toggleAnswer(7)">
+                        <h6>¿Qué dispositivos puedo utilizar con <i>S.A.C.® mobile service?</i></h6>
+                    </div>
+                    <div id="answer-7" class="faq-answer">
+                        <p>Por el momento solo está disponible para dispositivos con sistema operativo Android.</p>
+                    </div>
+                    <!--<div class="faq-card" onclick="toggleAnswer(8)">
+                        <h4>Pregunta 4</h4>
+                    </div>
+                    <div id="answer-8" class="faq-answer">
+                        <p>Respuesta a la pregunta 4.</p>
+                    </div>
+                    <div class="faq-card" onclick="toggleAnswer(9)">
+                        <h4>Pregunta 4</h4>
+                    </div>
+                    <div id="answer-9" class="faq-answer">
+                        <p>Respuesta a la pregunta 4.</p>
+                    </div>
+                    <div class="faq-card" onclick="toggleAnswer(10)">
+                        <h4>Pregunta 4</h4>
+                    </div>
+                    <div id="answer-10" class="faq-answer">
+                        <p>Respuesta a la pregunta 4.</p>
+                    </div>
+                    <div class="faq-card" onclick="toggleAnswer(11)">
+                        <h4>Pregunta 4</h4>
+                    </div>
+                    <div id="answer-11" class="faq-answer">
+                        <p>Respuesta a la pregunta 4.</p>
+                    </div>
+                    <div class="faq-card" onclick="toggleAnswer(12)">
+                        <h4>Pregunta 4</h4>
+                    </div>
+                    <div id="answer-12" class="faq-answer">
+                        <p>Respuesta a la pregunta 4.</p>
+                    </div> --->
                 </div>
-
-                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-
-                <h2>Section title</h2>
-                <div class="table-responsive">
-                    <table class="table table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Header</th>
-                                <th scope="col">Header</th>
-                                <th scope="col">Header</th>
-                                <th scope="col">Header</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1,001</td>
-                                <td>random</td>
-                                <td>data</td>
-                                <td>placeholder</td>
-                                <td>text</td>
-                            </tr>
-                            <tr>
-                                <td>1,002</td>
-                                <td>placeholder</td>
-                                <td>irrelevant</td>
-                                <td>visual</td>
-                                <td>layout</td>
-                            </tr>
-                            <tr>
-                                <td>1,003</td>
-                                <td>data</td>
-                                <td>rich</td>
-                                <td>dashboard</td>
-                                <td>tabular</td>
-                            </tr>
-                            <tr>
-                                <td>1,003</td>
-                                <td>information</td>
-                                <td>placeholder</td>
-                                <td>illustrative</td>
-                                <td>data</td>
-                            </tr>
-                            <tr>
-                                <td>1,004</td>
-                                <td>text</td>
-                                <td>random</td>
-                                <td>layout</td>
-                                <td>dashboard</td>
-                            </tr>
-                            <tr>
-                                <td>1,005</td>
-                                <td>dashboard</td>
-                                <td>irrelevant</td>
-                                <td>text</td>
-                                <td>placeholder</td>
-                            </tr>
-                            <tr>
-                                <td>1,006</td>
-                                <td>dashboard</td>
-                                <td>illustrative</td>
-                                <td>rich</td>
-                                <td>data</td>
-                            </tr>
-                            <tr>
-                                <td>1,007</td>
-                                <td>placeholder</td>
-                                <td>tabular</td>
-                                <td>information</td>
-                                <td>irrelevant</td>
-                            </tr>
-                            <tr>
-                                <td>1,008</td>
-                                <td>random</td>
-                                <td>data</td>
-                                <td>placeholder</td>
-                                <td>text</td>
-                            </tr>
-                            <tr>
-                                <td>1,009</td>
-                                <td>placeholder</td>
-                                <td>irrelevant</td>
-                                <td>visual</td>
-                                <td>layout</td>
-                            </tr>
-                            <tr>
-                                <td>1,010</td>
-                                <td>data</td>
-                                <td>rich</td>
-                                <td>dashboard</td>
-                                <td>tabular</td>
-                            </tr>
-                            <tr>
-                                <td>1,011</td>
-                                <td>information</td>
-                                <td>placeholder</td>
-                                <td>illustrative</td>
-                                <td>data</td>
-                            </tr>
-                            <tr>
-                                <td>1,012</td>
-                                <td>text</td>
-                                <td>placeholder</td>
-                                <td>layout</td>
-                                <td>dashboard</td>
-                            </tr>
-                            <tr>
-                                <td>1,013</td>
-                                <td>dashboard</td>
-                                <td>irrelevant</td>
-                                <td>text</td>
-                                <td>visual</td>
-                            </tr>
-                            <tr>
-                                <td>1,014</td>
-                                <td>dashboard</td>
-                                <td>illustrative</td>
-                                <td>rich</td>
-                                <td>data</td>
-                            </tr>
-                            <tr>
-                                <td>1,015</td>
-                                <td>random</td>
-                                <td>tabular</td>
-                                <td>information</td>
-                                <td>text</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </main> -->
+            </main>
         </div>
     </div>
 
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
         integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
         crossorigin="anonymous"></script>
