@@ -94,7 +94,7 @@ exports.addConsumo = async (req, res) => {
 };
 
 
-////GET consumos por id empresa CON PARAMETROS OPCIONALES
+//GET consumos por id empresa CON PARAMETROS OPCIONALES
 exports.getConsumosPorEmpresa = async (req, res) => {
   try {
     const centro = req.query.centro;
@@ -113,14 +113,36 @@ exports.getConsumosPorEmpresa = async (req, res) => {
         to_char(dc.dt_consumo, 'YYYY-MM-DD') as fecha,
         to_char(dc.dt_consumo, 'HH24:MI:SS') as hora,
         '$' || tc.precio as precio
-      FROM sac.detalle_consumo as dc
-      JOIN sac.empleado as e ON dc.id_empleado = e.id
-      JOIN sac.tipo_consumo as tc ON dc.id_tipo_consumo = tc.id
-      JOIN sac.empresa as p ON e.id_empresa = p.id
-      JOIN sac.centro_costos as cc ON e.id_centro_costos= cc.id
-      WHERE p.id = $1`;
+        FROM sac.detalle_consumo as dc
+        JOIN sac.empleado as e ON dc.id_empleado = e.id
+        JOIN sac.tipo_consumo as tc ON dc.id_tipo_consumo = tc.id
+        JOIN sac.empresa as p ON e.id_empresa = p.id
+        JOIN sac.centro_costos as cc ON e.id_centro_costos= cc.id
+        WHERE p.id = $1
+        AND date(dc.dt_consumo) between date_trunc('month', current_date) and current_date`;
 
     const params = [id_empresa];
+    
+    if (desde !== undefined && hasta !== undefined) {
+      query = `
+      SELECT 
+        cc.centro as centro_costos,
+        concat(e.nombre,' ', e.apellido_paterno,' ',e.apellido_materno) as nom_empleado,
+        concat(e.rut,'-', e.dv) as rut,
+        tc.tipo as tipo_consumo,
+        to_char(dc.dt_consumo, 'YYYY-MM-DD') as fecha,
+        to_char(dc.dt_consumo, 'HH24:MI:SS') as hora,
+        '$' || tc.precio as precio
+        FROM sac.detalle_consumo as dc
+        JOIN sac.empleado as e ON dc.id_empleado = e.id
+        JOIN sac.tipo_consumo as tc ON dc.id_tipo_consumo = tc.id
+        JOIN sac.empresa as p ON e.id_empresa = p.id
+        JOIN sac.centro_costos as cc ON e.id_centro_costos= cc.id
+        WHERE p.id = $1
+        AND date(dc.dt_consumo) between $${params.length + 1} AND $${params.length + 2}`;
+      params.push(desde);
+      params.push(hasta);
+    }
 
     if (centro !== undefined) {
       query += ` AND e.id_centro_costos = $${params.length + 1}`;
@@ -130,13 +152,6 @@ exports.getConsumosPorEmpresa = async (req, res) => {
     if (consumo !== undefined) {
       query += ` AND tc.id = $${params.length + 1}`;
       params.push(consumo);
-    }
-
-    if (desde !== undefined && hasta !== undefined) {
-      query += ` AND date(dc.dt_consumo) between $${params.length + 1
-        } AND $${params.length + 2}`;
-      params.push(desde);
-      params.push(hasta);
     }
 
     const { rows } = await pool.query(query, params);
@@ -342,7 +357,7 @@ exports.getInformeConsumoMensual = async (req, res) => {
     const query = `
     Select  cont.nombre as nom_contratista, 
     extract(YEAR from cons.dt_consumo) as año,
-	extract(MONTH from cons.dt_consumo) as mes,
+	  extract(MONTH from cons.dt_consumo) as mes,
     count(cons.dt_consumo) as cant_consumos,
     sum(tipo.precio) as total
     from sac.contratista as cont
