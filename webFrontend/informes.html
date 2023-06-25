@@ -129,8 +129,8 @@
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h4">Métricas Asistencia</h1>
-
                 </div>
+                <h6 class="text-light-emphasis"> *Asistencia esperada se obtiene multiplicando los días hábiles del mes por la cantidad de empleados</h6>
                 <div class="row">
                     <div class = "col-md-6">
                         <canvas class="my-4 w-60" id="myChart3" width="900" height="380"></canvas>
@@ -148,7 +148,7 @@
                     <h1 class="h4">Métricas Globales</h1>
 
                 </div>
-                <h6 class="text-light-emphasis"> *Se contrasta únicamente con servicio alimentación tipo "almuerzo"</h6>
+                <h6 class="text-light-emphasis"> *Se contrastan datos de asistencia con datos de alimentación tipo "almuerzo"</h6>
                 <div class="row">
                     <div class = "col-md-6">
                         <canvas class="my-4 w-60" id="myChart5" width="900" height="380"></canvas>
@@ -162,60 +162,73 @@
                 </div>
 
                 
+                <div class="table-responsive-xl p-2">
+                    <h4>Data</h4>
+                    <table id="table-metricas" class="table table-striped table-sm">
+                        <thead>
+                            
+                        </thead>
+                    </table>
 
-                <h4>Glosario términos</h4>
-                <div class="table-responsive">
-                    <table class="table table-striped table-sm">
+                </div>
+                
+                <div class="table-responsive p-2">
+                    <h4>Glosario términos</h4>
+                    <table class="table table-bordered table-sm text-center">
                         <thead>
                             <tr>
-                                <th scope="col">Indicador</th>
-                                <th scope="col">Descripcion</th>
+                                <th scope="col" class="table-info">Indicador</th>
+                                <th scope="col" class="table-info">Descripcion</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 
-                                <td>Asistencia Esperada</td>
-                                <td>Se calcula como la cantidad de empleados por la cantidad de días hábiles del mes, menos el total de permisos solicitados</td>
+                                <td>Asistencia Esperada/ Asist. Esperada</td>
+                                <td>Se calcula como la múltiplicación de días hábiles del mes por la cantidad de empleados, menos el total de permisos solicitados</td>
                             </tr>
                             <tr>
                                
-                                <td>Asistencia Real</td>
-                                <td>Consiste en la suma de asistencias registradas por los empleados en el mes </td>
+                                <td>Asistencia Real/ Asistencias</td>
+                                <td>Se calcula como el total de asistencias registradas en el mes</td>
                             </tr>
                             <tr>
                                
-                                <td>Porcentaje Cumplimiento Asistencia Esperada vs Real</td>
-                                <td>Es el porcentaje que representa la asistencia real respecto de la asistencia esperada </td>
+                                <td>% Cumplimiento Asistencia Esperada vs Real/ % Asist.Esperada</td>
+                                <td>Representa la asistencia real sobre la esperada como porcentaje</td>
                             </tr>
                             <tr>
                                
                                 <td>Delta Almuerzos</td>
-                                <td>Se calcula como la resta de la asistencia real menos los almuerzos reales. Si el delta llegase a ser negativo, indica que se registtran más almuerzos que asistencias. </td>
+                                <td>Se refiere a la diferencia entre la asistencia registrada (real) menos los almuerzos registrados en el mes, por lo que valores negativos indican que se registran más almuerzos que empleados que asisten.</td>
+                            </tr>
+                          
+                            <tr>
+                                <td>Empleados que almuerzan/ Almuerzan</td>
+                                <td>Es la cantidad de empleados de la empresa que registraron al menos 1 almuerzo durante el mes</td>
                             </tr>
                             <tr>
                                
-                                <td>Q empleados asisten</td>
-                                <td>Es la cantidad de empleados de la empresa que registraron asistencia en el mes</td>
+                                <td>Empleados que asisten/ Asisten</td>
+                                <td>Es la cantidad de empleados de la empresa que registraron al menos 1 asistencia durante el mes</td>
                             </tr>
                             <tr>
-                               
-                                <td>Q empleados almuerzo</td>
-                                <td>Es la cantidad de empleados de la empresa que registraron almorzar durante el mes</td>
+                                <td>Almuerzos</td>
+                                <td>Se calcula como el total de almuerzos registrados en el mes</td>
+                            </tr>
+                            <tr>
+                                <td>Permisos</td>
+                                <td>Se calcula como el total de permisos registrados en el mes</td>
+                            </tr>
+                            <tr>
+                                <td>Alm. Esperado</td>
+                                <td>Se calcula como el total asistencias registradas en el mes</td>
                             </tr>
                            
                         </tbody>
                     </table>
 
                     
-                </div>
-                <div class="table-responsive-xl">
-                    <table id="table-metricas" class="table table-sm">
-                        <thead>
-                            
-                        </thead>
-                    </table>
-
                 </div>
             </main>
         </div>

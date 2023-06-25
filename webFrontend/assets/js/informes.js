@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         "data": {
           "labels": labels,
           "datasets": [{
-            "label": "Porcentaje cumplimiento Asistencia Esperada vs Real",
+            "label": "% cumplimiento Asistencia Esperada vs Real",
             "data": valuesPorcAsist,
             "fill": false,
             "backgroundColor": ["rgba(255, 159, 64, 0.2)",
@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         "data": {
           "labels": labels,
           "datasets": [{
-            "label": "Q empleados que almuerzan",
+            "label": "Empleados que almuerzan",
             "data": q_emp_consume,
             "fill": false,
             "backgroundColor": [
@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             "borderWidth": 1
           },
           {
-            "label": "Q empleados que asisten",
+            "label": "Empleados que asisten",
             "data": q_emp_asiste,
             "fill": false,
             "backgroundColor": ["rgba(4, 76, 51, 0.2)"],
@@ -318,10 +318,29 @@ function createTable(data) {
 
   // Crear encabezado de la tabla
   const headers = Object.keys(data[0]);
+  const headerNames = {
+    annio: "Año",
+    mes: "Mes",
+    q_dias_mes: "Dias habil Mes",
+    q_emp_total: "Empleados",
+    q_emp_asiste: "Asisten",
+    q_emp_consume: "Almuerzan",
+    asistencia_real: "Asistencias",
+    almuerzos_real: "Almuerzos",
+    permisos: "Permisos",
+    asistencia_esperada: "Asist. Esperada",
+    almuerzos_esperado: "Alm. Esperado",
+    porc_obj_asist: "% Asist.Esperada",
+    delta_almuerzos: "Delta Almuerzos"
+
+  };
+  
+
   const headerRow = document.createElement("tr");
   headers.forEach(header => {
     const th = document.createElement("th");
-    th.textContent = header;
+    const columnName = headerNames[header] || header;
+    th.textContent = columnName;
     th.setAttribute("scope", "col");
     headerRow.appendChild(th);
   });
@@ -341,4 +360,5 @@ function createTable(data) {
   table.appendChild(tableHeader);
   table.appendChild(tableBody);
 }
+
 
