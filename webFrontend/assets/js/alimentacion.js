@@ -218,7 +218,7 @@ function GetConsumos(tabla_consumo) {
           .draw();
       });
       // Eliminar mensaje de carga
-      
+      loadingMessage.remove();
     },
   });
 }
