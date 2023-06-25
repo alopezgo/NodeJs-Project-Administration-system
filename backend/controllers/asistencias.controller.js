@@ -29,6 +29,7 @@ exports.getDetalleAsistencia= async (req, res) => {
   }
 };
 
+//Consulta asistencia con parametros opcionales
 exports.getAsistenciaPorEmpresa = async (req, res) => {
   try {
     const { id_empresa } = req.params;
@@ -39,21 +40,41 @@ exports.getAsistenciaPorEmpresa = async (req, res) => {
 
     // Ejecutar la consulta
     let query = `
-      SELECT
-       cc.centro as centro_costos, 
-       CONCAT(e.nombre, ' ',e.apellido_paterno,' ', e.apellido_materno) AS empleado,
-       e.rut||'-'||e.dv AS rut,
-       ea.evento AS tipo,
-       to_char(da.dt_evento, 'YYYY-MM-DD') as fecha,
-	     to_char(da.dt_evento, 'HH24:MI:SS') as hora
-       FROM sac.detalle_asistencia da 
-       JOIN sac.empleado e ON e.id = da.id_empleado
-	     JOIN sac.evento_asistencia ea ON da.id_evento_asistencia = ea.id
-       JOIN sac.empresa as p ON e.id_empresa = p.id
-       JOIN sac.centro_costos as cc ON e.id_centro_costos= cc.id
-	     Where e.id_empresa = $1`;
+        SELECT
+        cc.centro as centro_costos, 
+        CONCAT(e.nombre, ' ',e.apellido_paterno,' ', e.apellido_materno) AS empleado,
+        e.rut||'-'||e.dv AS rut,
+        ea.evento AS tipo,
+        to_char(da.dt_evento, 'YYYY-MM-DD') as fecha,
+        to_char(da.dt_evento, 'HH24:MI:SS') as hora
+        FROM sac.detalle_asistencia da 
+        JOIN sac.empleado e ON e.id = da.id_empleado
+        JOIN sac.evento_asistencia ea ON da.id_evento_asistencia = ea.id
+        JOIN sac.empresa as p ON e.id_empresa = p.id
+        JOIN sac.centro_costos as cc ON e.id_centro_costos= cc.id
+        Where e.id_empresa = $1
+        AND date(da.dt_evento) between date_trunc('month', current_date) and current_date`;
     const params = [id_empresa];
 
+    if (desde !== undefined && hasta !== undefined) {
+      query = ` 
+        SELECT
+        cc.centro as centro_costos, 
+        CONCAT(e.nombre, ' ',e.apellido_paterno,' ', e.apellido_materno) AS empleado,
+        e.rut||'-'||e.dv AS rut,
+        ea.evento AS tipo,
+        to_char(da.dt_evento, 'YYYY-MM-DD') as fecha,
+        to_char(da.dt_evento, 'HH24:MI:SS') as hora
+        FROM sac.detalle_asistencia da 
+        JOIN sac.empleado e ON e.id = da.id_empleado
+        JOIN sac.evento_asistencia ea ON da.id_evento_asistencia = ea.id
+        JOIN sac.empresa as p ON e.id_empresa = p.id
+        JOIN sac.centro_costos as cc ON e.id_centro_costos= cc.id
+        Where e.id_empresa = $1
+        AND date(da.dt_evento) between $${params.length + 1} AND $${params.length + 2}`;
+      params.push(desde);
+      params.push(hasta);
+    }
     if (centro !== undefined) {
       query += ` AND e.id_centro_costos = $${params.length + 1}`;
       params.push(centro);
@@ -62,13 +83,7 @@ exports.getAsistenciaPorEmpresa = async (req, res) => {
       query += ` AND ea.id = $${params.length + 1}`;
       params.push(evento);
     }
-    if (desde !== undefined && hasta !== undefined) {
-      query += ` AND date(da.dt_evento) between $${params.length + 1} AND $${
-        params.length + 2
-      }`;
-      params.push(desde);
-      params.push(hasta);
-    }
+    
     const { rows } = await pool.query(query, params);
 
     // Devolver los resultados en formato JSON
