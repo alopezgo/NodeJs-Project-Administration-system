@@ -194,6 +194,10 @@ async function cargarOptions(url, select) {
 // Función Auxiliar para Obtener lista de Consumos por Empresa
 function GetConsumos(tabla_consumo) {
   const id_empresa = localStorage.getItem("id_empresa");
+  // Mostrar mensaje de carga
+  const loadingMessage = document.getElementById("cargando");
+  loadingMessage.textContent = "Cargando...";
+
   return $.ajax({
     url: `http://localhost:3000/api/v1/consumos/${id_empresa}?`,
     type: "GET",
@@ -213,12 +217,18 @@ function GetConsumos(tabla_consumo) {
           })
           .draw();
       });
+      // Eliminar mensaje de carga
+      
     },
   });
 }
 // Función Auxiliar para Obtener lista de Consumos aplicando filtros del Formulario
 function GetConsumosPorParametros(centro_costos, tipo_consumo, fecha_desde, fecha_hasta) {
   const id_empresa = localStorage.getItem("id_empresa");
+  // Mostrar mensaje de carga
+  let cargaMensaje = document.getElementById("cargando2");
+  cargaMensaje.textContent = "Cargando...";
+
   let url_params = `http://localhost:3000/api/v1/consumos/${id_empresa}?`; 
   if (centro_costos != 0) {
     url_params += `&centro=${centro_costos}`;
@@ -246,14 +256,16 @@ function GetConsumosPorParametros(centro_costos, tipo_consumo, fecha_desde, fech
           })
           .draw();
       });
+      // Eliminar mensaje de carga
+      cargaMensaje.textContent="";
     },
   });
+  
 }
 
 //Función auxiliar para convertir tabla a CSV
 function tableToCSV() {
   var csv_data = [];
-
   var rows = document.getElementsByTagName("tr");
   for (var i = 0; i < rows.length; i++) {
     var cols = rows[i].querySelectorAll("td,th");
