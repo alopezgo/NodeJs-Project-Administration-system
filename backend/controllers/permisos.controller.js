@@ -145,7 +145,6 @@ exports.postRegistroPermiso = async (req, res) => {
       arrayFechas.push(fechaInicio.toISOString().split("T")[0]);
       }
       
-      console.log(arrayFechas);
 
     //establece el estado y la fecha actual
     const insertQuery =

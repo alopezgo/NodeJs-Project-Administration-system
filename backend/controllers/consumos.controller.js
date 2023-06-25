@@ -39,7 +39,6 @@ exports.getDetalleConsumo = async (req, res) => {
 //Actualizado con nuevas validaciones
 exports.addConsumo = async (req, res) => {
   try {
-    console.log('body', req.body);
     const { rut_empleado, consumo } = req.body;
     if (!rut_empleado || !consumo) {
       return res.status(400).send({ success: false, message: "Se requiere el rut del empleado y los datos del consumo" });

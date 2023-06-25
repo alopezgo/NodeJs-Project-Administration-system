@@ -9,8 +9,6 @@ exports.getUser = async (req, res) => {
     const query = "SELECT * FROM sac.usuario";
     const result = await pool.query(query);
 
-    console.log("BD DATA: ", result.rows);
-
     return res.status(200).send({
       success: true,
       message: "usuario encontrado",
@@ -25,7 +23,6 @@ exports.getUser = async (req, res) => {
 //Funcion login actualizada
 exports.loginUser = async (req, res) => {
   try {
-    console.log('body', req.body);
     const { correo, contrasena } = req.body;
 
     if (!correo || !contrasena) {
@@ -79,7 +76,6 @@ exports.loginUserApp = async (req, res) => {
 //Actualizado con nuevas validaciones
 exports.addUser = async (req, res) => {
   try {
-    console.log('body', req.body)
     let { id_empresa, id_rol, rut, dv, nombre, ap_paterno, ap_materno, correo, contrasena } = req.body;
     if (!correo || !contrasena) {
       return res.status(400).send({ success: false, message: "Se requiere correo y contraseña para iniciar sesión" });
@@ -235,8 +231,6 @@ exports.getUserPorId = async (req, res) => {
         message: "Usuario no encontrado",
       });
     }
-
-    console.log("BD DATA: ", result.rows);
 
     return res.status(200).send({
       success: true,
@@ -405,7 +399,6 @@ exports.recovery = async (req, res) => {
 
     } else if (correoBD.success == true) {
       const password = await generatePassword();
-      console.log(password);
 
       const subject = 'Solicitud de registro';
       const html = `<h1>Hemos recibido su solicitud exitosamente!</h1> 
@@ -441,7 +434,7 @@ exports.recovery = async (req, res) => {
       });
     }
   } catch (e) {
-    console.log('Error:', e);
+    console.error('Error:', e);
     res.status(500).json({
       success: false,
       message: "Error en el servidor",

@@ -17,8 +17,6 @@ exports.getDetalleAsistencia= async (req, res) => {
                         JOIN sac.centro_costos cc ON e.id = cc.id_empresa;`;
     const result = await pool.query(query);
 
-    console.log("BD DATA: ", result.rows)
-
     return res.status(200).send({
       success: true,
       message: "Detalle Asistencia encontrado",
