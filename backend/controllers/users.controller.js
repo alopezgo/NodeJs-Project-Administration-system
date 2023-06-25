@@ -4,22 +4,6 @@ const { loginWeb, loginApp, deleteUser, validatePassword, generatePassword, exis
 const { mailValidation, sendEmail } = require("../services/mail.services");
 
 
-exports.getUser = async (req, res) => {
-  try {
-    const query = "SELECT * FROM sac.usuario";
-    const result = await pool.query(query);
-
-    return res.status(200).send({
-      success: true,
-      message: "usuario encontrado",
-      Data: result.rows,
-    });
-  } catch (error) {
-    console.error("Error al obtener los usuarios", error);
-    res.status(500).send("Error en el servidor");
-  }
-};
-
 //Funcion login actualizada
 exports.loginUser = async (req, res) => {
   try {
