@@ -119,12 +119,14 @@ form.addEventListener("submit", async (event) => {
       { title: "Hasta", data: "hasta" },
     ],
   });
-  try {
-    GetPermisos(table);
-  } catch (error) {
-    console.error(error);
-    alert("Error al cargar tabla");
-  }
+  setTimeout(function() {
+    try {
+      GetPermisos(table);
+    } catch (error) {
+      console.error(error);
+      alert("Error al cargar tabla");
+    }
+  }, 3000);
   
 });
 
