@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular'; // Importa IonicModule
 
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -14,6 +15,11 @@ export class DashboardPage implements OnInit {
   correo: string| null= '';
   id: any = '';
   rol : string| null= '';
+  isModalOpen = false;
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
 
 
   constructor(private activatedRoute: ActivatedRoute, private router:Router, private navCtrl: NavController) {}
