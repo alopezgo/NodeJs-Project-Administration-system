@@ -32,7 +32,7 @@
                         </li>
                         <hr />
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="dashboard.html">
+                            <a class="nav-link" aria-current="page" href="dashboard.html">
                                 <span data-feather="home" class="align-text-bottom"></span>
                                 Dashboard
                             </a>
@@ -102,51 +102,67 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Servicio Administrativo Complementario</h1>
+                    <h1 class="h2">Mi Perfil</h1>
                 </div>
                 <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
-                <div class="row">
-                    <div class="col-sm-6 col-lg-6 mb-4">
-                        <div class="card">
-                            <img width="100%" height="180" src="https://images.unsplash.com/photo-1532888277436-2286814f0ee1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=885&q=80">
-                            <div class="card-body">
-                                <h6 class="card-title">Una herramienta fácil de usar</h6>
-                                <!-- <p class="card-text">Contenido de la card</p>
-                            Otros elementos de la card -->
-                              </div>
-                        </div>
-                      </div>
-                    <div class="col-sm-6 col-lg-6 mb-4">
-                      <div class="card">
-                        <img width="100%" height="180" src="https://images.unsplash.com/photo-1564668836804-05a2de350bb6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" class="card-img-top" alt="Descripción de la imagen">
-                        <div class="card-body">
-                            <h6 class="card-title">Registros confiables en streaming</h6>
-                            
-                          </div>
-                    </div>
-                    </div>
-                </div>
-
-                <div class= "row">
-                    <div class="col-sm-6 col-lg-6 mb-4">
-                        <div class="card">
-                          <img width="100%" height="180" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=872&q=80">
-                          <div class="card-body">
-                              <h6 class="card-title">Conéctate desde cualquier lugar</h6>
+                <section >
+                    <div class="container p-1">            
+                      <div class="row">
+                        <div class="col-lg-4">
+                          <div class="card mb-4" style="background-color: #eeeeee;">
+                            <div class="card-body text-center">
+                              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK8HJpZl5SDTDZP455OxKbc71lJTRXW4wygA&usqp=CAU" alt="avatar"
+                                class="rounded-circle img-fluid" style="width: 100px;">
+                              <h5 class="my-3" id="fullNameUser">Cargando...</h5>
+                              <p class="text-muted mb-2" id="companyName"></p>
                             </div>
+                          </div>
                         </div>
-                      </div>
-                    
-                      <div class="col-sm-6 col-lg-6 mb-4">
-                        <div class="card">
-                            <img width="100%" height="180" src="https://images.unsplash.com/photo-1430417934865-589b63ad5c00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1176&q=80">
+                        <div class="col-lg-7">
+                          <div class="card mb-4" style="background-color: #eeeeee;">
                             <div class="card-body">
-                                <h6 class="card-title">Optimiza tiempos de gestión</h6>
+                              
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <p class="mb-0">Correo</p>
+                                </div>
+                                <div class="col-sm-9">
+                                  <p class="text-muted mb-0" id="userMail"></p>
+                                </div>
                               </div>
-                          
+                              <hr>
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <p class="mb-0">Rol</p>
+                                </div>
+                                <div class="col-sm-9">
+                                  <p class="text-muted mb-0" id = "userRole"></p>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <p class="mb-0" >Empresa</p>
+                                </div>
+                                <div class="col-sm-9">
+                                  <p class="text-muted mb-0" id = "companyName2"></p>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <p class="mb-0" >Descripción</p>
+                                </div>
+                                <div class="col-sm-9">
+                                  <p class="text-muted mb-0" id="companyDesc"></p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                </div>
+                    </div>
+                  </section>
             </main>
         </div>
     </div>
@@ -159,7 +175,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
         integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG"
         crossorigin="anonymous"></script>
-    <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/perfil.js"></script>
     <script src="assets/js/componentImport.js"></script>
 </body>
 

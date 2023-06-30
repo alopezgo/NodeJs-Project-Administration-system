@@ -354,6 +354,56 @@ exports.updatePasswordApp = async (req, res) => {
   }
 };
 
+exports.infoUser = async (req, res) => {
+  try {
+    const {id_usuario} = req.params;
+    const {id_empresa} = req.params;
+    
+    const params = [id_usuario, id_empresa];
+
+    const query = `
+      Select 
+      us.id as id_usuario, 
+      rol.rol as rol_usuario, 
+      us.id_empresa, 
+      us.rut as rut_usuario, 
+      us.dv as dv_usuario, 
+      us.nombre as nom_usuario, 
+      ap_paterno as app_usuario, 
+      ap_materno as apm_usuario, 
+      correo as correo_usuario,
+      emp.nombre as nom_empresa,
+      emp.rut as rut_empresa,
+      emp.dv as dv_empresa,
+      emp.rubro as rubro_empresa,
+      emp.descripcion as desc_empresa
+      from sac.usuario as us
+      join sac.rol on us.id_rol = rol.id
+      join sac.empresa as emp on us.id_empresa = emp.id
+      where us.id = $1
+      and us.id_empresa = $2;`
+
+      const result = await pool.query(query, params);
+
+      if (result.rows.length === 0) {
+        // Si no se encuentra ningún usuario con el id proporcionado, devuelve un mensaje adecuado
+        return res.status(404).send({
+          success: false,
+          message: "Usuario no encontrado",
+        });
+      }
+
+      return res.status(200).send({
+        success: true,
+        message: "Usuario encontrado",
+        Data: result.rows,
+      });
+  }catch(error) {
+      console.error('Error al actualizar contraseña', error);
+      res.status(500).send('Error en el servidor');
+  }
+}
+
 
 //En construcción
 exports.recovery = async (req, res) => {

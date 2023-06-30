@@ -13,6 +13,7 @@ api.get('/v1/usuarios/:id_usuario/:id_empresa', UsersController.getUserPorEmpres
 api.put('/v1/usuarios/update/:id', UsersController.updateUser);
 api.put('/v1/usuarios/:id_usuario/updatePass', UsersController.updatePasswordApp);
 api.put('/v1/usuarios/estado/:id', UsersController.updateUserStatus);
+api.post('/v1/usuarios/info/:id_usuario/:id_empresa', UsersController.infoUser);
 api.post('/v1/usuarios/recovery', UsersController.recovery);
 
 //user por id
