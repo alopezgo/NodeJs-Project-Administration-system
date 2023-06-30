@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.111.3">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Inicia sesión</title>
 
 
@@ -57,6 +58,8 @@
                                               <input type="password" id="password" name="password"  placeholder="Ingresa tu contraseña"  class="form-control" required><br>
                                         <input type="submit" value="Ingresar" class="btn btn-lg btn-primary">
                                     </form>
+                                    <p class="sticky-xl-top align-self-start pt-3 mt-5 mb-3 mt-xl-0 mb-xl-6 ">¿Olvidaste tu contraseña? Recupera el acceso <a href="recovery.html">AQUÍ</a>
+                                    </p>
                                         </div>
                                         
                                     <div id="message"></div>
@@ -74,9 +77,9 @@
     </main>
 
     <script>
-        const form = document.querySelector("#login-form");
+      const form = document.querySelector("#login-form");
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   // Get the form data.
@@ -84,31 +87,25 @@ form.addEventListener("submit", (event) => {
   const password = form.elements.password.value;
 
   if (!email || !password) {
-    alert("Se requiere correo y contraseña para iniciar sesión");
+    Swal.fire("Error", "Se requiere correo y contraseña para iniciar sesión", "error");
     return;
   }
 
-  fetch("http://localhost:3000/api/v1/user/login", {
-    method: "POST",
-    body: JSON.stringify({
-      correo: email,
-      contrasena: password,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => {
-      if (response.status === 200) {
-        return response.json();
-      } else if (response.status === 401) {
-        alert("Correo o contraseña incorrectos");
-        throw new Error("Correo o contraseña incorrectos");
-      } else {
-        throw new Error("Error en el servidor");
-      }
-    })
-    .then((data) => {
+  try {
+    const response = await fetch("http://localhost:3000/api/v1/user/login", {
+      method: "POST",
+      body: JSON.stringify({
+        correo: email,
+        contrasena: password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.status === 200) {
       // Extract the required data from the response
       const { token, data: userData } = data;
       const { id_empresa, nombre, id } = userData[0];
@@ -121,14 +118,18 @@ form.addEventListener("submit", (event) => {
 
       // Redirect to the next page
       window.location.href = "dashboard.html";
-    })
-    .catch((error) => {
-      console.error(error);
-      alert("No tiene permisos para acceder al sitio web");
-    });
+    } else if (response.status === 401) {
+      Swal.fire("Error", "Correo o contraseña incorrectos", "error");
+    } else {
+      Swal.fire("Error", "Error en el servidor", "error");
+    }
+  } catch (error) {
+    console.error(error);
+    Swal.fire("Error", "Credenciales incorrectas o No tiene permisos para acceder al sitio web", "error");
+  }
 });
 
-    </script>	
+    </script>
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
 

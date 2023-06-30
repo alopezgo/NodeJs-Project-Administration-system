@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.111.3">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Inicia sesión</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+
+  <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">
+        <img src="images/logo_sac_(S).png" alt="" width="32" height="32" class="rounded me-2">
+        <span>SAC</span>
+    </a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search"
+        aria-label="Search"> -->
+    <div class="navbar-nav">
+        <div class="nav-item text-nowrap">
+            <a class="nav-link px-3" href="index.html">
+            <button href="index.html type="button" class="btn btn-outline-danger m-1" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
+              </svg>
+            </button>
+        </a>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container col-md-9 ms-sm-auto col-lg-5 px-md-4 my-5">
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+            <div class="col-lg-12 p-3 p-lg-5 pt-lg-3 text-center">
+                <img class="mx-auto mb-2" src="images/logo_sac_(S).png" style="border-radius:10px"  alt="" width="72" height="57">
+                <h4 class="sticky-xl-top fw-bold align-self-start pt-3 mt-5 mb-3 mt-xl-0 mb-xl-6 ">Recupera el acceso a SAC
+                </h4>
+                <div class="bd-example">
+                    <div class="bd-example-snippet bd-code-snippet">
+                        <div class="bd-example">
+                            <form id="login-form" class="form-group">
+                                <div class="form">
+                                    <input type="email" id="email" placeholder="Ingresa tu correo" name="email" class="form-control" required>
+                                    <br>
+                                    <input type="submit" value="Enviar" class="btn btn-lg btn-primary">
+                                </div>
+                            </form>
+                            <div id="message"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="b-example-divider"></div>
+</main>
+
+<script>
+    const form = document.querySelector("#login-form");
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        // Obtén el correo electrónico ingresado en el formulario
+        const email = form.elements.email.value;
+
+        // Envía la solicitud al servicio de recuperación de acceso
+        try {
+            const response = await fetch('http://localhost:3000/api/v1/usuarios/recovery', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ newMail: email })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Mostrar mensaje de éxito al usuario
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito',
+                    text: 'Se envió un correo a la casilla indicada',
+                }).then(() => {
+                    // Restablecer el formulario
+                    form.reset();
+                    window.location.href = 'login.html';
+                });
+            } else {
+                // Mostrar mensaje de error al usuario
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.message,
+                });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            // Mostrar mensaje de error al usuario
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Se produjo un error al enviar el correo',
+            });
+        }
+    });
+</script>
+</body>
+
+</html>
