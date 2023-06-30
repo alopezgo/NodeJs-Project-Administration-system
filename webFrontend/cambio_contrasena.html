@@ -5,27 +5,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="proyecto" content="Portafolio 2023">
-    <title>Dashboard - SAC</title>
+    <title>Cambio de contraseña</title>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
 </head>
 
-<body>
-   <!--Id es rellenado con el contenido de navComponent.html que trae componentImport.js-->
-    <div id="nav-component">
-    </div>
+<body class="is-preload">
+    <!--DESDE AQUI NAVBAR-->
+    <div id="nav-component"></div>
+    <!--HASTA AQUI NAVBAR-->
 
     <div class="container-fluid">
         <div class="row">
+            <!--DESDE AQUI MENÚ LATERAL-->
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar collapse">
                 <div class="position-sticky pt-3 sidebar-sticky">
                     <ul class="nav flex-column">
-
                         <li class="nav-item">
                             <a id="nombre-usuario" class="nav-link" href="perfil.html">
-                                <img id=img-usuario
+                                <img id="img-usuario"
                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK8HJpZl5SDTDZP455OxKbc71lJTRXW4wygA&usqp=CAU"
                                     alt="" width="32" height="32" class="rounded-circle me-2">
                             </a>
@@ -40,11 +41,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="informes.html">
                                 <span data-feather="bar-chart-2" class="align-text-bottom"></span>
-                                Indicadores
+                                Informes
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="usuarios.html">
+                            <a class="nav-link active" href="usuarios.html">
                                 <span data-feather="users" class="align-text-bottom"></span>
                                 Usuarios
                             </a>
@@ -67,12 +68,14 @@
                                 Permisos
                             </a>
                         </li>
+
                     </ul>
                     <hr />
+
                     <h6
                         class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
                         <span>Favoritos</span>
-                            <span data-feather="star" class="align-text-bottom"></span>  
+                        <span data-feather="star" class="align-text-bottom"></span>
                     </h6>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">
@@ -98,86 +101,43 @@
                     </ul>
                 </div>
             </nav>
+            <!--HASTA AQUI MENÚ LATERAL-->
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Mi Perfil</h1>
+                <!--DESDE AQUI FORMULARIO-->
+                <div class="bd-cheatsheet container-fluid bg-body">
+                    <section id="informe-filtros">
+                        <article class="my-3 border" id="overview">
+                            <div class="bd-heading sticky-xl-top align-self-start mt-5 mt-xl-0 mb-xl-2"></div>
+                            <form id="cambio-contrasena-form" class="my-3">
+                                <label for="contrasena_antigua">Contraseña antigua:</label>
+                                <input type="password" id="contrasena_antigua" name="contrasena_antigua"
+                                    class="form-control" required><br><br>
+
+                                <label for="contrasena_nueva">Contraseña nueva:</label>
+                                <input type="password" id="contrasena_nueva" name="contrasena_nueva"
+                                    class="form-control" required><br><br>
+
+                                <input type="submit" value="Confirmar" class="btn btn-outline-info btn-md">
+                            </form>
+                        </article>
+                    </section>
                 </div>
-                <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
-                <section >
-                    <div class="container p-1">            
-                      <div class="row">
-                        <div class="col-lg-4">
-                          <div class="card mb-4" style="background-color: #eeeeee;">
-                            <div class="card-body text-center">
-                              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK8HJpZl5SDTDZP455OxKbc71lJTRXW4wygA&usqp=CAU" alt="avatar"
-                                class="rounded-circle img-fluid" style="width: 100px;">
-                              <h5 class="my-3" id="fullNameUser">Cargando...</h5>
-                              <p class="text-muted mb-2" id="companyName"></p>
-                            </div>
-                          </div>
-                          <button class="btn btn-outline-info btn-sm"><a href="cambio_contrasena.html">Modificar contraseña</a></button>
-                        </div>
-                        <div class="col-lg-7">
-                          <div class="card mb-4" style="background-color: #eeeeee;">
-                            <div class="card-body">
-                              
-                              <div class="row">
-                                <div class="col-sm-3">
-                                  <p class="mb-0">Correo</p>
-                                </div>
-                                <div class="col-sm-9">
-                                  <p class="text-muted mb-0" id="userMail"></p>
-                                </div>
-                              </div>
-                              <hr>
-                              <div class="row">
-                                <div class="col-sm-3">
-                                  <p class="mb-0">Rol</p>
-                                </div>
-                                <div class="col-sm-9">
-                                  <p class="text-muted mb-0" id = "userRole"></p>
-                                </div>
-                              </div>
-                              <hr>
-                              <div class="row">
-                                <div class="col-sm-3">
-                                  <p class="mb-0" >Empresa</p>
-                                </div>
-                                <div class="col-sm-9">
-                                  <p class="text-muted mb-0" id = "companyName2"></p>
-                                </div>
-                              </div>
-                              <hr>
-                              <div class="row">
-                                <div class="col-sm-3">
-                                  <p class="mb-0" >Descripción</p>
-                                </div>
-                                <div class="col-sm-9">
-                                  <p class="text-muted mb-0" id="companyDesc"></p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
+                <!--HASTA AQUI FORMS-->
             </main>
         </div>
     </div>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+    <script
+        src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
         integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
+    <script
+        src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
         integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG"
         crossorigin="anonymous"></script>
-    <script src="assets/js/perfil.js"></script>
-    <script src="assets/js/componentImport.js"></script>
-</body>
-
-</html>
+        <script src="assets/js/componentImport.js"></script>
+        <script src="assets/js/cambio_contrasena.js"></script>
+   
