@@ -65,6 +65,16 @@ exports.addConsumo = async (req, res) => {
     if (rows.length > 0) {
       const id_empleado = rows[0].id;
 
+      // Obtener el último ID almacenado en detalle_consumo
+      const lastIdQuery = 'SELECT MAX(id) as last_id FROM sac.detalle_consumo';
+      const { rows: lastIdRows } = await pool.query(lastIdQuery);
+      let nextId = 1; // Valor predeterminado si no hay registros en detalle_consumo
+
+      if (lastIdRows.length > 0 && lastIdRows[0].last_id !== null) {
+        nextId = lastIdRows[0].last_id + 1;
+        console.log(nextId)
+      }
+
       // Verifica si ya existe un consumo registrado para el empleado y tipo de consumo en la fecha actual
       const consumoExistenteQuery = 'SELECT id FROM sac.detalle_consumo WHERE id_empleado = $1 AND id_tipo_consumo = $2 AND dt_consumo::date = CURRENT_DATE';
       const { rowCount: consumoExistenteCount } = await pool.query(consumoExistenteQuery, [id_empleado, consumo.id_tipo_consumo]);
@@ -73,9 +83,9 @@ exports.addConsumo = async (req, res) => {
         return res.status(400).send({ success: false, message: "Ya se ha registrado un consumo para este empleado y tipo de consumo el día de hoy" });
       }
 
-      // Inserta el registro en detalle_consumo
-      const insertQuery = 'INSERT INTO sac.detalle_consumo (id_empleado, id_tipo_consumo, dt_consumo) VALUES ($1, $2, NOW())';
-      await pool.query(insertQuery, [id_empleado, consumo.id_tipo_consumo]);
+      // Inserta el registro en detalle_consumo con el ID calculado
+      const insertQuery = 'INSERT INTO sac.detalle_consumo (id, id_empleado, id_tipo_consumo, dt_consumo) VALUES ($1, $2, $3, NOW())';
+      await pool.query(insertQuery, [nextId, id_empleado, consumo.id_tipo_consumo]);
 
       return res.status(200).send({
         success: true,
@@ -122,7 +132,7 @@ exports.getConsumosPorEmpresa = async (req, res) => {
         AND date(dc.dt_consumo) between date_trunc('month', current_date) and current_date`;
 
     const params = [id_empresa];
-    
+
     if (desde !== undefined && hasta !== undefined) {
       query = `
       SELECT 
