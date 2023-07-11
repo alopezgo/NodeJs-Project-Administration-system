@@ -89,7 +89,11 @@ form.addEventListener("submit", async (event) => {
   const fechaDesdeObj = new Date(fecha_desde);
   const fechaHastaObj = new Date(fecha_hasta);
   if (fechaDesdeObj > fechaHastaObj) {
-    alert("La fecha desde no puede ser mayor que la fecha hasta");
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Complete todos los campos'
+    });
   }
   else{
     //Si la tabla ya existe se elimina informacion y se borra la tabla
@@ -117,7 +121,11 @@ form.addEventListener("submit", async (event) => {
       GetAsistenciasPorParametros(centro_costos, tipo, fecha_desde, fecha_hasta);
     }catch(error){
       console.error(error);
-      alert("Error al generar informe")
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error al generar informe'
+      });
     }
   }
 
@@ -143,7 +151,11 @@ async function cargarOptions(url, select) {
     if (Array.isArray(opciones) && opciones.length > 0) {
       // Código para agregar las opciones al select
     } else {
-      alert("No se pudieron cargar las opciones");
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pueden cargar las opciones'
+      });
     }
 
     if (url === "http://localhost:3000/api/v1/tiposasistencia") {
@@ -183,7 +195,11 @@ async function cargarOptions(url, select) {
     }
   } catch (error) {
     console.error(error);
-    alert("Error al cargar las opciones");
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'No se pueden cargar las opciones'
+    });
   }
 };
 

@@ -88,12 +88,20 @@ form.addEventListener("submit", async (event) => {
 
   // Valida que se hayan completado todos los campos.
   if (empleadoSelect == 0 || permisoSelect == 0 || !fecha_desde || !fecha_hasta ) {
-    alert("Por favor, complete todos los campos.");
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Debe completar todos los campos'
+    });
     return;
   }
 
   if (fechaDesdeObj > fechaHastaObj) {
-    alert("La fecha desde no puede ser mayor que la fecha hasta");
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Fecha Desde no se puede ser posterior a fecha Hasta'
+    });
   } else{
     try {
       PostAsistencia(empleadoSelect, permisoSelect, fecha_desde, fecha_hasta)

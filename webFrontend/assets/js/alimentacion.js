@@ -90,7 +90,11 @@ form.addEventListener("submit", async (event) => {
   const fechaDesdeObj = new Date(fecha_desde);
   const fechaHastaObj = new Date(fecha_hasta);
   if (fechaDesdeObj > fechaHastaObj) {
-    alert("La fecha desde no puede ser mayor que la fecha hasta");
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Fecha Desde no se puede ser posterior a fecha Hasta'
+    });
   }
   else {
 
@@ -120,7 +124,11 @@ form.addEventListener("submit", async (event) => {
       GetConsumosPorParametros(centro_costos, tipo_consumo, fecha_desde, fecha_hasta);
     }catch(error){
       console.error(error);
-      alert("Error al generar informe")
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se puede cargar informe'
+      });
     }
 
   }
@@ -147,7 +155,11 @@ async function cargarOptions(url, select) {
     if (Array.isArray(opciones) && opciones.length > 0) {
       // Código para agregar las opciones al select
     } else {
-      alert("No se pudieron cargar las opciones");
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pueden cargar las opciones'
+      });
     }
 
     if (url === "http://localhost:3000/api/v1/tiposconsumo") {
@@ -187,7 +199,14 @@ async function cargarOptions(url, select) {
     }
   } catch (error) {
     console.error(error);
-    alert("Error al cargar las opciones");
+    Swal.fire({
+      icon: "error",
+      title: "¡Error!",
+      // Agregar el mensaje de error en la alerta.
+      text: data.message || "No se pueden cargar las opciones",
+      showConfirmButton: true,
+      confirmButtonText: "Aceptar",
+    });
   }
 };
 
