@@ -1,8 +1,8 @@
 const { pool } = require('../db/db');
 
-exports.getDetalleAsistencia= async (req, res) => {
-    try {
-        const query = `
+exports.getDetalleAsistencia = async (req, res) => {
+  try {
+    const query = `
                     SELECT e.nombre||' '||e.apellido_paterno||' '||e.apellido_materno AS nom_empleado,
                         e.rut||'-'||e.dv AS rut_empleado,
                         p.nombre AS nom_empresa,
@@ -83,7 +83,7 @@ exports.getAsistenciaPorEmpresa = async (req, res) => {
       query += ` AND ea.id = $${params.length + 1}`;
       params.push(evento);
     }
-    
+
     const { rows } = await pool.query(query, params);
 
     // Devolver los resultados en formato JSON
@@ -94,12 +94,12 @@ exports.getAsistenciaPorEmpresa = async (req, res) => {
     });
   } catch (error) {
     console.error("Error al obtener Asistencias por Empresa", error);
-    return res.status(500).send("Error en el servidor") ;
+    return res.status(500).send("Error en el servidor");
   }
 };
 
 //Función para obtener todos los Tipos de Asistencia
-exports.getTiposAsistencia= async (req, res) => {
+exports.getTiposAsistencia = async (req, res) => {
   try {
     const query = `
                     SELECT id as id_tipo_asistencia, evento as tipo_asistencia
@@ -139,16 +139,34 @@ exports.addAsistencia = async (req, res) => {
       return res.status(400).send({ success: false, message: "No existe el evento asistencia que intenta registrar" });
     }
 
+    // Obtiene el registro más alto en la tabla de detalle_asistencia
+    const maxIdQuery = 'SELECT MAX(id) as max_id FROM sac.detalle_asistencia';
+    const { rows } = await pool.query(maxIdQuery);
+    const maxId = rows[0].max_id;
+    const newId = maxId + 1;
+
     // Busca el id del empleado a partir del rut
     const query = 'SELECT id FROM sac.empleado WHERE rut = $1';
-    const { rows } = await pool.query(query, [rut_empleado]);
+    const { rows: empleadoRows } = await pool.query(query, [rut_empleado]);
 
-    if (rows.length > 0) {
-      const id_empleado = rows[0].id;
+    if (empleadoRows.length > 0) {
+      const id_empleado = empleadoRows[0].id;
 
-      // Inserta el registro en detalle_consumo
-      const insertQuery = 'INSERT INTO sac.detalle_asistencia (id, id_empleado, id_evento_asistencia, dt_evento) VALUES (DEFAULT, $1, $2, NOW())';
-      await pool.query(insertQuery, [id_empleado, id_tipo_asistencia]);
+      // Verifica el último registro de asistencia para el empleado
+      const lastAsistenciaQuery = 'SELECT id_evento_asistencia FROM sac.detalle_asistencia WHERE id_empleado = $1 ORDER BY id DESC LIMIT 1';
+      const { rows: lastAsistenciaRows } = await pool.query(lastAsistenciaQuery, [id_empleado]);
+      if (lastAsistenciaRows.length > 0) {
+        const lastAsistenciaId = lastAsistenciaRows[0].id_evento_asistencia;
+
+        // Comprueba si el último registro es del mismo tipo de asistencia
+        if (lastAsistenciaId === id_tipo_asistencia) {
+          return res.status(400).send({ success: false, message: "No se puede registrar el mismo tipo de asistencia seguido" });
+        }
+      }
+
+      // Inserta el registro en detalle_asistencia con la nueva ID
+      const insertQuery = 'INSERT INTO sac.detalle_asistencia (id, id_empleado, id_evento_asistencia, dt_evento) VALUES ($1, $2, $3, NOW())';
+      await pool.query(insertQuery, [newId, id_empleado, id_tipo_asistencia]);
 
       return res.status(200).send({
         success: true,
@@ -168,9 +186,9 @@ exports.addAsistencia = async (req, res) => {
 
 //TODO conectar a front en vista informes
 
-exports.getInformeMensualAsisteConsume = async (req, res) =>{
+exports.getInformeMensualAsisteConsume = async (req, res) => {
 
-  try{
+  try {
     const { id_empresa } = req.params;
     const query = `
     WITH permisos AS (
@@ -237,9 +255,9 @@ exports.getInformeMensualAsisteConsume = async (req, res) =>{
 
 //TODO conectar a front en vista informes
 
-exports.getMetricas = async (req, res) =>{
+exports.getMetricas = async (req, res) => {
 
-  try{
+  try {
     const { id_empresa } = req.params;
     const query = `
     WITH 
