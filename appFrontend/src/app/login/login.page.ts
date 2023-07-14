@@ -59,7 +59,7 @@ export class LoginPage implements OnInit {
       contrasena: password,
     };
 
-    let serverUrl = 'http://192.168.52.22:3000/api/v1/user/loginApp';
+    let serverUrl = 'http://192.168.1.120:3000/api/v1/user/loginApp';
 
     this.http.post(serverUrl, data, { headers }).subscribe(
       (response: any) => {

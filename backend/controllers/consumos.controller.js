@@ -365,24 +365,24 @@ exports.getInformeConsumoMensual = async (req, res) => {
     const { id_empresa } = req.params;
 
     const query = `
-    Select  cont.nombre as nom_contratista, 
-    extract(YEAR from cons.dt_consumo) as año,
-	  extract(MONTH from cons.dt_consumo) as mes,
-    count(cons.dt_consumo) as cant_consumos,
-    sum(tipo.precio) as total
-    from sac.contratista as cont
-    join sac.empresa as emp
-    on cont.id_empresa = emp.id
-    join sac.empleado as empl 
-    on cont.id_empresa = empl.id_empresa
-    and empl.id = empl.id_empresa 
-    join sac.detalle_consumo as cons
-    on cons.id_empleado = empl.id
-    join sac.tipo_consumo as tipo on cons.id_tipo_consumo = tipo.id
-    where cont.id_servicio = 1
-    and cont.id_empresa = $1
-    GROUP BY cont.nombre, emp.nombre, empl.id, año, mes
-    order by año, mes
+    Select 
+    cont.nombre as nom_contratista,
+      extract(YEAR from cons.dt_consumo) as año,
+    extract(MONTH from cons.dt_consumo) as mes,
+      count(cons.dt_consumo) as cant_consumos,
+      sum(tipo.precio) as total
+      from sac.contratista as cont
+      join sac.empresa as emp
+      on cont.id_empresa = emp.id
+      join sac.empleado as empl 
+      on emp.id = empl.id_empresa 
+      join sac.detalle_consumo as cons
+      on cons.id_empleado = empl.id
+      join sac.tipo_consumo as tipo on cons.id_tipo_consumo = tipo.id
+      where cont.id_servicio = 1
+      and empl.id_empresa = $1
+       GROUP BY cont.nombre, emp.nombre, año, mes
+       ORDER BY año, mes
       `;
     const params = [id_empresa];
     const { rows } = await pool.query(query, params);

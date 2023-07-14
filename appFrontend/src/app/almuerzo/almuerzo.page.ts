@@ -100,7 +100,7 @@ export class AlmuerzoPage implements OnInit {
           consumo: consumo,
         };
 
-        this.http.post('http://192.168.52.22:3000/api/v1/consumos/registrarConsumo', data)
+        this.http.post('http://192.168.1.120:3000/api/v1/consumos/registrarConsumo', data)
           .subscribe(
             (response: any) => {
               console.log(response);

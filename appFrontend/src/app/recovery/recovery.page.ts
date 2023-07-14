@@ -43,7 +43,7 @@ export class RecoveryPage implements OnInit {
         nueva_contrasena: this.nuevaContrasena,
       };
 
-      const url = `http://192.168.52.22:3000/api/v1/usuarios/${this.id}/updatePass`;
+      const url = `http://192.168.1.120:3000/api/v1/usuarios/${this.id}/updatePass`;
 
       const response = await this.http.put<UpdatePasswordResponse>(url, body).toPromise();
 

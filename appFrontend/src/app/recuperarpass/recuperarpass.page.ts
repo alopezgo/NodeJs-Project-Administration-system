@@ -11,7 +11,7 @@ import { AlertController, NavController } from '@ionic/angular';
 })
 export class RecuperarpassPage implements OnInit {
 
-  private apiUrl = 'http://192.168.52.22:3000/api/v1/usuarios/recovery'; // URL del servidor de desarrollo local
+  private apiUrl = 'http://192.168.1.120:3000/api/v1/usuarios/recovery'; // URL del servidor de desarrollo local
 
   constructor(private http: HttpClient, private router:Router, private navCtrl: NavController, private alertController: AlertController) {}
   

@@ -88,7 +88,7 @@ export class EntradaPage implements OnInit {
           id_tipo_asistencia: that.asistencia,
         };
 
-        this.http.post('http://192.168.52.22:3000/api/v1/addAsistencia', data)
+        this.http.post('http://192.168.1.120:3000/api/v1/addAsistencia', data)
           .subscribe(
             (response: any) => {
               console.log(response);

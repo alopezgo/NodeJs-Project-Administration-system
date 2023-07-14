@@ -92,7 +92,7 @@ form.addEventListener("submit", async (event) => {
     Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: 'Complete todos los campos'
+      text: 'La fecha Desde no puede ser posterior a fecha Hasta'
     });
   }
   else{
